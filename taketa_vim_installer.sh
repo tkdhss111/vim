@@ -1,47 +1,51 @@
 #=====================================================
 # Vim installation script
 #
+# (Instruction)
+# Install with username (-u USER)
+# sudo -u USER sh ./taketa_vim_installer.sh
+#
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
+##
+## Vim installation
+##
+#apt install software-properties-common
+#add-apt-repository ppa:neovim-ppa/unstable
+#apt update -y
+#apt install neovim -y
+#apt install python-dev python-pip python3-dev python3-pip
+#pip3 install --user pynvim
+#pip3 install --user --upgrade pynvim
+#which nvim
+#nvim -v | grep 'NVIM v'
 #
-# Vim installation
+##
+## Add-in packages installation
+##
 #
-apt install software-properties-common
-add-apt-repository ppa:neovim-ppa/unstable
-apt update -y
-apt install neovim -y
-apt install python-dev python-pip python3-dev python3-pip
-pip3 install --user pynvim
-pip3 install --user --upgrade pynvim
-which nvim
-nvim -v | grep 'NVIM v'
-
+## repeat.vim
+#mkdir -p ~/.vim/pack/tpope/start
+#cd ~/.vim/pack/tpope/start
+#git clone https://tpope.io/vim/repeat.git
 #
-# Add-in packages installation
+## surround.vim
+#mkdir -p ~/.vim/pack/tpope/start
+#cd ~/.vim/pack/tpope/start
+#git clone https://tpope.io/vim/surround.git
+#vim -u NONE -c "helptags surround/doc" -c q
 #
-
-# repeat.vim
-mkdir -p ~/.vim/pack/tpope/start
-cd ~/.vim/pack/tpope/start
-git clone https://tpope.io/vim/repeat.git
-
-# surround.vim
-mkdir -p ~/.vim/pack/tpope/start
-cd ~/.vim/pack/tpope/start
-git clone https://tpope.io/vim/surround.git
-vim -u NONE -c "helptags surround/doc" -c q
-
-# Shougo's dein (Vim/Neovim plugin manager)
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-# For example, we just use `~/.cache/dein` as installation directory
-sh ./installer.sh ~/.cache/dein
-
-# speeddating.vim
-mkdir -p ~/.vim/pack/tpope/start
-cd ~/.vim/pack/tpope/start
-git clone https://tpope.io/vim/speeddating.git
-vim -u NONE -c "helptags speeddating/doc" -c q
+## Shougo's dein (Vim/Neovim plugin manager)
+#curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+## For example, we just use `~/.cache/dein` as installation directory
+#sh ./installer.sh ~/.cache/dein
+#
+## speeddating.vim
+#mkdir -p ~/.vim/pack/tpope/start
+#cd ~/.vim/pack/tpope/start
+#git clone https://tpope.io/vim/speeddating.git
+#vim -u NONE -c "helptags speeddating/doc" -c q
 
 #
 # Setup configulation files
@@ -49,7 +53,14 @@ vim -u NONE -c "helptags speeddating/doc" -c q
 #
 
 # Create init.vim (empty file)
-set INI = /home/$USERNAME/.config/nvim/init.vim
+NOW=$(date '+%F_%H:%M:%S')
+INI=/home/${USER}/.config/nvim/init.vim
+echo ${INI}
+if [ -e ${INI} ]; then
+  mv ${INI} ${INI}_till${NOW}
+else
+  mkdir -p /home/${USER}/.config/nvim
+fi	
 touch ${INI}
 
 # Move line up and down with alt + j and k
@@ -63,9 +74,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 EOF
 
 # Get back to normal mode from insert mode by typing 'jj' and :w
-cat <<EOF >> ${INI}
-inoremap <silent> jj <ESC>:<C-u>w<CR>
-EOF 
+echo "inoremap <silent> jj <ESC>:<C-u>w<CR>" >>${INI}
 
 # Change window by typing 'Ctrl-hjkl'
 cat <<EOF >> ${INI}
@@ -73,8 +82,7 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-EOF 
-
+EOF
 
 # Useful set commands
 cat <<EOF >> ${INI}
@@ -156,7 +164,6 @@ syntax enable
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
 EOF
-
 
 #
 # Vim editor process (Manual installation)
