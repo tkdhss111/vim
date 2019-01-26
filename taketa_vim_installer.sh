@@ -20,7 +20,7 @@ pip3 install --user pynvim
 pip3 install --user --upgrade pynvim
 which nvim
 nvim -v | grep 'NVIM v'
-echo 'alias vim=nvim' >> /home/${USER}/.bashrc
+echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.bashrc
 
 #
 # Add-in packages installation
