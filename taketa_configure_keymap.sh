@@ -44,6 +44,7 @@ setxkbmap -print
 rm -rf /var/lib/xkb/*
 
 # Keep settings even if the input method has changed
+apt install dconf-editor
 dconf write /org/gnome/desktop/input-sources/xkb-options "['MYKEYMAP:keymap']"
 
 #reboot
