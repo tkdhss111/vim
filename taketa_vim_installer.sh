@@ -20,6 +20,7 @@ pip3 install --user pynvim
 pip3 install --user --upgrade pynvim
 which nvim
 nvim -v | grep 'NVIM v'
+echo 'alias vim=nvim' >> /home/${USER}/.bashrc
 
 #
 # Add-in packages installation
@@ -36,16 +37,16 @@ cd ~/.vim/pack/tpope/start
 git clone https://tpope.io/vim/surround.git
 vim -u NONE -c "helptags surround/doc" -c q
 
-# Shougo's dein (Vim/Neovim plugin manager)
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-# For example, we just use `~/.cache/dein` as installation directory
-sh ./installer.sh ~/.cache/dein
-
 # speeddating.vim
 mkdir -p ~/.vim/pack/tpope/start
 cd ~/.vim/pack/tpope/start
 git clone https://tpope.io/vim/speeddating.git
 vim -u NONE -c "helptags speeddating/doc" -c q
+
+# Shougo's dein (Vim/Neovim plugin manager)
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+# For example, we just use `~/.cache/dein` as installation directory
+sh ./installer.sh ~/.cache/dein
 
 #
 # Setup configulation files
@@ -136,7 +137,7 @@ if dein#load_state('~/.cache/dein')
   nmap <F2> gaip*<Right>,
 
   "
-  " vim thema
+  " vim theme
   "
   call dein#add('jdkanani/vim-material-theme')
   call dein#add('jacoborus/tender.vim')
