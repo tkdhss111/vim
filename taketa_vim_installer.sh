@@ -8,44 +8,44 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-##
-## Vim installation
-##
-#apt install software-properties-common
-#add-apt-repository ppa:neovim-ppa/unstable
-#apt update -y
-#apt install neovim -y
-#apt install python-dev python-pip python3-dev python3-pip
-#pip3 install --user pynvim
-#pip3 install --user --upgrade pynvim
-#which nvim
-#nvim -v | grep 'NVIM v'
 #
-##
-## Add-in packages installation
-##
+# Vim installation
 #
-## repeat.vim
-#mkdir -p ~/.vim/pack/tpope/start
-#cd ~/.vim/pack/tpope/start
-#git clone https://tpope.io/vim/repeat.git
+apt install software-properties-common
+add-apt-repository ppa:neovim-ppa/unstable
+apt update -y
+apt install neovim -y
+apt install python-dev python-pip python3-dev python3-pip
+pip3 install --user pynvim
+pip3 install --user --upgrade pynvim
+which nvim
+nvim -v | grep 'NVIM v'
+
 #
-## surround.vim
-#mkdir -p ~/.vim/pack/tpope/start
-#cd ~/.vim/pack/tpope/start
-#git clone https://tpope.io/vim/surround.git
-#vim -u NONE -c "helptags surround/doc" -c q
+# Add-in packages installation
 #
-## Shougo's dein (Vim/Neovim plugin manager)
-#curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-## For example, we just use `~/.cache/dein` as installation directory
-#sh ./installer.sh ~/.cache/dein
-#
-## speeddating.vim
-#mkdir -p ~/.vim/pack/tpope/start
-#cd ~/.vim/pack/tpope/start
-#git clone https://tpope.io/vim/speeddating.git
-#vim -u NONE -c "helptags speeddating/doc" -c q
+
+# repeat.vim
+mkdir -p ~/.vim/pack/tpope/start
+cd ~/.vim/pack/tpope/start
+git clone https://tpope.io/vim/repeat.git
+
+# surround.vim
+mkdir -p ~/.vim/pack/tpope/start
+cd ~/.vim/pack/tpope/start
+git clone https://tpope.io/vim/surround.git
+vim -u NONE -c "helptags surround/doc" -c q
+
+# Shougo's dein (Vim/Neovim plugin manager)
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+# For example, we just use `~/.cache/dein` as installation directory
+sh ./installer.sh ~/.cache/dein
+
+# speeddating.vim
+mkdir -p ~/.vim/pack/tpope/start
+cd ~/.vim/pack/tpope/start
+git clone https://tpope.io/vim/speeddating.git
+vim -u NONE -c "helptags speeddating/doc" -c q
 
 #
 # Setup configulation files
