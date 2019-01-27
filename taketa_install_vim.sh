@@ -1,10 +1,6 @@
 #=====================================================
 # Vim installation script
 #
-# If python installation error occurs in deoplete
-# Try the command below:
-# pip3 --no-cache-dir install -I neovim
-# :UpdateRemotePlugins
 #
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
@@ -14,15 +10,15 @@ USER=eric
 #
 # Vim installation
 #
-#apt install software-properties-common
-#apt update -y
-#apt install python-dev python-pip python3 python3-dev python3-pip
-#pip3 install --user pynvim
-#pip3 install --user --upgrade pynvim
-#pip3 install neovim
-#which nvim
-#nvim -v | grep 'NVIM v'
-#echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.bashrc
+apt install software-properties-common
+apt update -y
+apt install python-dev python-pip python3 python3-dev python3-pip
+pip3 install --user pynvim
+pip3 install --user --upgrade pynvim
+pip3 --no-cache-dir install -I neovim
+which nvim
+nvim -v | grep 'NVIM v'
+echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.bashrc
 
 #
 # Add-in packages installation
