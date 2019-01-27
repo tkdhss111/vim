@@ -1,9 +1,10 @@
 #=====================================================
 # Vim installation script
 #
-# (Instruction)
-# Install with username (-u USER)
-# sudo -u USER sh ./taketa_vim_installer.sh
+# If python installation error occurs in deoplete
+# Try the command below:
+# pip3 --no-cache-dir install -I neovim
+# :UpdateRemotePlugins
 #
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
@@ -177,7 +178,28 @@ let g:deoplete#enable_at_startup = 1
 " NERDTree settings (Ctrl+n to open NERDTree)
 "
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
-"autocmd VimEnter *  NERDTree
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" NERDTress File highlighting
+"function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+" exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+" exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+"endfunction
+"call NERDTreeHighlightFile('f90',     'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('mod',     'blue',    'none', '#3366FF', '#151515')
+"call NERDTreeHighlightFile('chp',    'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('o', 'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('a',   'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('csv',   'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('html',   'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('styl',   'cyan',    'none', 'cyan',    '#151515')
+"call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
+"call NERDTreeHighlightFile('txt',     'Red',     'none', 'red',     '#151515')
+"call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
+"call NERDTreeHighlightFile('db',    'Magenta', 'none', '#ff00ff', '#151515')
+let g:NERDTreeDirArrows = 1
+let g:NERDTreeDirArrowExpandable  = '▶'
+let g:NERDTreeDirArrowCollapsible = '▼'
 EOF
 
 #
