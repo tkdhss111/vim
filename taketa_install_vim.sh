@@ -13,16 +13,15 @@ USER=eric
 #
 # Vim installation
 #
-apt install software-properties-common
-#add-apt-repository ppa:neovim-ppa/unstable
-apt update -y
-apt install python-dev python-pip python3 python3-dev python3-pip
-pip3 install --user pynvim
-pip3 install --user --upgrade pynvim
-pip3 install neovim
-which nvim
-nvim -v | grep 'NVIM v'
-echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.bashrc
+#apt install software-properties-common
+#apt update -y
+#apt install python-dev python-pip python3 python3-dev python3-pip
+#pip3 install --user pynvim
+#pip3 install --user --upgrade pynvim
+#pip3 install neovim
+#which nvim
+#nvim -v | grep 'NVIM v'
+#echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.bashrc
 
 #
 # Add-in packages installation
@@ -161,6 +160,7 @@ if dein#load_state('~/.cache/dein')
   "let g:molokai_original = 1
   "let g:rehash256 = 1
   call dein#remote_plugins()
+  call dein#add('scrooloose/nerdtree')
 " taketa ends --------------------------------------------
 
   call dein#end()
@@ -172,6 +172,12 @@ syntax enable
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
+
+"
+" NERDTree settings (Ctrl+e to open NERDTree)
+"
+nnoremap <silent><C-n> :NERDTreeToggle<CR>
+"autocmd VimEnter *  NERDTree
 EOF
 
 #
