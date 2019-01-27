@@ -8,16 +8,18 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
+USER=eric
+
 #
 # Vim installation
 #
 apt install software-properties-common
 add-apt-repository ppa:neovim-ppa/unstable
 apt update -y
-apt install neovim -y
-apt install python-dev python-pip python3-dev python3-pip
+apt install python-dev python-pip python3 python3-dev python3-pip
 pip3 install --user pynvim
 pip3 install --user --upgrade pynvim
+pip3 install neovim
 which nvim
 nvim -v | grep 'NVIM v'
 echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.bashrc
@@ -44,9 +46,11 @@ git clone https://tpope.io/vim/speeddating.git
 vim -u NONE -c "helptags speeddating/doc" -c q
 
 # Shougo's dein (Vim/Neovim plugin manager)
+apt install curl -y
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 # For example, we just use `~/.cache/dein` as installation directory
 sh ./installer.sh ~/.cache/dein
+chmod -R 777 ~/.cache/dein
 
 #
 # Setup configulation files
@@ -152,7 +156,7 @@ if dein#load_state('~/.cache/dein')
   let g:airline#extensions#tabline#enabled = 1
   "let g:molokai_original = 1
   "let g:rehash256 = 1
-
+  call dein#remote_plugins()
 " taketa ends --------------------------------------------
 
   call dein#end()
@@ -172,4 +176,4 @@ EOF
 
 # dein
 # :call dein#install()
-
+# :checkhealth
