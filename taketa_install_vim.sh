@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=eric
+USER=enekei
 
 #
 # Vim installation
@@ -108,6 +108,7 @@ set smartcase
 set wrapscan
 set incsearch
 set inccommand=split
+set noswapfile
 EOF
 
 # Shougo's dein
@@ -202,6 +203,6 @@ EOF
 # Vim editor process (Manual installation)
 #
 
-# dein
+# reboot 
 # :call dein#install()
 # :checkhealth
