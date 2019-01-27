@@ -14,7 +14,7 @@ USER=eric
 # Vim installation
 #
 apt install software-properties-common
-add-apt-repository ppa:neovim-ppa/unstable
+#add-apt-repository ppa:neovim-ppa/unstable
 apt update -y
 apt install python-dev python-pip python3 python3-dev python3-pip
 pip3 install --user pynvim
@@ -44,6 +44,10 @@ mkdir -p ~/.vim/pack/tpope/start
 cd ~/.vim/pack/tpope/start
 git clone https://tpope.io/vim/speeddating.git
 vim -u NONE -c "helptags speeddating/doc" -c q
+
+# NERDtree
+git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+echo 'map <C-n> :NERDTreeToggle<CR>' >> ${INI}
 
 # Shougo's dein (Vim/Neovim plugin manager)
 apt install curl -y
