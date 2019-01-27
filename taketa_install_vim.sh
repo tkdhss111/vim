@@ -174,7 +174,7 @@ syntax enable
 let g:deoplete#enable_at_startup = 1
 
 "
-" NERDTree settings (Ctrl+e to open NERDTree)
+" NERDTree settings (Ctrl+n to open NERDTree)
 "
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
 "autocmd VimEnter *  NERDTree
