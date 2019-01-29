@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=enekei
+USER=eric
 
 #
 # Vim installation
@@ -80,6 +80,12 @@ EOF
 
 # Get back to normal mode from insert mode by typing 'jj' and :w
 echo "inoremap <silent> jj <ESC>:<C-u>w<CR>" >>${INI}
+
+# Return from terminal by ESC
+echo "tnoremap <silent> <ESC> <C-\><C-n><C-w>w" >>${INI}
+
+# Change directory to current directory by typing C-c
+echo "nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>" >>${INI}
 
 # Change window by typing 'Ctrl-hjkl'
 cat <<EOF >> ${INI}
