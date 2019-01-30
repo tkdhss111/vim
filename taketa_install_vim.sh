@@ -166,6 +166,29 @@ if dein#load_state('~/.cache/dein')
   "let g:rehash256 = 1
   call dein#remote_plugins()
   call dein#add('scrooloose/nerdtree')
+  
+  "
+  " R plugins
+  "
+  call dein#add('jalvesaq/Nvim-R')
+  call dein#add('gaalcaras/ncm-R')
+  
+  “ remapping the basic :: send line
+  nmap , <Plug>RDSendLine
+
+  “ remapping selection :: send multiple lines
+  vmap , <Plug>RDSendSelection
+
+  “ remapping selection :: send multiple lines + echo lines
+  vmap ,e <Plug>RESendSelection
+
+  “ settings :: Nvim-R plugin
+  “ R output is highlighted with current colorscheme
+  let g:rout_follow_colorscheme = 1
+  
+  “ R commands in R output are highlighted
+  let g:Rout_more_colors = 1
+
 " taketa ends --------------------------------------------
 
   call dein#end()
