@@ -172,21 +172,24 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('jalvesaq/Nvim-R')
   call dein#add('gaalcaras/ncm-R')
+  call dein#add('ncm2/ncm2')
+  call dein#add('sirver/UltiSnips')
+  call dein#add('ncm2/ncm2-ultisnips')
   
-  “ remapping the basic :: send line
+  " remapping the basic :: send line
   nmap , <Plug>RDSendLine
 
-  “ remapping selection :: send multiple lines
+  " remapping selection :: send multiple lines
   vmap , <Plug>RDSendSelection
 
-  “ remapping selection :: send multiple lines + echo lines
+  " remapping selection :: send multiple lines + echo lines
   vmap ,e <Plug>RESendSelection
 
-  “ settings :: Nvim-R plugin
-  “ R output is highlighted with current colorscheme
+  " settings :: Nvim-R plugin
+  " R output is highlighted with current colorscheme
   let g:rout_follow_colorscheme = 1
   
-  “ R commands in R output are highlighted
+  " R commands in R output are highlighted
   let g:Rout_more_colors = 1
 
 " taketa ends --------------------------------------------
