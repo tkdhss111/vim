@@ -142,10 +142,11 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('junegunn/vim-easy-align')
   " Start interactive EasyAlign in visual mode (e.g. vipga)
-  xmap ga <Plug>(EasyAlign)
+"  xmap ga <Plug>(EasyAlign)
   " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-  nmap ga <Plug>(EasyAlign)
-  nmap <F2> gaip*<Right>,
+"  nmap ga <Plug>(EasyAlign)
+"  nmap <F2> gaip*<Right>,
+   vmap <Enter> <Plug>(EasyAlign)
 
   "
   " vim theme
