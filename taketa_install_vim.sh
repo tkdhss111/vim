@@ -172,9 +172,9 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('jalvesaq/Nvim-R')
   call dein#add('gaalcaras/ncm-R')
-"  call dein#add('ncm2/ncm2')
-"  call dein#add('sirver/UltiSnips')
-"  call dein#add('ncm2/ncm2-ultisnips')
+  call dein#add('ncm2/ncm2')
+  call dein#add('sirver/UltiSnips')
+  call dein#add('ncm2/ncm2-ultisnips')
   
   " remapping the basic :: send line
   nmap , <Plug>RDSendLine
