@@ -19,6 +19,7 @@ pip3 --no-cache-dir install -I neovim
 which nvim
 nvim -v | grep 'NVIM v'
 echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.bashrc
+echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.bashrc
 
 #
 # Add-in packages installation
