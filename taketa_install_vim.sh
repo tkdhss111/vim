@@ -25,6 +25,10 @@ echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.bashrc
 # Add-in packages installation
 #
 
+# ripgrep (NB: install the latest one by manually changing version number
+curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb
+dpkg -i ripgrep_0.10.0_amd64.deb && rm ripgrep_0.10.0_amd64.deb
+
 # repeat.vim
 mkdir -p ~/.vim/pack/tpope/start
 cd ~/.vim/pack/tpope/start
@@ -143,11 +147,15 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('junegunn/vim-easy-align')
   " Start interactive EasyAlign in visual mode (e.g. vipga)
-"  xmap ga <Plug>(EasyAlign)
+  xmap ga <Plug>(EasyAlign)
   " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-"  nmap ga <Plug>(EasyAlign)
-"  nmap <F2> gaip*<Right>,
-   vmap <Enter> <Plug>(EasyAlign)
+  nmap ga <Plug>(EasyAlign)
+   vmap <F2> :s/=/`/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/`/=/ge<CR>
+
+  "
+  " Enhanced multi-file search for Vim
+  "
+  call dein#add('wincent/ferret')
 
   "
   " vim theme
