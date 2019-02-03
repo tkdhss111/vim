@@ -13,8 +13,13 @@ USER=eric
 apt install software-properties-common
 apt update -y
 apt install python-dev python-pip python3 python3-dev python3-pip
-pip3 install --user pynvim
-pip3 install --user --upgrade pynvim
+#pip2 install --user pynvim
+#pip3 install --user pynvim
+pip install --upgrade --no-cache-dir pip
+pip install --no-cache-dir setuptools
+pip install --user --upgrade --no-cache-dir pynvim
+pip2 install --user --upgrade --no-cache-dir pynvim
+pip3 install --user --upgrade --no-cache-dir pynvim
 pip3 --no-cache-dir install -I neovim
 which nvim
 nvim -v | grep 'NVIM v'
@@ -120,6 +125,9 @@ set wrapscan
 set incsearch
 set inccommand=split
 set noswapfile
+set clipboard+=unnamedplus
+set termguicolors
+set background=dark
 EOF
 
 # Shougo's dein
@@ -146,16 +154,16 @@ if dein#load_state('~/.cache/dein')
   " vim-easy-align
   "
   call dein#add('junegunn/vim-easy-align')
-  " Start interactive EasyAlign in visual mode (e.g. vipga)
-  xmap ga <Plug>(EasyAlign)
-  " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-  nmap ga <Plug>(EasyAlign)
-  vmap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
 
   "
   " Enhanced multi-file search for Vim
   "
   call dein#add('wincent/ferret')
+
+  "
+  " NERDTree
+  "
+  call dein#add('scrooloose/nerdtree')
 
   "
   " vim theme
@@ -165,16 +173,6 @@ if dein#load_state('~/.cache/dein')
   "call dein#add('tomasr/colors/molokai.vim')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
-  syntax enable
-  set termguicolors
-  set background=dark
-  "colorscheme tender 
-  let g:airline_theme = 'simple'
-  let g:airline#extensions#tabline#enabled = 1
-  "let g:molokai_original = 1
-  "let g:rehash256 = 1
-  call dein#remote_plugins()
-  call dein#add('scrooloose/nerdtree')
   
   "
   " R plugins
@@ -184,28 +182,57 @@ if dein#load_state('~/.cache/dein')
   call dein#add('ncm2/ncm2')
   call dein#add('sirver/UltiSnips')
   call dein#add('ncm2/ncm2-ultisnips')
-  
-  " remapping the basic :: send line
-  nmap , <Plug>RDSendLine
-
-  " remapping selection :: send multiple lines
-  vmap , <Plug>RDSendSelection
-
-  " remapping selection :: send multiple lines + echo lines
-  vmap ,e <Plug>RESendSelection
-
-  " settings :: Nvim-R plugin
-  " R output is highlighted with current colorscheme
-  let g:rout_follow_colorscheme = 1
-  
-  " R commands in R output are highlighted
-  let g:Rout_more_colors = 1
 
 " taketa ends --------------------------------------------
 
+  call dein#remote_plugins()
   call dein#end()
   call dein#save_state()
+
 endif
+
+"
+" vim-easy-align
+"
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Align Fortran :: symbols
+vmap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
+
+"
+" R plugins
+"
+
+" remapping the basic :: send line
+nmap , <Plug>RDSendLine
+
+" remapping selection :: send multiple lines
+vmap , <Plug>RDSendSelection
+
+" remapping selection :: send multiple lines + echo lines
+vmap ,e <Plug>RESendSelection
+
+" settings :: Nvim-R plugin
+" R output is highlighted with current colorscheme
+let g:rout_follow_colorscheme = 1
+
+" R commands in R output are highlighted
+let g:Rout_more_colors = 1
+
+"
+" vim theme
+"
+syntax enable
+"colorscheme tender 
+let g:airline_theme = 'simple'
+let g:airline#extensions#tabline#enabled = 1
+"let g:molokai_original = 1
+"let g:rehash256 = 1
 
 filetype plugin indent on
 syntax enable
@@ -224,18 +251,18 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
 " exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 "endfunction
-"call NERDTreeHighlightFile('f90',     'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('mod',     'blue',    'none', '#3366FF', '#151515')
-"call NERDTreeHighlightFile('chp',    'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('o', 'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('a',   'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('csv',   'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('html',   'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('styl',   'cyan',    'none', 'cyan',    '#151515')
-"call NERDTreeHighlightFile('css',    'cyan',    'none', 'cyan',    '#151515')
-"call NERDTreeHighlightFile('txt',     'Red',     'none', 'red',     '#151515')
-"call NERDTreeHighlightFile('js',     'Red',     'none', '#ffa500', '#151515')
-"call NERDTreeHighlightFile('db',    'Magenta', 'none', '#ff00ff', '#151515')
+"call NERDTreeHighlightFile('f90',  'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('mod',  'blue',    'none', '#3366FF', '#151515')
+"call NERDTreeHighlightFile('chp',  'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('o',    'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('a',    'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('csv',  'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('html', 'yellow',  'none', 'yellow',  '#151515')
+"call NERDTreeHighlightFile('styl', 'cyan',    'none', 'cyan',    '#151515')
+"call NERDTreeHighlightFile('css',  'cyan',    'none', 'cyan',    '#151515')
+"call NERDTreeHighlightFile('txt',  'Red',     'none', 'red',     '#151515')
+"call NERDTreeHighlightFile('js',   'Red',     'none', '#ffa500', '#151515')
+"call NERDTreeHighlightFile('db',   'Magenta', 'none', '#ff00ff', '#151515')
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
