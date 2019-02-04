@@ -92,7 +92,7 @@ EOF
 echo "inoremap <silent> jj <ESC>:<C-u>w<CR>" >>${INI}
 
 # Return from terminal by ESC
-echo "tnoremap <silent> <ESC> <C-\><C-n><C-w>w" >>${INI}
+echo "tnoremap <silent> <ESC> <C-\><C-n>" >>${INI}
 
 # Change directory to current directory by typing C-c
 echo "nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>" >>${INI}
