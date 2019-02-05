@@ -272,7 +272,8 @@ EOF
 "
 " Set F9 to make run
 "
-:nmap <F9> :w<CR> :make<CR> :make run<CR> 
+:nmap <F9> :w<CR> :make<CR> :make run<CR>
+:nmap <F8> :w<CR> :make<CR> :make drun<CR>
 
 #
 # Vim editor process (Manual installation)
