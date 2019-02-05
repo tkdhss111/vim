@@ -128,6 +128,7 @@ set noswapfile
 set clipboard+=unnamedplus
 set termguicolors
 set background=dark
+set viminfo='10
 EOF
 
 # Shougo's dein
@@ -267,6 +268,11 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
 EOF
+
+"
+" Set F9 to make run
+"
+:nmap <F9> :w<CR> :make<CR> :make run<CR> 
 
 #
 # Vim editor process (Manual installation)
