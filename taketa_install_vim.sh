@@ -92,7 +92,7 @@ EOF
 echo "inoremap <silent> jj <ESC>:<C-u>w<CR>" >>${INI}
 
 # Return from terminal by ESC
-echo "tnoremap <silent> <ESC> <C-\><C-n>" >>${INI}
+echo "tnoremap <silent> <ESC> <C-\><C-n><C-w>w" >>${INI}
 
 # Change directory to current directory by typing C-c
 echo "nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>" >>${INI}
@@ -128,7 +128,6 @@ set noswapfile
 set clipboard+=unnamedplus
 set termguicolors
 set background=dark
-set viminfo='10
 EOF
 
 # Shougo's dein
@@ -268,12 +267,6 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
 EOF
-
-"
-" Set F9 to make run
-"
-:nmap <F9> :w<CR> :make<CR> :make run<CR>
-:nmap <F8> :w<CR> :make<CR> :make drun<CR>
 
 #
 # Vim editor process (Manual installation)
