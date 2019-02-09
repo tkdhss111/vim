@@ -112,6 +112,14 @@ nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 EOF
 
+#
+# Set F9 to make run
+#
+cat <<EOF >> ${INI}
+:nmap <F9> :w<CR> :make<CR> :make run<CR>
+:nmap <F8> :w<CR> :make<CR> :make debugrun<CR>
+EOF
+
 # Useful set commands
 cat <<EOF >> ${INI}
 set number
@@ -276,12 +284,6 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
 EOF
-
-"
-" Set F9 to make run
-"
-:nmap <F9> :w<CR> :make<CR> :make run<CR>
-:nmap <F8> :w<CR> :make<CR> :make debugrun<CR>
 
 #
 # Vim editor process (Manual installation)
