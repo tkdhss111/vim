@@ -167,6 +167,11 @@ if dein#load_state('~/.cache/dein')
 
 " taketa begin -------------------------------------------
   "
+  " vim-auto-save
+  "
+  call dein#add('vim-scripts/vim-auto-save')
+  
+  "
   " vim-easy-align
   "
   call dein#add('junegunn/vim-easy-align')
@@ -207,6 +212,11 @@ if dein#load_state('~/.cache/dein')
 
 endif
 
+"
+" vim-auto-save
+"
+let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save_silent = 1  " do not display the auto-save notification
 
 "
 " vim-easy-align
