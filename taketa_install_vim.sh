@@ -92,7 +92,7 @@ EOF
 echo "inoremap <silent> jj <ESC>:<C-u>w<CR>" >>${INI}
 
 # Return from terminal by ESC
-echo "tnoremap <silent> <ESC> <C-\><C-n><C-w>w" >>${INI}
+echo "tnoremap <silent> <ESC> <C-\><C-n>" >>${INI}
 
 # Change directory to current directory by typing C-c
 echo "nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>" >>${INI}
@@ -103,6 +103,13 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+EOF
+
+# Change yanked strings to a word under the cursol
+cat <<EOF >> ${INI}
+nnoremap <silent> ciy ciw<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
+nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
+vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 EOF
 
 # Useful set commands
@@ -128,6 +135,7 @@ set noswapfile
 set clipboard+=unnamedplus
 set termguicolors
 set background=dark
+set viminfo='10
 EOF
 
 # Shougo's dein
@@ -190,6 +198,7 @@ if dein#load_state('~/.cache/dein')
   call dein#save_state()
 
 endif
+
 
 "
 " vim-easy-align
@@ -268,6 +277,12 @@ let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
 EOF
 
+"
+" Set F9 to make run
+"
+:nmap <F9> :w<CR> :make<CR> :make run<CR>
+:nmap <F8> :w<CR> :make<CR> :make debugrun<CR>
+
 #
 # Vim editor process (Manual installation)
 #
@@ -276,3 +291,4 @@ EOF
 # :call dein#install()
 # :call dein#update()
 # :checkhealth
+
