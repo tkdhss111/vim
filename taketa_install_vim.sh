@@ -167,6 +167,11 @@ if dein#load_state('~/.cache/dein')
 
 " taketa begin -------------------------------------------
   "
+  " CSV 
+  "
+  call dein#add('chrisbra/csv.vim')
+
+  "
   " vim-auto-save
   "
   call dein#add('vim-scripts/vim-auto-save')
@@ -216,7 +221,7 @@ endif
 " vim-auto-save
 "
 let g:auto_save = 1  " enable AutoSave on Vim startup
-let g:auto_save_silent = 0  " do not display the auto-save notification
+let g:auto_save_silent = 1  " do not display the auto-save notification
 
 "
 " vim-easy-align
@@ -293,6 +298,20 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '▶'
 let g:NERDTreeDirArrowCollapsible = '▼'
+EOF
+
+#
+# CSV filetype
+#
+cat <<EOF >> /home/${USER}/.config/nvim/filetype.vim
+if exists("did_load_csvfiletype")                                            
+  finish
+endif
+let did_load_csvfiletype=1
+
+augroup filetypedetect
+  au! BufRead,BufNewFile *.csv,*.dat  setfiletype csv
+augroup END
 EOF
 
 #
