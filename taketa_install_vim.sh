@@ -13,6 +13,7 @@ USER=eric
 apt install software-properties-common
 apt update -y
 apt install python-dev python-pip python3 python3-dev python3-pip
+apt install exuberant-ctags
 #pip2 install --user pynvim
 #pip3 install --user pynvim
 pip install --upgrade --no-cache-dir pip
@@ -166,6 +167,11 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
+  "
+  " vim-tags
+  "
+  call dein#add('szw/vim-tags')
+
   "
   " CSV 
   "
@@ -322,4 +328,4 @@ EOF
 # :call dein#install()
 # :call dein#update()
 # :checkhealth
-
+# If there is no tags information -> :TagsGenerate!
