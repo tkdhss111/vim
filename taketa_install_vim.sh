@@ -14,6 +14,7 @@ apt install software-properties-common
 apt update -y
 apt install python-dev python-pip python3 python3-dev python3-pip
 apt install exuberant-ctags
+apt install xclip -y
 #pip2 install --user pynvim
 #pip3 install --user pynvim
 pip install --upgrade --no-cache-dir pip
@@ -302,7 +303,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "call NERDTreeHighlightFile('js',   'Red',     'none', '#ffa500', '#151515')
 "call NERDTreeHighlightFile('db',   'Magenta', 'none', '#ff00ff', '#151515')
 let g:NERDTreeDirArrows = 1
-let g:NERDTreeDirArrowExpandable  = '▶'
+let g:NERDTreeDirArrowExpandable  = '+'
 let g:NERDTreeDirArrowCollapsible = '▼'
 EOF
 
@@ -319,6 +320,28 @@ augroup filetypedetect
   au! BufRead,BufNewFile *.csv,*.dat  setfiletype csv
 augroup END
 EOF
+
+#
+# Turn off paste mode when leaving insert
+#
+cat <<EOF >>${INI}
+autocmd InsertLeave * set nopaste
+EOF
+
+cat <<EOF >>${INI}
+function! ClipboardYank()
+  call system('xclip -i -selection clipboard', @@)
+endfunction
+function! ClipboardPaste()
+  let @@ = system('xclip -o -selection clipboard')
+endfunction
+vnoremap <silent> y y:call ClipboardYank()<cr>
+vnoremap <silent> d d:call ClipboardYank()<cr>
+nnoremap <silent> p :call ClipboardPaste()<cr>p
+onoremap <silent> y y:call ClipboardYank()<cr>
+onoremap <silent> d d:call ClipboardYank()<cr>
+EOF
+
 
 #
 # Vim editor process (Manual installation)
