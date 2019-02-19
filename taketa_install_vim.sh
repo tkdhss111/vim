@@ -305,6 +305,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '+'
 let g:NERDTreeDirArrowCollapsible = '▼'
+let NERDTreeQuitOnOpen=1
 EOF
 
 #
