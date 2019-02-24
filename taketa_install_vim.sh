@@ -305,7 +305,6 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '+'
 let g:NERDTreeDirArrowCollapsible = '▼'
-let NERDTreeQuitOnOpen=1
 EOF
 
 #
@@ -343,6 +342,13 @@ onoremap <silent> y y:call ClipboardYank()<cr>
 onoremap <silent> d d:call ClipboardYank()<cr>
 EOF
 
+#
+# ctags settings
+#
+cat <<EOF >>${INI}
+let g:vim_tags_auto_generate = 0
+let g:vim_tags_project_tags_command = "ctags -R --fields=+l --tag-relative -f tags 2>/dev/null"
+EOF
 
 #
 # Vim editor process (Manual installation)
