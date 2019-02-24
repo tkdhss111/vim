@@ -90,8 +90,10 @@ vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 EOF
 
-# Get back to normal mode from insert mode by typing 'jj' and :w
-echo "inoremap <silent> jj <ESC>:<C-u>w<CR>" >>${INI}
+# Get back to normal mode from insert mode by typing 'jj' or 'kk' or 'hh'
+echo "inoremap <silent> jj <ESC>" >>${INI}
+echo "inoremap <silent> kk <ESC>" >>${INI}
+echo "inoremap <silent> hh <ESC>" >>${INI}
 
 # Return from terminal by ESC
 echo "tnoremap <silent> <ESC> <C-\><C-n>" >>${INI}
@@ -346,8 +348,8 @@ EOF
 # ctags settings
 #
 cat <<EOF >>${INI}
-let g:vim_tags_auto_generate = 0
-let g:vim_tags_project_tags_command = "ctags -R --fields=+l --tag-relative -f %:h/tags 2>/dev/null"
+let g:vim_tags_auto_generate = 1
+let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/01_Projects/tags --languages=Fortran ~/01_Projects 2>/dev/null'
 EOF
 
 #
