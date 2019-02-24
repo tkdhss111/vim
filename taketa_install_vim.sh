@@ -347,7 +347,7 @@ EOF
 #
 cat <<EOF >>${INI}
 let g:vim_tags_auto_generate = 0
-let g:vim_tags_project_tags_command = "ctags -R --fields=+l --tag-relative -f tags 2>/dev/null"
+let g:vim_tags_project_tags_command = "ctags -R --fields=+l --tag-relative -f %:h/tags 2>/dev/null"
 EOF
 
 #
