@@ -79,6 +79,7 @@ else
   mkdir -p /home/${USER}/.config/nvim
 fi	
 touch ${INI}
+chmod -R 777 /home/${USER}/.config/nvim
 
 # Move line up and down with alt + j and k
 cat <<EOF >> ${INI}
