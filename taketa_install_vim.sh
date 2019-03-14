@@ -362,3 +362,20 @@ EOF
 # :call dein#update()
 # :checkhealth
 # If there is no tags information -> :TagsGenerate!
+
+#
+# Font installation
+#
+git clone https://github.com/kudryavka/Ricty
+apt install fontforge -y
+apt install fonts-inconsolata -y
+curl "https://osdn.net/projects/mix-mplus-ipa/downloads/63545/migu-1m-20150712.zip" -o "migu-1m.zip"
+unzip migu-1m.zip
+sh ricty_generator.sh auto
+sudo mkdir ~/.fonts/
+sudo cp -f Ricty*.ttf ~/.fonts/
+sudo fc-cache -vf
+
+# https://github.com/mzyy94/RictyDiminished-for-Powerline
+sudo apt install unity-tweak-tool
+# Use unity-tweak-tool to set system default font
