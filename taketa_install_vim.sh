@@ -8,6 +8,12 @@
 USER=eric
 
 #
+# Need to purge regular vim installed as default to prevent
+# root from using .vimrc
+#
+apt --purge remove vim
+
+#
 # Vim installation
 #
 apt install software-properties-common
