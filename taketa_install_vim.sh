@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=eric
+USER=lily
 
 #
 # Need to purge regular vim installed as default to prevent
@@ -17,7 +17,6 @@ apt --purge remove vim
 # Vim installation
 #
 apt install software-properties-common
-apt update -y
 apt install python-dev python-pip python3 python3-dev python3-pip
 apt install exuberant-ctags
 apt install xclip -y
@@ -373,10 +372,11 @@ EOF
 # Font installation
 #
 git clone https://github.com/kudryavka/Ricty
+cd Ricty/
 apt install fontforge -y
 apt install fonts-inconsolata -y
-curl "https://osdn.net/projects/mix-mplus-ipa/downloads/63545/migu-1m-20150712.zip" -o "migu-1m.zip"
-unzip migu-1m.zip
+curl -L -o 'migu-1m-20130617.zip' 'http://sourceforge.jp/frs/redir.php?m=iij&f=%2Fmix-mplus-ipa%2F59022%2Fmigu-1m-20130617.zip'
+unzip migu-1m-20130617.zip
 sh ricty_generator.sh auto
 sudo mkdir ~/.fonts/
 sudo cp -f Ricty*.ttf ~/.fonts/
