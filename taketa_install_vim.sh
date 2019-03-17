@@ -151,7 +151,7 @@ set incsearch
 set inccommand=split
 set noswapfile
 set clipboard+=unnamedplus
-set termguicolors
+"set termguicolors
 set background=dark
 set viminfo='10
 EOF
