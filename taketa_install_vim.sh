@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=lily
+USER=eric
 
 #
 # Need to purge regular vim installed as default to prevent
@@ -17,7 +17,10 @@ apt --purge remove vim
 # Vim installation
 #
 apt install software-properties-common
-apt install python-dev python-pip python3 python3-dev python3-pip
+add-apt-repository ppa:neovim-ppa/stable
+apt update
+apt install neovim
+apt install python-dev python-pip python3-dev python3-pip
 apt install exuberant-ctags
 apt install xclip -y
 #pip2 install --user pynvim
