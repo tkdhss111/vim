@@ -19,10 +19,10 @@ apt --purge remove vim
 apt install software-properties-common
 add-apt-repository ppa:neovim-ppa/stable
 apt update
-apt install neovim
-apt install python-dev python-pip python3-dev python3-pip
-apt install exuberant-ctags
-apt install xclip -y
+apt install -y neovim
+apt install -y python-dev python-pip python3-dev python3-pip
+apt install -y exuberant-ctags
+apt install -y xclip
 #pip2 install --user pynvim
 #pip3 install --user pynvim
 pip install --upgrade --no-cache-dir pip
