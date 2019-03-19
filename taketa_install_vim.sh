@@ -23,6 +23,7 @@ apt install -y neovim
 apt install -y python-dev python-pip python3-dev python3-pip
 apt install -y exuberant-ctags
 apt install -y xclip
+apt install -y ripgrep
 #pip2 install --user pynvim
 #pip3 install --user pynvim
 pip install --upgrade --no-cache-dir pip
