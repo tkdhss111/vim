@@ -18,6 +18,7 @@ apt --purge remove vim
 #
 apt install software-properties-common
 add-apt-repository ppa:neovim-ppa/stable
+add-apt-repository ppa:x4121/ripgrep
 apt update
 apt install -y neovim
 apt install -y python-dev python-pip python3-dev python3-pip
