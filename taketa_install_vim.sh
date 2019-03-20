@@ -43,8 +43,8 @@ echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.bashrc
 #
 
 # ripgrep (NB: install the latest one by manually changing version number
-curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb
-dpkg -i ripgrep_0.10.0_amd64.deb && rm ripgrep_0.10.0_amd64.deb
+#curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb
+#dpkg -i ripgrep_0.10.0_amd64.deb && rm ripgrep_0.10.0_amd64.deb
 
 # repeat.vim
 mkdir -p ~/.vim/pack/tpope/start
@@ -181,6 +181,11 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
+  "
+  " mesonic
+  "
+  call dein#add('igankevich/mesonic')
+
   "
   " vim-tags
   "
@@ -373,20 +378,3 @@ EOF
 # :checkhealth
 # If there is no tags information -> :TagsGenerate!
 
-#
-# Font installation
-#
-git clone https://github.com/kudryavka/Ricty
-cd Ricty/
-apt install fontforge -y
-apt install fonts-inconsolata -y
-curl -L -o 'migu-1m-20130617.zip' 'http://sourceforge.jp/frs/redir.php?m=iij&f=%2Fmix-mplus-ipa%2F59022%2Fmigu-1m-20130617.zip'
-unzip migu-1m-20130617.zip
-sh ricty_generator.sh auto
-sudo mkdir ~/.fonts/
-sudo cp -f Ricty*.ttf ~/.fonts/
-sudo fc-cache -vf
-
-# https://github.com/mzyy94/RictyDiminished-for-Powerline
-sudo apt install unity-tweak-tool
-# Use unity-tweak-tool to set system default font
