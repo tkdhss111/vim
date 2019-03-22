@@ -243,6 +243,17 @@ if dein#load_state('~/.cache/dein')
 endif
 
 "
+" MESON 
+"
+" If there's a `meson.build` file, use meson for linting.
+autocmd FileType c call ConsiderMesonForLinting()
+function ConsiderMesonForLinting()
+    if filereadable('meson.build')
+        let g:syntastic_c_checkers = ['meson']
+    endif
+endfunction
+
+"
 " vim-auto-save
 "
 let g:auto_save = 1  " enable AutoSave on Vim startup
