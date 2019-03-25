@@ -376,7 +376,7 @@ EOF
 #
 cat <<EOF >>${INI}
 let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/01_Projects/tags --languages=Fortran ~/01_Projects 2>/dev/null'
+let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
 EOF
 
 #
