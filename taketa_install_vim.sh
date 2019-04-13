@@ -137,6 +137,7 @@ EOF
 
 # Useful set commands
 cat <<EOF >> ${INI}
+set autochdir
 set number
 set relativenumber
 set cursorline
