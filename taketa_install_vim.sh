@@ -183,9 +183,9 @@ if dein#load_state('~/.cache/dein')
 
 " taketa begin -------------------------------------------
   "
-  " mesonic
+  " sakhnik/nvim-gdb
   "
-  call dein#add('igankevich/mesonic')
+  call dein#add('sakhnik/nvim-gdb')
 
   "
   " vim-tags
