@@ -9,13 +9,7 @@
 #
 # Create keymap file named with username 
 #
-NOW=$(date '+%F_%H:%M:%S')
 MAP=/usr/share/X11/xkb/symbols/MYKEYMAP
-echo ${MAP}
-if [ -e ${MAP} ]; then
-  mv ${MAP} ${MAP}_till${NOW}
-fi	
-touch ${MAP}
 
 # Keymap settings 
 cat <<EOF >> ${MAP}
@@ -33,6 +27,7 @@ EOF
 # Set keymap settings as a rule
 cd /usr/share/X11/xkb/rules
 cp evdev evdev_till${NOW}
+sed -i '/MYKEYMAP/d' evdev
 sed -i 's|! option\t=\tsymbols|&\n\tMYKEYMAP:keymap = +MYKEYMAP(keymap) // added by user|' evdev
 
 #
