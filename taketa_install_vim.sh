@@ -131,8 +131,8 @@ EOF
 # Set F9 to make run
 #
 cat <<EOF >> ${INI}
-:nmap <F9> :w<CR> :make<CR> :make run<CR>
-:nmap <F8> :w<CR> :make<CR> :make debugrun<CR>
+:nmap <F5> :make clear<CR> :make run<CR>
+:nmap <F4> :make clear<CR> :make debugrun<CR>
 EOF
 
 # Useful set commands
@@ -242,17 +242,6 @@ if dein#load_state('~/.cache/dein')
   call dein#save_state()
 
 endif
-
-"
-" MESON 
-"
-" If there's a `meson.build` file, use meson for linting.
-autocmd FileType c call ConsiderMesonForLinting()
-function ConsiderMesonForLinting()
-    if filereadable('meson.build')
-        let g:syntastic_c_checkers = ['meson']
-    endif
-endfunction
 
 "
 " vim-auto-save
