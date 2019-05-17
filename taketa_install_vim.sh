@@ -20,6 +20,7 @@ apt install software-properties-common
 add-apt-repository ppa:neovim-ppa/stable
 add-apt-repository ppa:x4121/ripgrep
 apt update
+apt upgrade -y
 apt install -y neovim
 apt install -y python-dev python-pip python3-dev python3-pip
 apt install -y exuberant-ctags
@@ -131,8 +132,11 @@ EOF
 # Set F9 to make run
 #
 cat <<EOF >> ${INI}
+:nmap <F1> :wq<CR>
 :nmap <F5> :make clear<CR> :make run<CR>
 :nmap <F4> :make clear<CR> :make debugrun<CR>
+:nmap <F3> :make debug<CR>
+:nmap <F6> :make<CR>
 EOF
 
 # Useful set commands
