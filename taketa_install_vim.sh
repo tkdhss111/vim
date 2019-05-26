@@ -187,6 +187,11 @@ if dein#load_state('~/.cache/dein')
 
 " taketa begin -------------------------------------------
   "
+  " Agit
+  "
+  call dein#add('cohama/agit.vim')
+  
+  "
   " sakhnik/nvim-gdb
   "
   call dein#add('sakhnik/nvim-gdb')
