@@ -231,7 +231,7 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('jdkanani/vim-material-theme')
   call dein#add('jacoborus/tender.vim')
-  "call dein#add('tomasr/colors/molokai.vim')
+  "call dein#add('tomasr/molokai.vim')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   
