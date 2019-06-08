@@ -92,6 +92,11 @@ fi
 touch ${INI}
 chmod -R 777 /home/${USER}/.config/nvim
 
+# Get back to the last edited line when file is opened.
+cat <<EOF >> ${INI}
+:au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+EOF
+
 # Move line up and down with alt + j and k
 cat <<EOF >> ${INI}
 nnoremap <A-j> :m .+1<CR>==
