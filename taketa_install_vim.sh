@@ -193,6 +193,13 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
+  " Smartchr
+  "
+  call dein#add('kana/vim-smartchr')
+  inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
+  inoremap <expr> , smartchr#loop(', ', ',')
+
+  "
   " autodate.vim
   "
   call dein#add('vim-scripts/autodate.vim') 
