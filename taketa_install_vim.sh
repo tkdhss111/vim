@@ -208,9 +208,6 @@ if dein#load_state('~/.cache/dein')
   " autodate.vim
   "
   call dein#add('vim-scripts/autodate.vim') 
-  :let b:autodate_keyword_pre  = '\cLast Updated:'
-  :let b:autodate_keyword_post = '\.'
-  :let b:autodate_format       = '%Y-%m-%d %H:%M:%S'
 
   "
   " Agit
@@ -277,6 +274,13 @@ if dein#load_state('~/.cache/dein')
   call dein#save_state()
 
 endif
+
+"
+" autodate.vim
+"
+let autodate_keyword_pre  = '\cLast Updated:'
+let autodate_keyword_post = '\.'
+let autodate_format       = '%Y-%m-%d %H:%M:%S'
 
 "
 " vim-auto-save
