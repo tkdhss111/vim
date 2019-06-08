@@ -1,3 +1,4 @@
+" Last Updated: .
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -65,6 +66,11 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
+  " sudo.vim
+  "
+  call dein#add('vim-scripts/sudo.vim')
+
+  "
   " Smartchr
   "
   call dein#add('kana/vim-smartchr')
@@ -77,7 +83,7 @@ if dein#load_state('~/.cache/dein')
   call dein#add('vim-scripts/autodate.vim') 
   :let b:autodate_keyword_pre  = '\cLast Updated:'
   :let b:autodate_keyword_post = '\.'
-  :let b:autodate_format       = '%Y-%m-%d %H:%M:%S'
+  :let b:autodate_format       = ' %Y-%m-%d %H:%M:%S'
 
   "
   " sakhnik/nvim-gdb
