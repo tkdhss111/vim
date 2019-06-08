@@ -193,6 +193,11 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
+  " sudo.vim
+  "
+  call dein#add('vim-scripts/sudo.vim')
+
+  "
   " Smartchr
   "
   call dein#add('kana/vim-smartchr')
