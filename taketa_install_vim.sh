@@ -191,6 +191,15 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
+
+  "
+  " autodate.vim
+  "
+  call dein#add('vim-scripts/autodate.vim') 
+  :let b:autodate_keyword_pre  = '\cLast Updated:'
+  :let b:autodate_keyword_post = '\.'
+  :let b:autodate_format       = '%Y-%m-%d %H:%M:%S'
+
   "
   " Agit
   "
