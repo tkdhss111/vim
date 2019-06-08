@@ -204,8 +204,8 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('vim-scripts/autodate.vim') 
   :let b:autodate_keyword_pre  = '\cLast Updated:'
-  :let b:autodate_keyword_post = '\by'
-  :let b:autodate_format       = ' %Y-%m-%d %H:%M:%S '
+  :let b:autodate_keyword_post = '\.'
+  :let b:autodate_format       = ' %Y-%m-%d %H:%M:%S'
 
   "
   " Agit
