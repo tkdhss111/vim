@@ -1,4 +1,6 @@
-" Last Updated:2019-06-11 11:34:28. 
+" Last Updated:2019-06-11 15:59:25. 
+" by H. Takeda
+
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
