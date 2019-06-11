@@ -1,4 +1,4 @@
-" Last Updated:2019-06-11 16:03:55. 
+" Last Updated:2019-06-11 16:10:00. 
 " by H. Takeda,  Ph.D.
 
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -25,6 +25,7 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 :nmap <F6> :make release<CR>
 :nmap <F4> :make clean_debug<CR> :make debugrun<CR>
 :nmap <F5> :make clean_release<CR> :make run<CR>
+:nmap <F12> :Git push origin master<CR>
 set autochdir
 set number
 "set relativenumber
