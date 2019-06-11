@@ -94,6 +94,7 @@ chmod -R 777 /home/${USER}/.config/nvim
 
 # Get back to the last edited line when file is opened.
 cat <<EOF >> ${INI}
+" Last Updated: . 
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 EOF
 
@@ -191,6 +192,12 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
+
+  "
+  " vim-fugitive and vim-rhubarb
+  "
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-rhubarb')
 
   "
   " sudo.vim

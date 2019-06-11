@@ -1,4 +1,4 @@
-" Last Updated:. 
+" Last Updated:2019-06-11 11:34:28. 
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
@@ -64,6 +64,12 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
+
+  "
+  " vim-fugitive and vim-rhubarb
+  "
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-rhubarb')
 
   "
   " sudo.vim
