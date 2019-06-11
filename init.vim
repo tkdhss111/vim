@@ -1,5 +1,5 @@
-" Last Updated:2019-06-11 15:59:25. 
-" by H. Takeda
+" Last Updated:2019-06-11 16:03:55. 
+" by H. Takeda,  Ph.D.
 
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 nnoremap <A-j> :m .+1<CR>==
