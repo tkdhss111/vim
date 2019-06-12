@@ -160,8 +160,8 @@ set softtabstop=0
 set expandtab
 set smarttab
 set shiftround
-set ignorecase
-set smartcase
+"set ignorecase
+"set smartcase
 set wrapscan
 set incsearch
 set inccommand=split
