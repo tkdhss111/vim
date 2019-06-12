@@ -1,4 +1,4 @@
-" Last Updated:2019-06-11 16:15:29. 
+" Last Updated:2019-06-12 10:06:25. 
 " by H. Takeda,  Ph.D.
 
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -82,8 +82,6 @@ if dein#load_state('~/.cache/dein')
   " Smartchr
   "
   call dein#add('kana/vim-smartchr')
-  inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
-  inoremap <expr> , smartchr#loop(', ', ',')
 
   "
   " autodate.vim
@@ -150,6 +148,12 @@ if dein#load_state('~/.cache/dein')
   call dein#save_state()
 
 endif
+
+"
+" Smartchr
+"
+inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
+inoremap <expr> , smartchr#loop(', ', ',')
 
 "
 " autodate.vim
