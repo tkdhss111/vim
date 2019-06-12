@@ -1,4 +1,4 @@
-" Last Updated:2019-06-12 10:06:25. 
+" Last Updated:2019-06-12 11:08:38. 
 " by H. Takeda,  Ph.D.
 
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
@@ -38,8 +38,8 @@ set softtabstop=0
 set expandtab
 set smarttab
 set shiftround
-set ignorecase
-set smartcase
+"set ignorecase
+"set smartcase
 set wrapscan
 set incsearch
 set inccommand=split
