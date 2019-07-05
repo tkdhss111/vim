@@ -1,30 +1,65 @@
-" Last Updated:2019-06-12 11:08:38. 
-" by H. Takeda,  Ph.D.
+" Last Updated:2019-07-06 08:23:26. 
+" by H. Takeda, Ph.D.
 
+"
+" Get back to the last edited line when file is opened.
+"
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+"
+" Move line up and down with alt + j and k
+"
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
 inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+
+"
+" Get back to normal mode from insert mode by typing 'jj' or 'kk' or 'hh'
+"
 inoremap <silent> jj <ESC>
 inoremap <silent> kk <ESC>
 inoremap <silent> hh <ESC>
+
+"
+" Return from terminal by ESC
+"
 tnoremap <silent> <ESC> <C-\><C-n>
+
+"
+" Change directory to current directory by typing C-c
+"
 nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>
+
+"
+" Change window by typing 'Ctrl-hjkl'
+"
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+"
+" Change yanked strings to a word under the cursol
+"
 nnoremap <silent> ciy ciw<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
+
+"
+" Set F9 to make run
+"
 :nmap <F1> :q<CR>
 :nmap <F3> :make debug<CR>
 :nmap <F6> :make release<CR>
 :nmap <F4> :make clean_debug<CR> :make debugrun<CR>
 :nmap <F5> :make clean_release<CR> :make run<CR>
+
+"
+" Useful set commands
+"
 set autochdir
 set number
 "set relativenumber
@@ -48,21 +83,35 @@ set clipboard+=unnamedplus
 "set termguicolors
 set background=dark
 set viminfo='10
+"set relativenumber
+"set autoindent
+"set termguicolors
+
+"
+" Shougo's dein
+"
 if &compatible
+
   set nocompatible
+
 endif
+
 " Add the dein installation directory into runtimepath
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
 if dein#load_state('~/.cache/dein')
+
   call dein#begin('~/.cache/dein')
 
   call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/denite.nvim')
+
   if !has('nvim')
+
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
+
   endif
 
 " taketa begin -------------------------------------------
@@ -82,6 +131,8 @@ if dein#load_state('~/.cache/dein')
   " Smartchr
   "
   call dein#add('kana/vim-smartchr')
+  inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
+  inoremap <expr> , smartchr#loop(', ', ',')
 
   "
   " autodate.vim
@@ -158,7 +209,7 @@ inoremap <expr> , smartchr#loop(', ', ',')
 "
 " autodate.vim
 "
-let autodate_keyword_pre  = '\cLast Updated:'
+let autodate_keyword_pre  = '\cLast updated:'
 let autodate_keyword_post = '\.'
 let autodate_format       = '%Y-%m-%d %H:%M:%S'
 
@@ -244,17 +295,34 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '+'
 let g:NERDTreeDirArrowCollapsible = '▼'
+
+"
+" Turn off paste mode when leaving insert
+"
 autocmd InsertLeave * set nopaste
+
+"
+" Clipboard
+"
 function! ClipboardYank()
   call system('xclip -i -selection clipboard', @@)
 endfunction
+
 function! ClipboardPaste()
   let @@ = system('xclip -o -selection clipboard')
 endfunction
+
 vnoremap <silent> y y:call ClipboardYank()<cr>
 vnoremap <silent> d d:call ClipboardYank()<cr>
 nnoremap <silent> p :call ClipboardPaste()<cr>p
 onoremap <silent> y y:call ClipboardYank()<cr>
 onoremap <silent> d d:call ClipboardYank()<cr>
+
+"
+" ctags
+"
 let g:vim_tags_auto_generate = 1
 let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
+
+
+
