@@ -117,11 +117,13 @@ EOF
 #
 # Github (manual edit the password)
 #
-cat <<EOF >> /home/${USER}/.netrc
+cat <<EOF > /home/${USER}/.netrc
 machine github.com
 login tkdhss111
 password ********* 
 EOF
+
+chmod -R 777 /home/${USER}/.netrc
 
 git config --global user.name "tkdhss111"
 git config --global user.email "tkdhss111@gmail.com"
