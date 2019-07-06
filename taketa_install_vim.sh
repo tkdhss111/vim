@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=eric
+USER=jma
 
 #
 # Need to purge regular vim installed as default to prevent
@@ -96,7 +96,7 @@ else
 
 fi	
 
-cp init.vim ${INI} 
+cp /home/${USER}/vim/init.vim ${INI} 
 
 chmod -R 777 /home/${USER}/.config/nvim
 
@@ -122,6 +122,11 @@ machine github.com
 login tkdhss111
 password ********* 
 EOF
+
+git config --global user.name "tkdhss111"
+git config --global user.email "tkdhss111@gmail.com"
+git config --global web.browser "ff"
+git config --global browser.ff.cmd "open -a Firefox.app"
 
 #
 # Fortran syntax highlighting
