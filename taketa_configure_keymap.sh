@@ -12,7 +12,7 @@
 MAP=/usr/share/X11/xkb/symbols/MYKEYMAP
 
 # Keymap settings 
-cat <<EOF >> ${MAP}
+cat <<EOF > ${MAP}
 partial hidden modifier_keys
 xkb_symbols "keymap" {
     key <HENK> { [ i ] }; // 変換をRightに変更
