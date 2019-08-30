@@ -20,8 +20,6 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 " Get back to normal mode from insert mode by typing 'jj' or 'kk' or 'hh'
 "
 inoremap <silent> jj <ESC>
-inoremap <silent> kk <ESC>
-inoremap <silent> hh <ESC>
 
 "
 " Return from terminal by ESC
