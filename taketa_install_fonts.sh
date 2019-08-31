@@ -22,3 +22,5 @@ rm -r Ricty
 # https://github.com/mzyy94/RictyDiminished-for-Powerline
 apt install unity-tweak-tool
 # Use unity-tweak-tool to set system default font
+
+chmod -R 777 ~
