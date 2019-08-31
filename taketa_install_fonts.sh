@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=eric
+USER=jma
 
 git clone https://github.com/kudryavka/Ricty
 cd Ricty/

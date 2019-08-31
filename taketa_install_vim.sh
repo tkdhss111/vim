@@ -98,7 +98,6 @@ fi
 
 cp /home/${USER}/vim/init.vim ${INI} 
 
-chmod -R 777 /home/${USER}/.config/nvim
 
 #
 # CSV filetype
@@ -154,3 +153,5 @@ let b:fortran_fold_multilinecomments=1 " 3行以上のコメントに折りた�
 let b:fortran_do_enddo=1 " do-endoブロックをインデント
 " let b:fortran_indent_less=1 " プログラム単位でのインデントを無効化
 EOF
+
+chmod -R 777 /home/${USER}/.config/nvim
