@@ -7,6 +7,13 @@
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 "
+" Move to the beginning and end of the line
+"
+noremap <S-h> ^
+noremap <S-l> $
+noremap <Space> i
+
+"
 " Move line up and down with alt + j and k
 "
 nnoremap <A-j> :m .+1<CR>==
