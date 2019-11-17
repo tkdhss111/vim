@@ -10,7 +10,9 @@
 " Key swich
 "
 nnoremap ; :
-nnoremap : ;
+
+inoremap ; :
+inoremap : ;
 
 "
 " Move to the beginning and end of the line
