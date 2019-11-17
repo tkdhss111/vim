@@ -7,6 +7,12 @@
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 "
+" Key swich
+"
+nnoremap ; :
+nnoremap : ;
+
+"
 " Move to the beginning and end of the line
 "
 noremap <S-h> ^
