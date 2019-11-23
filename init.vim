@@ -218,6 +218,10 @@ endif
 "
 inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
 inoremap <expr> , smartchr#loop(', ', ',')
+inoremap <expr> + smartchr#loop(' + ', '+')
+inoremap <expr> - smartchr#loop(' - ', '-')
+inoremap <expr> / smartchr#loop(' / ', '/')
+inoremap <expr> * smartchr#loop(' * ', '*')
 
 "
 " autodate.vim
