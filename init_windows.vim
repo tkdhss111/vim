@@ -5,7 +5,7 @@
 " Japanese entry setup instruction for Windows OS
 "
 " See URL: http://sifue.hatenablog.com/entry/20120411/1334161078 
-" Go to Google Japanese input and right click 'A' icon in the task bar of windows
+" Go to Google Japanese (Windows) or iBus(linux) input and right click 'A' icon in the task bar of windows
 " Then select 'property' and press key selection 'Kotorie' and next 'Henshu' botton of 'ippan' tab
 " Go to the bottom 'Henshu' botton and add entry, then press all six entries
 " with Escape and 'Nolify IME after cancellation' by double clicking cells.

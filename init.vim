@@ -130,6 +130,12 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
+  " Latex (vimtex and vim - quickrun)
+  "
+  call dein#add('lervag/vimtex')
+  call dein#add('thinca/vim-quickrun')
+
+  "
   " vim-fugitive and vim-rhubarb
   "
   call dein#add('tpope/vim-fugitive')
@@ -144,8 +150,6 @@ if dein#load_state('~/.cache/dein')
   " Smartchr
   "
   call dein#add('kana/vim-smartchr')
-  inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
-  inoremap <expr> , smartchr#loop(', ', ',')
 
   "
   " autodate.vim
@@ -214,14 +218,16 @@ if dein#load_state('~/.cache/dein')
 endif
 
 "
+" Latex (vimtex and vim - quickrun)
+" Install neovim-remote with the command: pip3 install neovim-remote
+" use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
+let g:vimtex_compiler_progname = 'nvr' 
+
+"
 " Smartchr
 "
 inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
 inoremap <expr> , smartchr#loop(', ', ',')
-inoremap <expr> + smartchr#loop(' + ', '+')
-inoremap <expr> - smartchr#loop(' - ', '-')
-inoremap <expr> / smartchr#loop(' / ', '/')
-inoremap <expr> * smartchr#loop(' * ', '*')
 
 "
 " autodate.vim
