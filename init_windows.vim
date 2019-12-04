@@ -1,26 +1,92 @@
+" Last Updated:2019-07-24 23:09:50
+" by H. Takeda, Ph.D.
+
+"
+" Japanese entry setup instruction for Windows OS
+"
+" See URL: http://sifue.hatenablog.com/entry/20120411/1334161078 
+" Go to Google Japanese input and right click 'A' icon in the task bar of windows
+" Then select 'property' and press key selection 'Kotorie' and next 'Henshu' botton of 'ippan' tab
+" Go to the bottom 'Henshu' botton and add entry, then press all six entries
+" with Escape and 'Nolify IME after cancellation' by double clicking cells.
+
+" Install python2 and 3 using the commands: choco install python2, python3
+" and set the following path before dein is used.
+let g:python2_host_prog='C:\Python27'
+let g:python3_host_prog='C:\Python38'
+
+"
+" Get back to the last edited line when file is opened.
+"
+:au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+"
+" Key swich
+"
+nnoremap ; :
+
+inoremap ; :
+inoremap : ;
+
+"
+" Move to the beginning and end of the line
+"
+noremap <S-h> ^
+noremap <S-l> $
+noremap <Space> i
+
+"
+" Move line up and down with alt + j and k
+"
 nnoremap <A-j> :m .+1<CR>==
 nnoremap <A-k> :m .-2<CR>==
 inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
+ 
+"
+" Get back to normal mode from insert mode by typing 'jj' or 'kk' or 'hh'
+"
 inoremap <silent> jj <ESC>
-inoremap <silent> kk <ESC>
-inoremap <silent> hh <ESC>
-tnoremap <silent> <ESC> <C-/><C-n>
+
+"
+" Return from terminal by ESC
+"
+tnoremap <silent> <ESC> <C-\><C-n>
+
+"
+" Change directory to current directory by typing C-c
+"
 nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>
+
+"
+" Change window by typing 'Ctrl-hjkl'
+"
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+"
+" Change yanked strings to a word under the cursol
+"
 nnoremap <silent> ciy ciw<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
+
+"
+" Set F9 to make run
+"
 :nmap <F1> :q<CR>
 :nmap <F3> :make debug<CR>
 :nmap <F6> :make release<CR>
 :nmap <F4> :make clean_debug<CR> :make debugrun<CR>
 :nmap <F5> :make clean_release<CR> :make run<CR>
+
+"
+" Useful set commands
+"
 set autochdir
 set number
 "set relativenumber
@@ -34,48 +100,79 @@ set softtabstop=0
 set expandtab
 set smarttab
 set shiftround
-set ignorecase
-set smartcase
+"set ignorecase
+"set smartcase
 set wrapscan
 set incsearch
 set inccommand=split
 set noswapfile
-set clipboard=unnamed
+set clipboard+=unnamedplus
+"set termguicolors
+set background=dark
 set viminfo='10
-set paste
+"set relativenumber
+"set autoindent
+"set termguicolors
 
-let python2_host_prog="C:/Python27/python.exe"
-let python3_host_prog="C:/Python37/python.exe"
-
-let s:dein_home_dir  = expand('~/.cache/dein')
-let s:dein_repo_dir  = expand('~/.cache/dein/repos/github.com/Shougo/dein.vim')
-let s:toml_file      = expand('~/.cache/conf/dein.toml')
-let s:toml_lazy      = expand('~/.cache/conf/dein_lazy.toml')
-
-" dein.vim ‚ª‚È‚¯‚ê‚Î git clone
-if !isdirectory(s:dein_repo_dir)
-  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-endif
-
+"
+" Shougo's dein
+"
 if &compatible
+
   set nocompatible
+
 endif
 
 " Add the dein installation directory into runtimepath
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
 
+" Latex
+set runtimepath+=~/.cache/ftplugin/tex_quickrun.vim
+
 if dein#load_state('~/.cache/dein')
+
   call dein#begin('~/.cache/dein')
 
   call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/denite.nvim')
+
   if !has('nvim')
+
     call dein#add('roxma/nvim-yarp')
     call dein#add('roxma/vim-hug-neovim-rpc')
+
   endif
 
 " taketa begin -------------------------------------------
+
+  "
+  " Latex (vimtex and vim - quickrun)
+  "
+  call dein#add('lervag/vimtex')
+  call dein#add('thinca/vim-quickrun')
+
+  "
+  " vim-fugitive and vim-rhubarb
+  "
+  call dein#add('tpope/vim-fugitive')
+  call dein#add('tpope/vim-rhubarb')
+
+  "
+  " sudo.vim
+  "
+  call dein#add('vim-scripts/sudo.vim')
+
+  "
+  " Smartchr
+  "
+  call dein#add('kana/vim-smartchr')
+
+  "
+  " autodate.vim
+  "
+  call dein#add('vim-scripts/autodate.vim') 
+
   "
   " sakhnik/nvim-gdb
   "
@@ -116,7 +213,7 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('jdkanani/vim-material-theme')
   call dein#add('jacoborus/tender.vim')
-  call dein#add('tomasr/molokai.vim')
+  "call dein#add('tomasr/colors/molokai.vim')
   call dein#add('vim-airline/vim-airline')
   call dein#add('vim-airline/vim-airline-themes')
   
@@ -138,6 +235,25 @@ if dein#load_state('~/.cache/dein')
 endif
 
 "
+" Latex (vimtex and vim - quickrun)
+" Install neovim-remote with the command: pip3 install neovim-remote
+" use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
+let g:vimtex_compiler_progname = 'nvr' 
+
+"
+" Smartchr
+"
+inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
+inoremap <expr> , smartchr#loop(', ', ',')
+
+"
+" autodate.vim
+"
+let autodate_keyword_pre  = '\cLast updated:'
+let autodate_keyword_post = '\.'
+let autodate_format       = '%Y-%m-%d %H:%M:%S'
+
+"
 " vim-auto-save
 "
 let g:auto_save = 1  " enable AutoSave on Vim startup
@@ -154,7 +270,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 " Align Fortran :: symbols
-vmap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
+vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
 
 "
 " R plugins
@@ -180,14 +296,11 @@ let g:Rout_more_colors = 1
 " vim theme
 "
 syntax enable
-"colorscheme one
-let g:airline_theme = 'one'
+"colorscheme tender 
+let g:airline_theme = 'simple'
 let g:airline#extensions#tabline#enabled = 1
-let g:molokai_original = 1
-let g:rehash256 = 1
-"colorscheme wombat256
-highlight Normal guibg=black guifg=white
-set background=dark
+"let g:molokai_original = 1
+"let g:rehash256 = 1
 
 filetype plugin indent on
 syntax enable
@@ -198,7 +311,6 @@ let g:deoplete#enable_at_startup = 1
 "
 " NERDTree settings (Ctrl+n to open NERDTree)
 "
-"
 let NERDTreeQuitOnOpen=1
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
@@ -206,7 +318,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " NERDTress File highlighting
 "function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
 " exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-" exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^/s/+.*'. a:extension .'0'
+" exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'0'
 "endfunction
 "call NERDTreeHighlightFile('f90',  'yellow',  'none', 'yellow',  '#151515')
 "call NERDTreeHighlightFile('mod',  'blue',    'none', '#3366FF', '#151515')
@@ -222,6 +334,35 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "call NERDTreeHighlightFile('db',   'Magenta', 'none', '#ff00ff', '#151515')
 let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '+'
-let g:NERDTreeDirArrowCollapsible = '¥'
+let g:NERDTreeDirArrowCollapsible = '¿'
+
+"
+" Turn off paste mode when leaving insert
+"
+autocmd InsertLeave * set nopaste
+
+"
+" Clipboard
+"
+function! ClipboardYank()
+  call system('xclip -i -selection clipboard', @@)
+endfunction
+
+function! ClipboardPaste()
+  let @@ = system('xclip -o -selection clipboard')
+endfunction
+
+vnoremap <silent> y y:call ClipboardYank()<cr>
+vnoremap <silent> d d:call ClipboardYank()<cr>
+nnoremap <silent> p :call ClipboardPaste()<cr>p
+onoremap <silent> y y:call ClipboardYank()<cr>
+onoremap <silent> d d:call ClipboardYank()<cr>
+
+"
+" ctags
+"
 let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f C:/01_Projects/tags --languages=Fortran ~/01_Projects 2>/dev/null'
+let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
+
+
+
