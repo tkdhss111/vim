@@ -2,6 +2,23 @@
 " by H. Takeda, Ph.D.
 
 "
+" Japanese entry setup instruction for Windows OS
+"
+" See URL: http://sifue.hatenablog.com/entry/20120411/1334161078 
+" Go to Google Japanese (Windows) or iBus(linux) input 
+" and right click 'A' icon in the task bar of windows
+" Then select 'property' and press key selection 'Kotorie' 
+" and next 'Henshu' botton of 'ippan' tab
+" Go to the bottom 'Henshu' botton and add entry, then press all six entries
+" with Escape and 'Nolify IME after cancellation' by 'triple' clicking cells.
+
+" Install python2 and 3 using the commands: choco install python2, python3
+" and set the following path before dein is used.
+" Windows only:
+"let g:python2_host_prog='C:\Python27'
+"let g:python3_host_prog='C:\Python38'
+
+"
 " Get back to the last edited line when file is opened.
 "
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
