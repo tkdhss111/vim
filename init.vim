@@ -246,8 +246,17 @@ let g:vimtex_compiler_progname = 'nvr'
 let g:vimtex_view_method = 'zathura'
 let g:tex_flavor = 'latex'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
+" Disable overfull/underfull \hbox and all package warnings
+let g:vimtex_quickfix_latexlog = {
+      \ 'overfull' : 0,
+      \ 'underfull' : 0,
+      \ 'packages' : {
+      \   'default' : 0,
+      \ },
+      \}
 augroup filetype
   autocmd!
+  " tex file (I always use latex)
   autocmd BufRead,BufNewFile *.tex set filetype=tex
 augroup END
 
@@ -374,6 +383,4 @@ onoremap <silent> d d:call ClipboardYank()<cr>
 "
 let g:vim_tags_auto_generate = 1
 let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
-
-
 
