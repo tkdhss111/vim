@@ -15,8 +15,10 @@
 " Install python2 and 3 using the commands: choco install python2, python3
 " and set the following path before dein is used.
 " Windows only:
-"let g:python2_host_prog='C:\Python27'
-"let g:python3_host_prog='C:\Python38'
+if (has('win32') || has('win64') || has('win32unix'))
+  let g:python2_host_prog='C:\Python27'
+  let g:python3_host_prog='C:\Python38'
+endif
 
 "
 " Get back to the last edited line when file is opened.
@@ -241,9 +243,16 @@ endif
 " Latex (vimtex and vim - quickrun)
 " Install neovim-remote with the command: pip3 install neovim-remote
 " use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
-let g:vimtex_fold_envs = 0
-let g:vimtex_compiler_progname = 'nvr'
-let g:vimtex_view_method = 'zathura'
+if (has('win32') || has('win64') || has('win32unix'))
+  let g:vimtex_view_general_viewer = 'C:/02_Tools/PDF/SumatraPDF/SumatraPDF'
+  let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+  let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+else
+  let g:vimtex_fold_envs = 0
+  let g:vimtex_compiler_progname = 'nvr'
+  let g:vimtex_view_method = 'zathura'
+endif
+
 let g:tex_flavor = 'latex'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
 " Disable overfull/underfull \hbox and all package warnings
