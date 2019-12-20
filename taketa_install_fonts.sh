@@ -19,8 +19,20 @@ cp -f Ricty*.ttf ~/.fonts/
 fc-cache -vf
 rm -r Ricty
 
+#
+# IPA fonts
+#
+apt install -y fonts-ipafont
+fc-cache -vf
+fc-list
+
 # https://github.com/mzyy94/RictyDiminished-for-Powerline
 apt install unity-tweak-tool
 # Use unity-tweak-tool to set system default font
+
+#
+# R package: showtext
+#
+apt install libfreetype6-dev
 
 chmod -R 777 ~
