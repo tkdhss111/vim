@@ -4,4 +4,5 @@ cp .latexmkrc ~/.latexmkrc
 apt install zathura -y
 mkdir -p ~/.config/zathura/
 cp .zathurarc ~/.config/zathura/.zathurarc
+pip install --upgrade pip
 pip3 install neovim-remote
