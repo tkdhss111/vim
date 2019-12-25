@@ -114,15 +114,17 @@ augroup END
 EOF
 
 #
-# Github (manual edit the password)
-#
-cat <<EOF > /home/${USER}/.netrc
-machine github.com
-login tkdhss111
-password ********* 
-EOF
+# Github
+#https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
-chmod -R 777 /home/${USER}/.netrc
+# DEPRECATED
+#cat <<EOF > /home/${USER}/.netrc
+#machine github.com
+#login tkdhss111
+#password ********* 
+#EOF
+#
+#chmod -R 777 /home/${USER}/.netrc
 
 git config --global user.name "tkdhss111"
 git config --global user.email "tkdhss111@gmail.com"
