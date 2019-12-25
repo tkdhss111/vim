@@ -140,7 +140,12 @@ eval "$(ssh-agent -s)" # Start the ssh-agent in the background
 ssh-add ~/.ssh/id_rsa  # Add your SSH private key to the ssh-agent.
 xclip -sel clip < ~/.ssh/id_rsa.pub
 ssh -T git@github.com
+# Test
 git push
+# If you are asked ID and PW, ssh login does not work properly
+# Try the following solutions (adding .git afer the repo name):
+# git config remote.origin.url
+# git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
 
 #
 # Fortran syntax highlighting
