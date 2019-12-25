@@ -139,6 +139,7 @@ stop
 eval "$(ssh-agent -s)" # Start the ssh-agent in the background
 ssh-add ~/.ssh/id_rsa  # Add your SSH private key to the ssh-agent.
 xclip -sel clip < ~/.ssh/id_rsa.pub
+ssh -T git@github.com
 
 #
 # Fortran syntax highlighting
