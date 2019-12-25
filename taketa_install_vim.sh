@@ -146,6 +146,7 @@ git push
 # Try the following solutions (adding .git afer the repo name):
 # git config remote.origin.url
 # git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
+# OR try to edit directory .git/config file in your directory
 
 #
 # Fortran syntax highlighting
