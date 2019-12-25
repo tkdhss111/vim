@@ -129,6 +129,9 @@ git config --global user.email "tkdhss111@gmail.com"
 git config --global web.browser "ff"
 git config --global browser.ff.cmd "open -a Firefox.app"
 
+apt install ssh-askpass -y
+apt install git-gui -y
+
 #
 # Fortran syntax highlighting
 #
