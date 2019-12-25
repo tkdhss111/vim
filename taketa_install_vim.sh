@@ -134,6 +134,11 @@ git config --global browser.ff.cmd "open -a Firefox.app"
 apt install ssh-askpass -y
 apt install git-gui -y
 
+ssh-keygen -t rsa -b 4096 -C "tkdhss111@gmail"
+stop
+eval "$(ssh-agent -s)" # Start the ssh-agent in the background
+ssh-add ~/.ssh/id_rsa  # Add your SSH private key to the ssh-agent.
+
 #
 # Fortran syntax highlighting
 #
