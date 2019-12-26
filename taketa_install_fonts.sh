@@ -23,6 +23,10 @@ rm -r Ricty
 # IPA fonts
 #
 apt install -y fonts-ipafont
+apt install -y otf-ipafont-gothic
+apt install -y fonts-ipafont-gothic
+apt install -y fonts-ipaexfont
+apt install -y ubuntu-defaults-ja
 fc-cache -vf
 fc-list
 
