@@ -272,8 +272,8 @@ augroup END
 "
 " Smartchr
 "
-inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
-inoremap <expr> , smartchr#loop(', ', ',')
+"inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
+"inoremap <expr> , smartchr#loop(', ', ',')
 
 "
 " autodate.vim

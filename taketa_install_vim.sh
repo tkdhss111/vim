@@ -98,7 +98,6 @@ fi
 
 cp /home/${USER}/vim/init.vim ${INI} 
 
-
 #
 # CSV filetype
 #
