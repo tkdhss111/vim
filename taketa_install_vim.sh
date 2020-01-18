@@ -146,7 +146,7 @@ git push
 # git config remote.origin.url
 # git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
 # DO NOT USE : git clone https... 
-# BUT USE WHEN SSH: git clone git@github.com/tkdhss111/[リポジトリ].git
+# BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
 
 #
 # Fortran syntax highlighting
