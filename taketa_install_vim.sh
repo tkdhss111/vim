@@ -137,6 +137,7 @@ ssh-keygen -t rsa -b 4096 -C "tkdhss111@gmail.com"
 stop
 eval "$(ssh-agent -s)" # Start the ssh-agent in the background
 ssh-add ~/.ssh/id_rsa  # Add your SSH private key to the ssh-agent.
+ssh-add -l # Check if the key has been added
 xclip -sel clip < ~/.ssh/id_rsa.pub
 ssh -T git@github.com
 # Test
