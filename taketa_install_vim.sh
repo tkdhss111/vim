@@ -148,6 +148,19 @@ git push
 # git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
 # DO NOT USE : git clone https... 
 # BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
+cat <<'EOF'>>~/.profile
+agent="$HOME/tmp/ssh-agent-$USER"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+	case $SSH_AUTH_SOCK in
+	/tmp/*/agent.[0-9]*)
+		ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+	esac
+elif [ -S $agent ]; then
+	export SSH_AUTH_SOCK=$agent
+else
+	echo "no ssh-agent"
+fi
+EOF
 
 #
 # Fortran syntax highlighting
