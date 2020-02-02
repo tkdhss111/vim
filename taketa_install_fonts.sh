@@ -28,15 +28,18 @@ apt install -y fonts-ipafont-gothic
 apt install -y fonts-ipaexfont
 apt install -y ubuntu-defaults-ja
 fc-cache -vf
-fc-list
+fc-list | rg ipa
 
 # https://github.com/mzyy94/RictyDiminished-for-Powerline
 apt install unity-tweak-tool
 # Use unity-tweak-tool to set system default font
 
 #
-# R package: showtext
+# Morisawa fonts 
 #
-apt install libfreetype6-dev
+cp -r fonts/morisawa_kyokasho /usr/share/fonts/opentype/
+fc-cache -vf
+fc-list | rg morisawa_kyokasho
 
-chmod -R 777 ~
+
+
