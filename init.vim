@@ -280,7 +280,7 @@ augroup END
 " N.B. commas does not work
 " Hisashi Takeda Ph.D. []
 "let autodate_keyword_pre  = '\cHisashi Takeda Ph.D. ['
-let autodate_keyword_pre  = '\con '
+let autodate_keyword_pre  = '\con: '
 let autodate_keyword_post = '\.'
 "let autodate_format       = '%F'
 let autodate_format       = '%0m %d, %Y'
