@@ -130,6 +130,10 @@ git config --global user.email "tkdhss111@gmail.com"
 git config --global web.browser "ff"
 git config --global browser.ff.cmd "open -a Firefox.app"
 
+
+#
+# ssh-agent
+#
 apt install ssh-askpass -y
 apt install git-gui -y
 
@@ -149,16 +153,19 @@ git push
 # DO NOT USE : git clone https... 
 # BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
 cat <<'EOF'>>~/.profile
-agent="$HOME/tmp/ssh-agent-$USER"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-	case $SSH_AUTH_SOCK in
-	/tmp/*/agent.[0-9]*)
-		ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-	esac
-elif [ -S $agent ]; then
-	export SSH_AUTH_SOCK=$agent
+# ssh-agent
+eval `ssh-agent`
+ssh-add -t 1d ~/.ssh/id_rsa
+EOF
+
+cat <<'EOF'>>~/.bashrc
+# ssh-agent
+if [ -z "$(pgrep ssh-agent)" ]; then
+   rm -rf /tmp/ssh-*
+   eval $(ssh-agent -s) > /dev/null
 else
-	echo "no ssh-agent"
+   export SSH_AGENT_PID=$(pgrep ssh-agent)
+   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
 fi
 EOF
 
