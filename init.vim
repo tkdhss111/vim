@@ -88,6 +88,8 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 :nmap <F6> :make release<CR>
 :nmap <F4> :make clean_debug<CR> :make debugrun<CR>
 :nmap <F5> :make clean_release<CR> :make run<CR>
+:nmap <F9> :sp<CR>
+:nmap <F12> :terminal<CR>i 
 
 "
 " Useful set commands
