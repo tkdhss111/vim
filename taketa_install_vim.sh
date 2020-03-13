@@ -25,6 +25,7 @@ apt install -y neovim
 apt install -y python-dev python-pip python3-dev python3-pip
 apt install -y exuberant-ctags
 apt install -y xclip
+export DISPLAY=:0
 apt install -y ripgrep
 #pip2 install --user pynvim
 #pip3 install --user pynvim
@@ -135,39 +136,39 @@ git config --global browser.ff.cmd "open -a Firefox.app"
 # ssh-agent
 #
 apt install ssh-askpass -y
-apt install git-gui -y
+#apt install git-gui -y
 
-ssh-keygen -t rsa -b 4096 -C "tkdhss111@gmail.com"
-stop
-eval "$(ssh-agent -s)" # Start the ssh-agent in the background
-ssh-add ~/.ssh/id_rsa  # Add your SSH private key to the ssh-agent.
-ssh-add -l # Check if the key has been added
-xclip -sel clip < ~/.ssh/id_rsa.pub
-ssh -T git@github.com
-# Test
-git push
-# If you are asked ID and PW, ssh login does not work properly
-# Try the following solutions (adding .git afer the repo name):
-# git config remote.origin.url
-# git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
-# DO NOT USE : git clone https... 
-# BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
-cat <<'EOF'>>~/.profile
-# ssh-agent
-eval `ssh-agent`
-ssh-add -t 1d ~/.ssh/id_rsa
-EOF
-
-cat <<'EOF'>>~/.bashrc
-# ssh-agent
-if [ -z "$(pgrep ssh-agent)" ]; then
-   rm -rf /tmp/ssh-*
-   eval $(ssh-agent -s) > /dev/null
-else
-   export SSH_AGENT_PID=$(pgrep ssh-agent)
-   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
-fi
-EOF
+#ssh-keygen -t rsa -b 4096 -C "tkdhss111@gmail.com"
+#stop
+#eval "$(ssh-agent -s)" # Start the ssh-agent in the background
+#ssh-add ~/.ssh/id_rsa  # Add your SSH private key to the ssh-agent.
+#ssh-add -l # Check if the key has been added
+#xclip -sel clip < ~/.ssh/id_rsa.pub
+#ssh -T git@github.com
+## Test
+#git push
+## If you are asked ID and PW, ssh login does not work properly
+## Try the following solutions (adding .git afer the repo name):
+## git config remote.origin.url
+## git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
+## DO NOT USE : git clone https... 
+## BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
+#cat <<'EOF'>>~/.profile
+## ssh-agent
+#eval `ssh-agent`
+#ssh-add -t 1d ~/.ssh/id_rsa
+#EOF
+#
+#cat <<'EOF'>>~/.bashrc
+## ssh-agent
+#if [ -z "$(pgrep ssh-agent)" ]; then
+#   rm -rf /tmp/ssh-*
+#   eval $(ssh-agent -s) > /dev/null
+#else
+#   export SSH_AGENT_PID=$(pgrep ssh-agent)
+#   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
+#fi
+#EOF
 
 #
 # Fortran syntax highlighting
