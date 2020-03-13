@@ -170,6 +170,11 @@ apt install ssh-askpass -y
 #fi
 #EOF
 
+#cat <<'EOF'>>~/.bash_logout
+# ssh-agent
+#eval `ssh-agent -k`
+#EOF
+
 #
 # Fortran syntax highlighting
 #
