@@ -39,7 +39,6 @@ which nvim
 nvim -v | grep 'NVIM v'
 echo 'alias vim=nvim             # added by: '${USER} >> /home/${USER}/.profile
 echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.profile
-echo 'export DISPLAY=:0          # added by: '${USER} >> /home/${USER}/.profile
 
 #
 # Add-in packages installation
