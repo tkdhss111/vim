@@ -37,8 +37,9 @@ pip3 install --user --upgrade --no-cache-dir pynvim
 pip3 --no-cache-dir install -I neovim
 which nvim
 nvim -v | grep 'NVIM v'
-echo 'alias vim=nvim # added by: '${USER} >> /home/${USER}/.profile
+echo 'alias vim=nvim             # added by: '${USER} >> /home/${USER}/.profile
 echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.profile
+echo 'export DISPLAY=:0          # added by: '${USER} >> /home/${USER}/.profile
 
 #
 # Add-in packages installation
@@ -156,7 +157,7 @@ apt install ssh-askpass -y
 #cat <<'EOF'>>~/.profile
 ## ssh-agent
 #eval `ssh-agent`
-#ssh-add -t 1d ~/.ssh/id_rsa
+#ssh-add -t 1d ~/.ssh/id_rsa_lastboss
 #EOF
 #
 #cat <<'EOF'>>~/.bashrc
