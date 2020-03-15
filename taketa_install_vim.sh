@@ -153,27 +153,22 @@ apt install ssh-askpass -y
 ## git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
 ## DO NOT USE : git clone https... 
 ## BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
-#cat <<'EOF'>>~/.profile
-## ssh-agent
-#eval `ssh-agent`
-#ssh-add -t 1d ~/.ssh/id_rsa_lastboss
-#EOF
-#
-#cat <<'EOF'>>~/.bashrc
-## ssh-agent
-#if [ -z "$(pgrep ssh-agent)" ]; then
-#   rm -rf /tmp/ssh-*
-#   eval $(ssh-agent -s) > /dev/null
-#else
-#   export SSH_AGENT_PID=$(pgrep ssh-agent)
-#   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
-#fi
-#EOF
-
-#cat <<'EOF'>>~/.bash_logout
+cat <<'EOF'>>~/.profile
 # ssh-agent
-#eval `ssh-agent -k`
-#EOF
+eval `ssh-agent`
+ssh-add -t 1w ~/.ssh/id_rsa
+EOF
+
+cat <<'EOF'>>~/.bashrc
+# ssh-agent
+if [ -z "$(pgrep ssh-agent)" ]; then
+   rm -rf /tmp/ssh-*
+   eval $(ssh-agent -s) > /dev/null
+else
+   export SSH_AGENT_PID=$(pgrep ssh-agent)
+   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
+fi
+EOF
 
 #
 # Fortran syntax highlighting
