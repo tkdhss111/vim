@@ -123,7 +123,12 @@ set viminfo='10
 "set relativenumber
 "set autoindent
 "set termguicolors
-:set makeprg=make\ -f\ makefile.mk
+
+"
+" Make
+"
+:set makeprg=make\ -f\ makefile*
+:set shellpipe=3>
 
 "
 " Shougo's dein
