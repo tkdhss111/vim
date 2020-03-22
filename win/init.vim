@@ -128,7 +128,9 @@ set viminfo='10
 "
 " Shougo's dein
 "
-call map(dein#check_clean(), "delete(v:val, 'rf')") 
+" Uninstall package
+"call map(dein#check_clean(), "delete(v:val, 'rf')") 
+"call dein#recache_runtimepath()
 
 if &compatible
 
