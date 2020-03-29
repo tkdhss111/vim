@@ -97,7 +97,7 @@ else
 
 fi	
 
-cp /home/${USER}/vim/init.vim ${INI} 
+ln -s /home/${USER}/vim/init.vim ${INI} 
 
 #
 # CSV filetype
@@ -130,7 +130,6 @@ git config --global user.name "tkdhss111"
 git config --global user.email "tkdhss111@gmail.com"
 git config --global web.browser "ff"
 git config --global browser.ff.cmd "open -a Firefox.app"
-
 
 #
 # ssh-agent
