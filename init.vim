@@ -1,3 +1,4 @@
+
 " Last Updated:2019-07-24 23:09:50
 " by H. Takeda, Ph.D.
 
@@ -411,3 +412,5 @@ onoremap <silent> d d:call ClipboardYank()<cr>
 let g:vim_tags_auto_generate = 1
 let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
 
+" 保存時にsudo権限で無理やり保存
+cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
