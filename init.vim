@@ -84,7 +84,7 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 " Set F9 to make run
 "
 :nmap <F1> :q<CR>
-:nmap <F2> :GdbStart gdb ~/1_Projects/JMA/bin/Debug/
+:nmap <F2> :NeoDebug <CR> file ../bin/Debug/debug <CR>
 :nmap <F3> :make debug<CR>
 :nmap <F6> :make release<CR>
 :nmap <F4> :make clean_debug<CR> :make debugrun<CR>
@@ -153,6 +153,11 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
+
+  "
+  " Neodebug
+  "
+  call dein#add('cpiger/NeoDebug')
 
   "
   " Latex (vimtex and vim - quickrun)
@@ -273,10 +278,16 @@ augroup filetype
 augroup END
 
 "
+" NeoDebug
+"
+set mouse=a
+"let g:termdebug_wide = 163
+
+"
 " Smartchr
 "
 "inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
-"inoremap <expr> , smartchr#loop(', ', ',')
+inoremap <expr> , smartchr#loop(', ', ',')
 
 "
 " autodate.vim
