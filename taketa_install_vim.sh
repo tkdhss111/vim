@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=denko
+USER=jma
 
 #
 # Need to purge regular vim installed as default to prevent
@@ -21,7 +21,7 @@ add-apt-repository ppa:neovim-ppa/stable
 add-apt-repository ppa:x4121/ripgrep
 apt update
 apt upgrade -y
-apt install -y neovim
+apt install -y neovim neomutt
 apt install -y python-dev python-pip python3-dev python3-pip
 apt install -y exuberant-ctags
 apt install -y xclip
@@ -98,6 +98,12 @@ else
 fi	
 
 ln -s /home/${USER}/vim/init.vim ${INI} 
+
+#
+# Neomutt mailer
+#
+mkdir -p /home/${USER}/.config/neomutt/
+ln -s /home/${USER}/vim/neomuttrc /home/${USER}/.config/neomutt/neomuttrc
 
 #
 # CSV filetype
