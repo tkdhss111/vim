@@ -85,7 +85,7 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 " Set F9 to make run
 "
 :nmap <F1> :q<CR>
-:nmap <F2> :NeoDebug <CR> file ../bin/Debug/debug <CR>
+:nmap <F2> :NeoDebug <CR> file debug/debug <CR>
 :nmap <F3> :make debug<CR>
 :nmap <F6> :make release<CR>
 :nmap <F4> :make clean_debug<CR> :make debugrun<CR>
