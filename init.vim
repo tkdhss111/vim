@@ -37,8 +37,10 @@ inoremap : ;
 "
 " Move to the beginning and end of the line
 "
-noremap <S-h> ^
-noremap <S-l> $
+noremap <C-h> ^
+noremap <C-l> $
+noremap <C-j> 20j
+noremap <C-k> 20k
 noremap <Space> i
 
 "
@@ -69,10 +71,10 @@ nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>
 "
 " Change window by typing 'Ctrl-hjkl'
 "
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <S-h> <C-w>h
+nnoremap <S-j> <C-w>j
+nnoremap <S-k> <C-w>k
+nnoremap <S-l> <C-w>l
 
 "
 " Change yanked strings to a word under the cursol
@@ -85,7 +87,7 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 " Set F9 to make run
 "
 :nmap <F1> :q<CR>
-:nmap <F2> :NeoDebug <CR> file debug/debug <CR>
+:nmap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
 :nmap <F3> :make debug<CR>
 :nmap <F6> :make release<CR>
 :nmap <F4> :make clean_debug<CR> :make debugrun<CR>
