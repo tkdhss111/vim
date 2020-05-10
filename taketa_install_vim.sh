@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=jma
+USER=telework5963
 
 #
 # Need to purge regular vim installed as default to prevent
@@ -158,22 +158,22 @@ apt install ssh-askpass -y
 ## git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
 ## DO NOT USE : git clone https... 
 ## BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
-cat <<'EOF'>>~/.profile
-# ssh-agent
-eval `ssh-agent`
-ssh-add -t 1w ~/.ssh/id_rsa
-EOF
-
-cat <<'EOF'>>~/.bashrc
-# ssh-agent
-if [ -z "$(pgrep ssh-agent)" ]; then
-   rm -rf /tmp/ssh-*
-   eval $(ssh-agent -s) > /dev/null
-else
-   export SSH_AGENT_PID=$(pgrep ssh-agent)
-   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
-fi
-EOF
+#cat <<'EOF'>>~/.profile
+## ssh-agent
+#eval `ssh-agent`
+#ssh-add -t 1w ~/.ssh/id_rsa
+#EOF
+#
+#cat <<'EOF'>>~/.bashrc
+## ssh-agent
+#if [ -z "$(pgrep ssh-agent)" ]; then
+#   rm -rf /tmp/ssh-*
+#   eval $(ssh-agent -s) > /dev/null
+#else
+#   export SSH_AGENT_PID=$(pgrep ssh-agent)
+#   export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
+#fi
+#EOF
 
 #
 # Fortran syntax highlighting

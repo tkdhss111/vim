@@ -39,8 +39,8 @@ inoremap : ;
 "
 noremap <C-h> ^
 noremap <C-l> $
-noremap <C-j> 20j
-noremap <C-k> 20k
+noremap <C-j> <C-f>
+noremap <C-k> <C-b>
 noremap <Space> i
 
 "
