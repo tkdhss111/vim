@@ -14,5 +14,5 @@ pip3 install neovim-remote
 #
 # pandoc README.md -o readme.pdf --latex-engine=lualatex -V documentclass=bxjsarticle -V mainfont=UDDigiKyokashoN-R.otf
 
-
-apt install texlive-lualatex
+# for pandoc
+#apt install texlive-lualatex
