@@ -30,17 +30,21 @@ endif
 " Key swich
 "
 nnoremap ; :
+nnoremap : ;
 
 inoremap ; :
 inoremap : ;
+
+vnoremap : ;
+vnoremap ; :
 
 "
 " Move to the beginning and end of the line
 "
 noremap <C-h> ^
 noremap <C-l> $
-noremap <C-j> <C-f>
-noremap <C-k> <C-b>
+noremap <C-j> 20j
+noremap <C-k> 20k
 noremap <Space> i
 
 "
