@@ -40,7 +40,7 @@ par(cex=1.5, cex.lab=1.2)
 for (i in 1:2)
 {
   print(FILES[i])
-  cairo_ps(paste0(FILES[i], '.ps'))
+  cairo_ps(paste0(FILES[i], '.ps'), family = 'UDDigiKyokashoN-R')
   barplot (height      = ds[[i]],
            beside      = T,
            names.arg   = CNMS[[i]],
@@ -56,7 +56,7 @@ for (i in 1:2)
 #
 # Actual RMSE
 #
-cairo_ps(paste0(FILES[3], '.ps'), width=8, height=8)
+cairo_ps(paste0(FILES[3], '.ps'), width=8, height=8, family = 'UDDigiKyokashoN-R')
 COL <- c('black', 'red', 'blue', 'darkgreen', 'darkorange')
 COL <- gray(1/(5:1)) 
 matplot (ds[[3]][1, 1:12], type='n', xaxt='n', yaxt='n', xlab='', ylab='', fg='white', col.axis='white', ylim=c(20, 130))
@@ -81,7 +81,7 @@ for (j in dev.list() ) dev.off(j)
 #
 # Load curves
 #
-cairo_ps(paste0(FILES[4], '.ps'), width=8, height=8)
+cairo_ps(paste0(FILES[4], '.ps'), width=8, height=8, family = 'UDDigiKyokashoN-R')
 CNMS.D <- c('y', 'yhat')
 par(mar = .1 + c(4, 5, 1, 1), cex=1.1)
 COL <- gray(c(0.0, 0.7)) 
