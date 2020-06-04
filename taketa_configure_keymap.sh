@@ -15,6 +15,7 @@ MAP=/usr/share/X11/xkb/symbols/MYKEYMAP
 cat <<EOF > ${MAP}
 partial hidden modifier_keys
 xkb_symbols "keymap" {
+    replace key <AC10> { [ colon, semicolon ] };
     key <HENK> { [ i ] }; // 変換をRightに変更
     key <MUHE> { [ Escape ] }; // 無変換をLeftに変更
     key <HKTG> { [ BackSpace ] }; // ひらがなカタカナをBackSpaceに変更

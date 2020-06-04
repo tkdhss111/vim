@@ -30,7 +30,7 @@ endif
 " Key swich
 "
 nnoremap ; :
-nnoremap : ;
+nmap : ;
 
 inoremap ; :
 inoremap : ;
@@ -60,7 +60,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 "
 " Get back to normal mode from insert mode by typing 'jj' or 'kk' or 'hh'
 "
-inoremap <silent> jj <ESC>
+"inoremap <silent> jj <ESC>
 
 "
 " Return from terminal by ESC
