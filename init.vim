@@ -26,17 +26,18 @@ endif
 "
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
+"" DEPRECATED
+"" USE KEYMAP SWAP INSTEAD
+"" Key swich
+""
+"nnoremap ; :
+"nmap : ;
 "
-" Key swich
+"inoremap ; :
+"inoremap : ;
 "
-nnoremap ; :
-nmap : ;
-
-inoremap ; :
-inoremap : ;
-
-vnoremap : ;
-vnoremap ; :
+"vnoremap : ;
+"vnoremap ; :
 
 "
 " Move to the beginning and end of the line
