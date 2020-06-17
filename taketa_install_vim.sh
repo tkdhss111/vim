@@ -162,6 +162,10 @@ cat <<'EOF'>>~/.profile
 # ssh-agent
 eval `ssh-agent`
 ssh-add -t 1w ~/.ssh/id_rsa
+
+# keymap
+setxkbmap us -option MYKEYMAP:keymap
+
 EOF
 
 cat <<'EOF'>>~/.bashrc
