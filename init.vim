@@ -163,6 +163,12 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
+  " Previm
+  "
+  call dein#add('tyru/open-browser.vim')
+  call dein#add('kannokanno/previm')
+
+  "
   " Neodebug
   "
   call dein#add('cpiger/NeoDebug')
@@ -254,6 +260,25 @@ if dein#load_state('~/.cache/dein')
   call dein#save_state()
 
 endif
+
+"
+" Previm
+"
+let g:previm_open_cmd = ''
+let g:previm_enable_realtime = 1
+
+"
+" Openbrowser
+"
+nmap @ <Nop>
+nmap @g <Plug>(openbrowser-search)
+nmap <C-@> <Plug>(openbrowser-smart-search)
+nnoremap @a :<C-u>execute 'OpenBrowserSearch -alc' expand('<cWORD>')<CR>
+nnoremap @d :<C-u>execute 'OpenBrowserSearch -dev' expand('<cWORD>')<CR>
+let g:openbrowser_search_engines = {
+    \ 'alc': 'http://eow.alc.co.jp/{query}/UTF-8/',
+    \ 'dev': 'https://dev.classmethod.jp/?s={query}',
+    \ }
 
 "
 " Latex (vimtex and vim - quickrun)

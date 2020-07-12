@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=jma
+USER=boss
 
 #
 # Need to purge regular vim installed as default to prevent
@@ -21,11 +21,12 @@ add-apt-repository ppa:neovim-ppa/stable
 add-apt-repository ppa:x4121/ripgrep
 apt update
 apt upgrade -y
-apt install -y neovim neomutt
+apt install neovim -y
+#apt install -y neovim neomutt
 apt install -y python-dev python-pip python3-dev python3-pip
 apt install -y exuberant-ctags
 apt install -y xclip
-export DISPLAY=:0
+#export DISPLAY=:0
 apt install -y ripgrep
 #pip2 install --user pynvim
 #pip3 install --user pynvim
@@ -102,8 +103,8 @@ ln -s /home/${USER}/vim/init.vim ${INI}
 #
 # Neomutt mailer
 #
-mkdir -p /home/${USER}/.config/neomutt/
-ln -s /home/${USER}/vim/neomuttrc /home/${USER}/.config/neomutt/neomuttrc
+#mkdir -p /home/${USER}/.config/neomutt/
+#ln -s /home/${USER}/vim/neomuttrc /home/${USER}/.config/neomutt/neomuttrc
 
 #
 # CSV filetype
@@ -132,10 +133,10 @@ EOF
 #
 #chmod -R 777 /home/${USER}/.netrc
 
-git config --global user.name "tkdhss111"
-git config --global user.email "tkdhss111@gmail.com"
-git config --global web.browser "ff"
-git config --global browser.ff.cmd "open -a Firefox.app"
+#git config --global user.name "tkdhss111"
+#git config --global user.email "tkdhss111@gmail.com"
+#git config --global web.browser "ff"
+#git config --global browser.ff.cmd "open -a Firefox.app"
 
 #
 # ssh-agent
