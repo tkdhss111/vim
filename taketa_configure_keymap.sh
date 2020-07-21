@@ -34,8 +34,8 @@ sed -i 's|! option\t=\tsymbols|&\n\tMYKEYMAP:keymap = +MYKEYMAP(keymap) // added
 #
 # Set keymap and print settings
 #
-setxkbmap us -option MYKEYMAP:keymap
-setxkbmap -print
+/usr/bin/setxkbmap us -option MYKEYMAP:keymap
+/usr/bin/setxkbmap -print
 
 rm -rf /var/lib/xkb/*
 
@@ -46,8 +46,8 @@ dconf write /org/gnome/desktop/input-sources/xkb-options "['MYKEYMAP:keymap']"
 # 
 # sudo crontab -e 
 #
-# Append the following command:
-# @reboot /home/jma/vim/taketa_configure_keymap.sh
+# Append the following command with executable permission:
+# @reboot root /home/jma/vim/taketa_configure_keymap.sh
 #
 
 

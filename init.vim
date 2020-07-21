@@ -163,6 +163,11 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
+  " Cmake syntax
+  "
+  call dein#add('pboettch/vim-cmake-syntax')
+
+  "
   " Previm
   "
   call dein#add('tyru/open-browser.vim')
