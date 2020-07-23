@@ -47,13 +47,3 @@ rm -rf /var/lib/xkb/*
 # N.B. Can not use this for Ubuntu server
 #apt install dconf-editor
 #dconf write /org/gnome/desktop/input-sources/xkb-options "['MYKEYMAP:keymap']"
-
-# 
-# sudo crontab -e 
-#
-# Append the following command with executable permission:
-# @reboot root /home/jma/vim/taketa_configure_keymap.sh
-#
-
-
-#reboot
