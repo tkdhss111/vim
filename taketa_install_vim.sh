@@ -5,7 +5,7 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=boss
+USER=ubuntu
 
 #
 # Need to purge regular vim installed as default to prevent
@@ -70,13 +70,6 @@ vim -u NONE -c "helptags speeddating/doc" -c q
 git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
 echo 'map <C-n> :NERDTreeToggle<CR>' >> ${INI}
 
-# Shougo's dein (Vim/Neovim plugin manager)
-apt install curl -y
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-# For example, we just use `~/.cache/dein` as installation directory
-sh ./installer.sh ~/.cache/dein
-chmod -R 777 ~/.cache/dein
-
 #
 # Setup configulation files
 # /home/$USERNAME/.config/nvim/init.vim
@@ -97,6 +90,8 @@ else
   mkdir -p /home/${USER}/.config/nvim
 
 fi	
+
+chmod -R 777 /home/${USER}/.config/
 
 ln -s /home/${USER}/vim/init.vim ${INI} 
 
