@@ -37,18 +37,13 @@ sed -i 's|! option\t=\tsymbols|&\n\tMYKEYMAP:keymap = +MYKEYMAP(keymap) // added
 /usr/bin/setxkbmap us -option MYKEYMAP:keymap
 /usr/bin/setxkbmap -print
 
+cat <<'EOF'>>~/.bashrc
+/usr/bin/setxkbmap us -option MYKEYMAP:keymap
+EOF
+
 rm -rf /var/lib/xkb/*
 
 # Keep settings even if the input method has changed
-apt install dconf-editor
-dconf write /org/gnome/desktop/input-sources/xkb-options "['MYKEYMAP:keymap']"
-
-# 
-# sudo crontab -e 
-#
-# Append the following command with executable permission:
-# @reboot root /home/jma/vim/taketa_configure_keymap.sh
-#
-
-
-#reboot
+# N.B. Can not use this for Ubuntu server
+#apt install dconf-editor
+#dconf write /org/gnome/desktop/input-sources/xkb-options "['MYKEYMAP:keymap']"
