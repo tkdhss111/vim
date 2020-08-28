@@ -91,12 +91,12 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 "
 " Set F9 to make run
 "
-:nmap <F1> :q<CR>
+:nmap <F1> :make clean<CR>
 :nmap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
 :nmap <F3> :make debug<CR>
 :nmap <F6> :make release<CR>
-:nmap <F4> :make clean_debug<CR> :make debugrun<CR>
-:nmap <F5> :make clean_release<CR> :make run<CR>
+:nmap <F4> :make debugrun<CR>
+:nmap <F5> :make run<CR>
 :nmap <F9> :sp<CR>
 :nmap <F12> :terminal<CR>i 
 
