@@ -1,6 +1,7 @@
 #=====================================================
 # Vim installation script
 #
+# Run this script as user (non administrative) privilege
 #
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
@@ -11,35 +12,41 @@ USER=ubuntu
 # Need to purge regular vim installed as default to prevent
 # root from using .vimrc
 #
-apt --purge remove vim
+sudo apt --purge remove vim
 
 #
 # Vim installation
 #
-apt install software-properties-common
-add-apt-repository ppa:neovim-ppa/stable
-add-apt-repository ppa:x4121/ripgrep
-apt update
-apt upgrade -y
-apt install neovim -y
-#apt install -y neovim neomutt
-apt install -y python-dev python-pip python3-dev python3-pip
-apt install -y exuberant-ctags
-apt install -y xclip
-#export DISPLAY=:0
-apt install -y ripgrep
-#pip2 install --user pynvim
-#pip3 install --user pynvim
-pip install --upgrade --no-cache-dir pip
-pip install --no-cache-dir setuptools
-pip install --user --upgrade --no-cache-dir pynvim
-pip2 install --user --upgrade --no-cache-dir pynvim
-pip3 install --user --upgrade --no-cache-dir pynvim
-pip3 --no-cache-dir install -I neovim
+sudo apt install software-properties-common
+sudo add-apt-repository ppa:neovim-ppa/stable
+sudo add-apt-repository ppa:x4121/ripgrep
+sudo apt update
+sudo apt upgrade -y
+sudo apt install neovim -y
+#sudo apt install -y neovim neomutt
+sudo apt install -y python-dev python-pip python3-dev python3-pip
+sudo apt install -y exuberant-ctags
+sudo apt install -y xclip
+sudo apt install -y ripgrep
+#sudo pip2 install --user pynvim
+#sudo pip3 install --user pynvim
+#sudo export DISPLAY=:0
+sudo pip install --upgrade --no-cache-dir pip
+sudo pip install --no-cache-dir setuptools
+sudo pip install --user --upgrade --no-cache-dir pynvim
+sudo pip2 install --user --upgrade --no-cache-dir pynvim
+sudo pip3 install --user --upgrade --no-cache-dir pynvim
+sudo pip3 --no-cache-dir install -I neovim
 which nvim
 nvim -v | grep 'NVIM v'
 echo 'alias vim=nvim             # added by: '${USER} >> /home/${USER}/.profile
 echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.profile
+
+# Shougo's dein (Vim/Neovim plugin manager)
+sudo apt install curl -y
+curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+# For example, we just use `~/.cache/dein` as installation directory
+sh ./installer.sh ~/.cache/dein
 
 #
 # Add-in packages installation
@@ -49,20 +56,17 @@ echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.profile
 #curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.10.0/ripgrep_0.10.0_amd64.deb
 #dpkg -i ripgrep_0.10.0_amd64.deb && rm ripgrep_0.10.0_amd64.deb
 
-# repeat.vim
 mkdir -p ~/.vim/pack/tpope/start
 cd ~/.vim/pack/tpope/start
+
+# repeat.vim
 git clone https://tpope.io/vim/repeat.git
 
 # surround.vim
-mkdir -p ~/.vim/pack/tpope/start
-cd ~/.vim/pack/tpope/start
 git clone https://tpope.io/vim/surround.git
 vim -u NONE -c "helptags surround/doc" -c q
 
 # speeddating.vim
-mkdir -p ~/.vim/pack/tpope/start
-cd ~/.vim/pack/tpope/start
 git clone https://tpope.io/vim/speeddating.git
 vim -u NONE -c "helptags speeddating/doc" -c q
 
@@ -200,4 +204,4 @@ let b:fortran_do_enddo=1 " do-endoブロックをインデント
 " let b:fortran_indent_less=1 " プログラム単位でのインデントを無効化
 EOF
 
-chmod -R 777 /home/${USER}/.config/nvim
+#sudo chmod -R 777 /home/${USER}/.config/nvim
