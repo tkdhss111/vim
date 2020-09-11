@@ -335,7 +335,8 @@ inoremap <expr> , smartchr#loop(', ', ',')
 let autodate_keyword_pre  = '\c@date '
 let autodate_keyword_post = '\.'
 let autodate_format       = '%F'
-let autodate_lines        = -1
+let autodate_start_line   = -1
+"let autodate_lines        = -1
 "let autodate_format       = '%0m %d, %Y'
 "let autodate_format       = '%F %Ex %x %X %B %Om %d, %Y'
 
