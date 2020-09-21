@@ -83,4 +83,4 @@ else
 
 fi	
 
-ln -s /home/${USER}/vim/init.vim ${INI} 
+ln -s $PWD/init.vim ${INI} 

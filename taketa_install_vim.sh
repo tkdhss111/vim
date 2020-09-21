@@ -97,7 +97,8 @@ fi
 
 chmod -R 777 /home/${USER}/.config/
 
-ln -s /home/${USER}/vim/init.vim ${INI} 
+ln -s $PWD/init.vim ${INI} 
+#ln -s /home/${USER}/vim/init.vim ${INI} 
 
 #
 # Neomutt mailer
