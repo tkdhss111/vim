@@ -39,6 +39,8 @@ endif
 "vnoremap : ;
 "vnoremap ; :
 
+silent !setxkbmap us -option MYKEYMAP:keymap
+
 "
 " Move to the beginning and end of the line
 "

@@ -6,37 +6,44 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
-USER=ubuntu
+USER=$USER
 
 #
 # Need to purge regular vim installed as default to prevent
 # root from using .vimrc
 #
 sudo apt --purge remove vim
-
+sudo rm -r /home/$USER/.vim
+sudo rm -r /home/$USER/.config/nvim
+#sudo apt update
+#sudo apt upgrade -y
 #
 # Vim installation
 #
 sudo apt install software-properties-common
-sudo add-apt-repository ppa:neovim-ppa/stable
-sudo add-apt-repository ppa:x4121/ripgrep
+#sudo add-apt-repository ppa:neovim-ppa/stable
+#sudo add-apt-repository ppa:x4121/ripgrep
 sudo apt update
 sudo apt upgrade -y
 sudo apt install neovim -y
 #sudo apt install -y neovim neomutt
-sudo apt install -y python-dev python-pip python3-dev python3-pip
+#sudo apt install -y python-dev python-pip python3-dev python3-pip
+sudo apt install -y python3-dev python3-pip
 sudo apt install -y exuberant-ctags
 sudo apt install -y xclip
 sudo apt install -y ripgrep
+sudo apt install -y zathura
+sudo apt install -y msgpack
 #sudo pip2 install --user pynvim
-#sudo pip3 install --user pynvim
+sudo pip3 install --user pynvim --upgrade msgpack
 #sudo export DISPLAY=:0
-sudo pip install --upgrade --no-cache-dir pip
-sudo pip install --no-cache-dir setuptools
-sudo pip install --user --upgrade --no-cache-dir pynvim
-sudo pip2 install --user --upgrade --no-cache-dir pynvim
+#sudo pip install --upgrade --no-cache-dir pip
+#sudo pip install --no-cache-dir setuptools
+#sudo pip install --user --upgrade --no-cache-dir pynvim
+#sudo pip2 install --user --upgrade --no-cache-dir pynvim
 sudo pip3 install --user --upgrade --no-cache-dir pynvim
-sudo pip3 --no-cache-dir install -I neovim
+#sudo pip3 --no-cache-dir install -I neovim
+sudo apt autoremove -y
 which nvim
 nvim -v | grep 'NVIM v'
 echo 'alias vim=nvim             # added by: '${USER} >> /home/${USER}/.profile
@@ -47,6 +54,32 @@ sudo apt install curl -y
 curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 # For example, we just use `~/.cache/dein` as installation directory
 sh ./installer.sh ~/.cache/dein
+
+#
+# Setup configulation files
+# /home/$USERNAME/.config/nvim/init.vim
+#
+
+# Create init.vim (empty file)
+NOW=$(date '+%F_%H:%M:%S')
+INI=/home/${USER}/.config/nvim/init.vim
+
+echo ${INI}
+
+if [ -e ${INI} ]; then
+
+  mv ${INI} ${INI}_till${NOW}
+
+else
+
+  mkdir -p /home/${USER}/.config/nvim
+
+fi	
+
+sudo chmod -R 777 /home/${USER}/.config/
+
+#ln -s /home/${USER}/vim/init.vim ${INI}
+ln -s /media/jma/CRUCIAL_MX500SSD/vim/init.vim ${INI}
 
 #
 # Add-in packages installation
@@ -73,32 +106,6 @@ vim -u NONE -c "helptags speeddating/doc" -c q
 # NERDtree
 git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
 echo 'map <C-n> :NERDTreeToggle<CR>' >> ${INI}
-
-#
-# Setup configulation files
-# /home/$USERNAME/.config/nvim/init.vim
-#
-
-# Create init.vim (empty file)
-NOW=$(date '+%F_%H:%M:%S')
-INI=/home/${USER}/.config/nvim/init.vim
-
-echo ${INI}
-
-if [ -e ${INI} ]; then
-
-  mv ${INI} ${INI}_till${NOW}
-
-else
-
-  mkdir -p /home/${USER}/.config/nvim
-
-fi	
-
-chmod -R 777 /home/${USER}/.config/
-
-ln -s $PWD/init.vim ${INI} 
-#ln -s /home/${USER}/vim/init.vim ${INI} 
 
 #
 # Neomutt mailer
@@ -133,15 +140,15 @@ EOF
 #
 #chmod -R 777 /home/${USER}/.netrc
 
-#git config --global user.name "tkdhss111"
-#git config --global user.email "tkdhss111@gmail.com"
-#git config --global web.browser "ff"
-#git config --global browser.ff.cmd "open -a Firefox.app"
+git config --global user.name "tkdhss111"
+git config --global user.email "tkdhss111@gmail.com"
+git config --global web.browser "ff"
+git config --global browser.ff.cmd "open -a Firefox.app"
 
 #
 # ssh-agent
 #
-apt install ssh-askpass -y
+sudo apt install ssh-askpass -y
 #apt install git-gui -y
 
 #ssh-keygen -t rsa -b 4096 -C "tkdhss111@gmail.com"
@@ -159,15 +166,15 @@ apt install ssh-askpass -y
 ## git remote set-url origin git@github.com:tkdhss111/[リポジトリ].git
 ## DO NOT USE : git clone https... 
 ## BUT USE WHEN SSH: git clone git@github.com:tkdhss111/[リポジトリ].git
-cat <<'EOF'>>~/.profile
-# ssh-agent
-eval `ssh-agent`
-ssh-add -t 1w ~/.ssh/id_rsa
-
-# keymap
-setxkbmap us -option MYKEYMAP:keymap
-
-EOF
+#cat <<'EOF'>>~/.profile
+## ssh-agent
+#eval `ssh-agent`
+#ssh-add -t 1w ~/.ssh/id_rsa
+#
+## keymap
+#setxkbmap us -option MYKEYMAP:keymap
+#
+#EOF
 
 cat <<'EOF'>>~/.bashrc
 # ssh-agent
@@ -178,6 +185,8 @@ else
    export SSH_AGENT_PID=$(pgrep ssh-agent)
    export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
 fi
+
+setxkbmap us -option MYKEYMAP:keymap
 EOF
 
 #
