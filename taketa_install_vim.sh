@@ -186,6 +186,7 @@ else
    export SSH_AUTH_SOCK=$(find /tmp/ssh-* -name agent.*)
 fi
 
+alias ssh='ssh -Y'
 setxkbmap us -option MYKEYMAP:keymap
 EOF
 
