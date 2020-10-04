@@ -21,6 +21,11 @@ if (has('win32') || has('win64') || has('win32unix'))
   let g:python3_host_prog='C:\Python38'
 endif
 
+if (has('macunix'))
+  let g:python2_host_prog='/usr/bin/python2'
+  let g:python3_host_prog='/usr/bin/python3'
+endif
+
 "
 " Get back to the last edited line when file is opened.
 "
