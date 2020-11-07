@@ -20,7 +20,7 @@ sudo rm -r /home/$USER/.config/nvim
 #
 # Vim installation
 #
-sudo apt install software-properties-common
+#sudo apt install software-properties-common
 #sudo add-apt-repository ppa:neovim-ppa/stable
 #sudo add-apt-repository ppa:x4121/ripgrep
 sudo apt update
@@ -78,8 +78,8 @@ fi
 
 sudo chmod -R 777 /home/${USER}/.config/
 
-#ln -s /home/${USER}/vim/init.vim ${INI}
-ln -s /media/jma/CRUCIAL_MX500SSD/vim/init.vim ${INI}
+ln -s /home/${USER}/vim/init.vim ${INI}
+#ln -s /media/jma/CRUCIAL_MX500SSD/vim/init.vim ${INI}
 
 #
 # Add-in packages installation

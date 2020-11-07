@@ -4,7 +4,7 @@ cp .latexmkrc ~/.latexmkrc
 sudo apt install zathura libsynctex-dev libgtk-3-dev xdotool -y
 mkdir -p ~/.config/zathura/
 cp .zathurarc ~/.config/zathura/.zathurarc
-sudo pip install --upgrade pip
+
 sudo pip3 install neovim-remote
 
 # Pandoc
