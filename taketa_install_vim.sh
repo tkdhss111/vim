@@ -216,3 +216,12 @@ let b:fortran_do_enddo=1 " do-endoブロックをインデント
 EOF
 
 #sudo chmod -R 777 /home/${USER}/.config/nvim
+
+#
+# Japanese language settings
+#
+sudo apt install language-pack-ja-base language-pack-ja
+sudo locale-gen ja_JP.UTF-8
+echo export LANG=ja_JP.UTF-8 >> ~/.profile
+source ~/.profile
+
