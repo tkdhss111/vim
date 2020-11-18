@@ -1,8 +1,8 @@
 #https://debimate.jp/2019/06/01/%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%EF%BC%9Aterminalcli%E5%90%91%E3%81%91%E3%83%A1%E3%83%BC%E3%83%A9%E3%83%BCneomutt%E3%81%A7gmail%E3%82%92%E9%80%81%E5%8F%97%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%9F/
 
 set imap_user="enecast.tokyo.jp@gmail.com"
-set imap_pass=`/usr/bin/security find-generic-password -w -a 'enecast.tokyo.jp@gmail.com' -s 'Gmail'`
-
+#set imap_pass=`/usr/bin/security find-generic-password -w -a 'enecast.tokyo.jp@gmail.com' -s 'Gmail'`
+set imap_pass=sgvuopyqltsucehc
 set folder=imaps://imap.gmail.com/
 set spoolfile=+INBOX
 set record="+[Gmail]/Sent Mail"
