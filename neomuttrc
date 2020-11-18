@@ -22,7 +22,6 @@ set message_cachedir = "~/.mutt/cache/bodies"  # IMAP経由で受信したメッ
 set ssl_starttls  = yes # 受送信メールサーバまでの通信を暗号化 
 set ssl_force_tls = yes # SSLを次世代規格のTLSに強制的に変更
 
-
 #
 # Sorting
 #
@@ -31,11 +30,14 @@ set sort=threads
 # in relation to other threads, and how the branches of the thread trees are sorted.
 set sort_aux=last-date-received
 # Index page format. Default "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
-set index_format="%4C %Z %{%b %d %R} %-15.15L (%?l?%4l&%4c?) %s"
+set index_format="%4C %Z %[%Y-%m-%d(%a) %R] %-15.15L (%?l?%4l&%4c?) %s"
 
 set sidebar_visible
 set sidebar_format="%B%?F? [%F]?%* %?N?%N/?%S"
 set mail_check_stats
+
+# notify-send
+set new_mail_command="notify-send --icon=mail-message-new 'New Email' '%n new messages, %u unread.' &"
 
 # You can use any gmail imap mailboxes
 mailboxes =INBOX =[Gmail]/Sent\ Mail =[Gmail]/Drafts =[Gmail]/Spam =[Gmail]/Trash
