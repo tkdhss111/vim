@@ -1,6 +1,6 @@
 set imap_user="enecast.tokyo.jp@gmail.com"
-set imap_pass=`/usr/bin/security find-generic-password -w -a 'enecast.tokyo.jp@gmail.com' -s 'Gmail'`
-
+#set imap_pass=`/usr/bin/security find-generic-password -w -a 'enecast.tokyo.jp@gmail.com' -s 'Gmail'`
+set imap_pass=sgvuopyqltsucehc
 set folder=imaps://imap.gmail.com/
 set spoolfile=+INBOX
 set record="+[Gmail]/Sent Mail"
