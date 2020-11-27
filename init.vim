@@ -102,7 +102,7 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 :nmap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
 :nmap <F3> :make debug<CR>
 :nmap <F6> :make release<CR>
-:nmap <F4> :make debugrun<CR>
+:nmap <F4> :make test<CR>
 :nmap <F5> :make run<CR>
 :nmap <F9> :sp<CR>
 :nmap <F12> :terminal<CR>i 
@@ -331,7 +331,7 @@ set mouse=a
 "
 " Smartchr
 "
-"inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
+inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
 inoremap <expr> , smartchr#loop(', ', ',')
 
 "
@@ -456,7 +456,7 @@ onoremap <silent> d d:call ClipboardYank()<cr>
 " ctags
 "
 let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command = 'ctags -R --exclude=build/ --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
+let g:vim_tags_project_tags_command = 'ctags -R --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
 
 " 保存時にsudo権限で無理やり保存
 cnoremap w!! w !sudo tee > /dev/null %<CR> :e!<CR>
