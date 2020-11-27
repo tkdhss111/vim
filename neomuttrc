@@ -66,5 +66,5 @@ set smtp_url="smtps://enecast.tokyo.jp@gmail.com@smtp.gmail.com:465/"
 set smtp_pass=`/usr/bin/security find-generic-password -w -a 'enecast.tokyo.jp@gmail.com' -s 'Gmail'`
 set smtp_authenticators="gssapi:login"
 
-set new_mail_command="notify-send --icon='/home/santiago/Pictures/neomutt.png' \
+#set new_mail_command="notify-send --icon='/home/santiago/Pictures/neomutt.png' \
 'New Email' '%n new messages, %u unread.' &"
