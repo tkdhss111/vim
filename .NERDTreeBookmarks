@@ -1,2 +1,4 @@
+obs ~/1_Projects/JMA/1_obs
 vim ~/vim/init.vim
+taketa_install_neomutt.sh ~/servers/MUA/taketa_install_neomutt.sh
 

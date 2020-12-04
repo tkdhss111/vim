@@ -1,48 +1,53 @@
-#https://debimate.jp/2019/06/01/%E7%92%B0%E5%A2%83%E6%A7%8B%E7%AF%89%EF%BC%9Aterminalcli%E5%90%91%E3%81%91%E3%83%A1%E3%83%BC%E3%83%A9%E3%83%BCneomutt%E3%81%A7gmail%E3%82%92%E9%80%81%E5%8F%97%E4%BF%A1%E3%81%99%E3%82%8B%E3%81%9F/
-
-set imap_user="enecast.tokyo.jp@gmail.com"
-#set imap_pass=`/usr/bin/security find-generic-password -w -a 'enecast.tokyo.jp@gmail.com' -s 'Gmail'`
-set imap_pass=sgvuopyqltsucehc
-set folder=imaps://imap.gmail.com/
-set spoolfile=+INBOX
-set record="+[Gmail]/Sent Mail"
-set postponed="+[Gmail]/Drafts"
+#
+# Basic settings
+#
+source "gpg -d ~/.config/neomutt/passwds.gpg |"  # 暗号化したパスワードを読み込み
+set realname  = "Hisashi_Takeda"
+set from      = enecast.tokyo.jp@gmail.com
+set imap_user = enecast.tokyo.jp@gmail.com
+set smtp_url  = "smtp://enecast.tokyo.jp@smtp.gmail.com:587"
+set folder    = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+#set record   = "+[Gmail]/Sent Mail"
+set record    = ""
+set postponed = "+[Gmail]/Drafts"
+mailboxes     =INBOX =[Gmail]/Sent\ Mail =[Gmail]/Drafts =[Gmail]/Spam =[Gmail]/Trash
 
 # https://www.neomutt.org/guide/reference search sleep_time for additional info
 set sleep_time=0 # be faster
-set beep=yes # no beep sound
+set beep=yes
 set editor="vim"
-auto_view text/html
+set mail_check_stats                                       # 定期的にメールの状態をチェック
+set use_from        = yes                                  # メールのFromヘッダを自動生成ON
+set charset         = "utf-8"                              # Terminal(およびメール送信時)で使用する文字コード
+set assumed_charset = "utf-8:iso-2022-jp:euc-jp:shift_jis" # 文字コード指定がない場合のため、優先順位を設定
+set mbox_type       = "maildir"                            # mbox=複数のメッセージが連結した形式で保存
+set certificate_file= "~/.mutt/certificates"               # CAの証明書の格納先(接続先の認証ファイル)
+set mailcap_path    = "~/.mutt/mailcap"                    # mailcapには、w3mを使ってHTMLメールを読む設定を記載
+auto_view text/html                                        # HTMLを自動でw3mで開封
 
+#
 # キャッシュ設定(キャッシュ先ディレクトリを事前に作成する事) 
+#
 set header_cache     = "~/.mutt/cache/headers" # headerキャッシュのPATHを指定
 set message_cachedir = "~/.mutt/cache/bodies"  # IMAP経由で受信したメッセージのキャッシュPATHを指定
 
-#   セキュリティ設定 
+#
+# セキュリティ設定 
+#
 set ssl_starttls  = yes # 受送信メールサーバまでの通信を暗号化 
 set ssl_force_tls = yes # SSLを次世代規格のTLSに強制的に変更
 
 #
-# Sorting
+# Index view
 #
-set sort=threads
-# When sorting by threads, this variable controls how threads are sorted
-# in relation to other threads, and how the branches of the thread trees are sorted.
+set sort=reverse-date
 set sort_aux=last-date-received
-# Index page format. Default "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s"
 set index_format="%4C %Z %[%Y-%m-%d %a %R] %-15.15L (%?l?%4l&%4c?) %s"
 
-set sidebar_visible
-set sidebar_format="%B%?F? [%F]?%* %?N?%N/?%S"
-set mail_check_stats
-
-# notify-send
-set new_mail_command="notify-send --icon=mail-message-new 'New Email' '%n new messages, %u unread.' &"
-
-# You can use any gmail imap mailboxes
-mailboxes =INBOX =[Gmail]/Sent\ Mail =[Gmail]/Drafts =[Gmail]/Spam =[Gmail]/Trash
-
+#
 # Vim like binds
+#
 bind attach,index,pager s sort-mailbox
 bind attach,index,pager w save-message
 bind attach,index o display-message
@@ -53,18 +58,17 @@ bind pager G bottom
 bind attach,index g first-entry
 bind attach,index G last-entry
 
+#
 # Sidebar binds
+#
+set sidebar_visible
+set sidebar_format="%B%?F? [%F]?%* %?N?%N/?%S"
 bind index,pager \CK sidebar-prev                 # Ctrl-k to select previous folder
 bind index,pager \CJ sidebar-next                 # Ctrl-j to select next folder
 bind index,pager \CO sidebar-open                 # Ctrl-o to open selected folder
 bind index,pager \CN sidebar-toggle-visible       # Ctrl-n to toggle visibility of the sidebar
 
-set realname="Denko Bundenban"
-set from="enecast.tokyo.jp@gmail.com"
-
-set smtp_url="smtps://enecast.tokyo.jp@gmail.com@smtp.gmail.com:465/"
-set smtp_pass=`/usr/bin/security find-generic-password -w -a 'enecast.tokyo.jp@gmail.com' -s 'Gmail'`
-set smtp_authenticators="gssapi:login"
-
-#set new_mail_command="notify-send --icon='/home/santiago/Pictures/neomutt.png' \
-'New Email' '%n new messages, %u unread.' &"
+#
+# Desktop notification
+#
+set new_mail_command="notify-send --icon=mail-message-new 'New Email' '%n new messages, %u unread.' &"
