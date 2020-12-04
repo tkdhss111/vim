@@ -430,6 +430,10 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '+'
 let g:NERDTreeDirArrowCollapsible = '▼'
 
+"N.B. set full path to bookmarksfile instead of using ~ as home dir
+let g:NERDTreeBookmarksFile = '/home/jma/vim/.NERDTreeBookmarks' 
+let NERDTreeShowBookmarks=1
+
 "
 " Turn off paste mode when leaving insert
 "
