@@ -441,7 +441,7 @@ let g:NERDTreeDirArrowCollapsible = '▼'
 
 "N.B. set full path to bookmarksfile instead of using ~ as home dir
 "Auto open bookmarks is slow for some reason
-let g:NERDTreeBookmarksFile = '~/vim/.NERDTreeBookmarks' 
+let g:NERDTreeBookmarksFile = '/Users/hisashitakeda/vim/.NERDTreeBookmarks' 
 let NERDTreeShowBookmarks=1
 
 "
