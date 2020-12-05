@@ -15,14 +15,23 @@
 
 " Install python2 and 3 using the commands: choco install python2, python3
 " and set the following path before dein is used.
+
+" Define OS variable
+let s:is_win = has('win32') || has('win64')
+let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')
+            \ || system('uname') =~? '^darwin')
+let s:is_linux = !s:is_win && !s:is_mac
+
+
 " Windows only:
-if (has('win32') || has('win64') || has('win32unix'))
+if s:is_win
   let g:python2_host_prog='C:\Python27'
   let g:python3_host_prog='C:\Python38'
-endif
-
-if (has('macunix'))
-  let g:python2_host_prog='/usr/bin/python2'
+elseif s:is_mac
+"pip3 uninstall neovim
+"pip3 uninstall pynvim
+"pip3 install pynvim
+  let g:python_host_prog='/usr/bin/python2'
   let g:python3_host_prog='/usr/bin/python3'
 endif
 
@@ -432,7 +441,7 @@ let g:NERDTreeDirArrowCollapsible = '▼'
 
 "N.B. set full path to bookmarksfile instead of using ~ as home dir
 "Auto open bookmarks is slow for some reason
-let g:NERDTreeBookmarksFile = '/home/jma/vim/.NERDTreeBookmarks' 
+let g:NERDTreeBookmarksFile = '~/vim/.NERDTreeBookmarks' 
 let NERDTreeShowBookmarks=1
 
 "
