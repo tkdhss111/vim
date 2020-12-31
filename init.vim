@@ -40,19 +40,6 @@ endif
 "
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-"" DEPRECATED
-"" USE KEYMAP SWAP INSTEAD
-"" Key swich
-""
-"nnoremap ; :
-"nmap : ;
-"
-"inoremap ; :
-"inoremap : ;
-"
-"vnoremap : ;
-"vnoremap ; :
-
 silent !setxkbmap us -option MYKEYMAP:keymap
 
 "
@@ -343,7 +330,7 @@ set mouse=a
 "inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
 "inoremap <expr> + smartchr#loop(' + ', '+')
 "inoremap <expr> - smartchr#loop(' - ', '-', '--')
-inoremap <expr> , smartchr#loop(', ', ',', '')
+"inoremap <expr> , smartchr#loop(', ', ',', '')
 
 "
 " autodate.vim
