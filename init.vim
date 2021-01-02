@@ -108,10 +108,8 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 "
 set autochdir
 set number
-"set relativenumber
 set cursorline
 set showmatch
-"set autoindent
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -126,7 +124,6 @@ set incsearch
 set inccommand=split
 set noswapfile
 set clipboard+=unnamedplus
-"set termguicolors
 set background=dark
 set viminfo='10
 "set relativenumber
@@ -458,8 +455,10 @@ onoremap <silent> d d:call ClipboardYank()<cr>
 "
 " ctags
 "
+set tags=tags;/
 let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
+let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative --languages=Fortran `pwd` 2>/dev/null'
+"let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran `pwd` 2>/dev/null'
 
 " 保存時にsudo権限で無理やり保存
 cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
