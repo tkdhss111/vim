@@ -37,9 +37,9 @@ sudo apt install unity-tweak-tool
 #
 # Morisawa fonts 
 #
-cp -r fonts/morisawa_kyokasho /usr/share/fonts/opentype/
-fc-cache -vf
-fc-list | rg morisawa_kyokasho
+sudo cp -r fonts/morisawa_kyokasho /usr/share/fonts/opentype/
+sudo fc-cache -vf
+sudo fc-list | rg morisawa_kyokasho
 
 
 
