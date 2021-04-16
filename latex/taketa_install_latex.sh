@@ -7,6 +7,11 @@ cp .zathurarc ~/.config/zathura/.zathurarc
 
 sudo pip3 install neovim-remote
 
+sudo cp mediabb.sty /usr/share/texlive/texmf-dist/tex/platex/base/mediabb.sty
+
+cd /usr/share/texlive/
+sudo mktexlsr
+
 # Pandoc
 # Use pandoc -Dlatex for LaTeX default document
 #
