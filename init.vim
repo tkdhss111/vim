@@ -165,12 +165,22 @@ if dein#load_state('~/.cache/dein')
   "
   " (Python) 
   "
-  call dein#add('sillybun/vim-repl')
+  call dein#add('deoplete-plugins/deoplete-jedi')
 
   "
   " Cmake syntax
   "
   call dein#add('pboettch/vim-cmake-syntax')
+
+  "
+  " ALE --Asynchronous Lint Engine-- 
+  "
+  call dein#add('dense-analysis/ale')
+
+  "
+  " vim-syntastic 
+  "
+  "call dein#add('vim-syntastic/syntastic')
 
   "
   " Previm
@@ -270,6 +280,13 @@ if dein#load_state('~/.cache/dein')
   call dein#save_state()
 
 endif
+
+"
+" ALE
+"
+let g:ale_fortran_gcc_use_free_form = 1
+let g:ale_fortran_gcc_executable ='gfortran'
+let g:ale_fortran_gcc_options ='-Wall -Wextra'
 
 "
 " Previm
