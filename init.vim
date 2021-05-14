@@ -22,6 +22,8 @@ let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')
             \ || system('uname') =~? '^darwin')
 let s:is_linux = !s:is_win && !s:is_mac
 
+let g:python_host_prog='/usr/bin/python2'
+let g:python3_host_prog='/usr/bin/python3'
 
 " Windows only:
 if s:is_win
@@ -31,8 +33,6 @@ elseif s:is_mac
 "pip3 uninstall neovim
 "pip3 uninstall pynvim
 "pip3 install pynvim
-"  let g:python_host_prog='/usr/bin/python2'
-"  let g:python3_host_prog='/usr/bin/python3'
 endif
 
 "
@@ -161,6 +161,11 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
+
+  "
+  " Jupyter vim
+  "
+  call dein#add('jupyter-vim/jupyter-vim')
 
   "
   " Cmake syntax
