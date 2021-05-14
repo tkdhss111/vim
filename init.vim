@@ -163,9 +163,9 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
-  " Jupyter vim
+  " (Python) vim-repl
   "
-  call dein#add('jupyter-vim/jupyter-vim')
+  call dein#add('sillybun/vim-repl')
 
   "
   " Cmake syntax
