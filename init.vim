@@ -163,7 +163,7 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
-  " (Python) vim-repl
+  " (Python) 
   "
   call dein#add('sillybun/vim-repl')
 
