@@ -282,11 +282,11 @@ if dein#load_state('~/.cache/dein')
 endif
 
 "
-" ALE
+" ALE for Fortran linting
 "
 let g:ale_fortran_gcc_use_free_form = 1
 let g:ale_fortran_gcc_executable ='gfortran'
-let g:ale_fortran_gcc_options ='-Wall -Wextra'
+let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
 
 "
 " Previm
@@ -297,15 +297,17 @@ let g:previm_enable_realtime = 1
 "
 " Openbrowser
 "
-nmap @ <Nop>
-nmap @g <Plug>(openbrowser-search)
-nmap <C-@> <Plug>(openbrowser-smart-search)
-nnoremap @a :<C-u>execute 'OpenBrowserSearch -alc' expand('<cWORD>')<CR>
-nnoremap @d :<C-u>execute 'OpenBrowserSearch -dev' expand('<cWORD>')<CR>
-let g:openbrowser_search_engines = {
-    \ 'alc': 'http://eow.alc.co.jp/{query}/UTF-8/',
-    \ 'dev': 'https://dev.classmethod.jp/?s={query}',
-    \ }
+" N.B. @ mark conflicts with macro run
+"
+"nmap @ <Nop>
+"nmap @g <Plug>(openbrowser-search)
+"nmap <C-@> <Plug>(openbrowser-smart-search)
+"nnoremap @a :<C-u>execute 'OpenBrowserSearch -alc' expand('<cWORD>')<CR>
+"nnoremap @d :<C-u>execute 'OpenBrowserSearch -dev' expand('<cWORD>')<CR>
+"let g:openbrowser_search_engines = {
+"    \ 'alc': 'http://eow.alc.co.jp/{query}/UTF-8/',
+"    \ 'dev': 'https://dev.classmethod.jp/?s={query}',
+"    \ }
 
 "
 " Latex (vimtex and vim - quickrun)
