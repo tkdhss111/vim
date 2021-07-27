@@ -40,7 +40,7 @@ endif
 "
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-silent !setxkbmap -option MYKEYMAP:keymap
+silent !setxkbmap -option "ctrl:nocaps"
 
 "
 " Move to the beginning and end of the line
