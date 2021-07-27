@@ -34,11 +34,15 @@ sed -i 's|! option\t=\tsymbols|&\n\tMYKEYMAP:keymap = +MYKEYMAP(keymap) // added
 #
 # Set keymap and print settings
 #
-/usr/bin/setxkbmap us -option MYKEYMAP:keymap
+#/usr/bin/setxkbmap us -option MYKEYMAP:keymap
+/usr/bin/setxkbmap -option MYKEYMAP:keymap
 /usr/bin/setxkbmap -print
 
+#cat <<'EOF'>>~/.bashrc
+#/usr/bin/setxkbmap us -option MYKEYMAP:keymap
+#EOF
 cat <<'EOF'>>~/.bashrc
-/usr/bin/setxkbmap us -option MYKEYMAP:keymap
+/usr/bin/setxkbmap -option MYKEYMAP:keymap
 EOF
 
 rm -rf /var/lib/xkb/*
