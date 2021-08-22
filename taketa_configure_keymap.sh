@@ -15,13 +15,13 @@ MAP=/usr/share/X11/xkb/symbols/MYKEYMAP
 cat <<EOF > ${MAP}
 partial hidden modifier_keys
 xkb_symbols "keymap" {
-    replace key <AC10> { [ colon, semicolon ] };
-    key <HENK> { [ i ] }; // 変換をRightに変更
-    key <MUHE> { [ Escape ] }; // 無変換をLeftに変更
-    key <HKTG> { [ BackSpace ] }; // ひらがなカタカナをBackSpaceに変更
-    replace key <CAPS> { [ Control_L, Control_L ] }; // CapsをCtrlに変更
-//  replace key <CAPS> { [ Escape, Escape ] };       // CapsをEscapeに変更
-    modifier_map  Control { <CAPS>, <LCTL> };        // CapsをCtrlに変更 
+//    replace key <AC10> { [ colon, semicolon ] };
+//    key <HENK> { [ i ] }; // 変換をRightに変更
+//    key <MUHE> { [ Escape ] }; // 無変換をLeftに変更
+//    key <HKTG> { [ BackSpace ] }; // ひらがなカタカナをBackSpaceに変更
+    replace key <CAPS> { [ Control_L, Control_L ] };  // CapsをCtrlに変更
+    replace key <HZTG> { [ Escape, Escape ] };        // Zenkaku_HankakuをESCに変更
+    replace key <ESC> { [ Zenkaku_Hankaku, Kanji ] }; // ESCをZenkaku_Hankakuに変更
   };
 EOF
 
