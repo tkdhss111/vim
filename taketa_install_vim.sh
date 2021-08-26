@@ -32,7 +32,7 @@ sudo apt install -y python3-dev python3-pip
 sudo apt install -y exuberant-ctags
 sudo apt install -y xclip
 sudo apt install -y ripgrep
-sudo apt install -y zathura
+sudo apt install -y xdotool zathura
 sudo apt install -y msgpack
 #sudo pip2 install --user pynvim
 sudo pip3 install --user pynvim --upgrade msgpack
@@ -91,6 +91,8 @@ ln -s /home/${USER}/vim/init.vim ${INI}
 
 mkdir -p ~/.vim/pack/tpope/start
 cd ~/.vim/pack/tpope/start
+
+sudo apt install git -y
 
 # repeat.vim
 git clone https://tpope.io/vim/repeat.git
