@@ -9,19 +9,29 @@
 #
 # Create keymap file named with username 
 #
-MAP=/usr/share/X11/xkb/symbols/MYKEYMAP
 
-# Keymap settings 
-cat <<EOF > ${MAP}
+# JP keymap settings 
+sudo touch /usr/share/X11/xkb/symbols/MYKEYMAPJP
+sudo chmod 777 /usr/share/X11/xkb/symbols/MYKEYMAPJP
+cat <<EOF > /usr/share/X11/xkb/symbols/MYKEYMAPJP
 partial hidden modifier_keys
-xkb_symbols "keymap" {
-//    replace key <AC10> { [ colon, semicolon ] };
-//    key <HENK> { [ i ] }; // 変換をRightに変更
-//    key <MUHE> { [ Escape ] }; // 無変換をLeftに変更
-//    key <HKTG> { [ BackSpace ] }; // ひらがなカタカナをBackSpaceに変更
-    replace key <CAPS> { [ Control_L, Control_L ] };  // CapsをCtrlに変更
-    replace key <HZTG> { [ Escape, Escape ] };        // Zenkaku_HankakuをESCに変更
-    replace key <ESC> { [ Zenkaku_Hankaku, Kanji ] }; // ESCをZenkaku_Hankakuに変更
+xkb_symbols "keymapjp" {
+    replace key <CAPS> { [ Control_L, Control_L ] };  //CapsをCtrlに変更
+    replace key <HZTG> { [ Escape, Escape ] };        //Zenkaku_HankakuをEscに変更
+    replace key <ESC> { [ Zenkaku_Hankaku, Kanji ] }; //EscをZenkaku_Hankakuに変更
+  };
+EOF
+
+# US keymap settings 
+sudo touch /usr/share/X11/xkb/symbols/MYKEYMAPUS
+sudo chmod 777 /usr/share/X11/xkb/symbols/MYKEYMAPUS
+cat <<EOF > /usr/share/X11/xkb/symbols/MYKEYMAPUS
+partial hidden modifier_keys
+xkb_symbols "keymapus" {
+    replace key <CAPS> {[ Control_L, Control_L ]};      //CapsをCtrlに変更
+    replace key <AC10> {[ colon, semicolon ] };         //コロンとセミコロンを交換
+    replace key <ESC> {[ Zenkaku_Hankaku, quoteleft ]}; //ESCをZenkaku_Hankakuに変更，Shift+Escで右クオート
+    replace key <TLDE> {[ Escape, asciitilde ]};        //チルダをEscに変更，Shift＋Escでチルダ
   };
 EOF
 
@@ -29,26 +39,32 @@ EOF
 # The rule is either in evdev or base
 # N.B. TABs are included in evdev
 cd /usr/share/X11/xkb/rules
-cp evdev evdev_till${NOW}
-sed -i '/MYKEYMAP/d' evdev
-sed -i 's|! option\t=\tsymbols|&\nMYKEYMAP:keymap\t=\t+MYKEYMAP(keymap) // added by user|' evdev
+sudo cp evdev evdev_till${NOW}
+sudo sed -i '/MYKEYMAPJP/d' evdev
+sudo sed -i '/MYKEYMAPUS/d' evdev
+sudo sed -i 's|! option\t=\tsymbols|&\n  MYKEYMAPJP:keymapjp\t=\t+MYKEYMAPJP(keymapjp) // added by user|' evdev
+sudo sed -i 's|! option\t=\tsymbols|&\n  MYKEYMAPUS:keymapus\t=\t+MYKEYMAPUS(keymapus) // added by user|' evdev
 
-cp base base_till${NOW}
-sed -i '/MYKEYMAP/d' base
-sed -i 's|! option\t=\tsymbols|&\nMYKEYMAP:keymap\t=\t+MYKEYMAP(keymap) // added by user|' base
-
+sudo cp base base_till${NOW}
+sudo sed -i '/MYKEYMAPJP/d' base
+sudo sed -i '/MYKEYMAPUS/d' base
+sudo sed -i 's|! option\t=\tsymbols|&\n  MYKEYMAPJP:keymapjp\t=\t+MYKEYMAPJP(keymapjp) // added by user|' base
+sudo sed -i 's|! option\t=\tsymbols|&\n  MYKEYMAPUS:keymapus\t=\t+MYKEYMAPUS(keymapus) // added by user|' base
+ 
 #
 # Set keymap and print settings
 #
-#/usr/bin/setxkbmap us -option MYKEYMAP:keymap
-/usr/bin/setxkbmap -v 10 -option MYKEYMAP:keymap
-/usr/bin/setxkbmap -print
+setxkbmap us -v 10 -option MYKEYMAPUS:keymapus
+setxkbmap -print
 
-#cat <<'EOF'>>~/.bashrc
-#/usr/bin/setxkbmap us -option MYKEYMAP:keymap
-#EOF
+#setxkbmap -v 10 -option MYKEYMAPJP:keymapjp
+#setxkbmap -print
+
+sed -i '/MYKEYMAPJP/d' ~/.bashrc
+sed -i '/MYKEYMAPUS/d' ~/.bashrc
 cat <<'EOF'>>~/.bashrc
-/usr/bin/setxkbmap -option MYKEYMAP:keymap
+#setxkbmap -option MYKEYMAPJP:keymapjp
+setxkbmap us -option MYKEYMAPUS:keymapus
 EOF
 
 rm -rf /var/lib/xkb/*
