@@ -97,14 +97,14 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 "
 " Set F9 to make run
 "
-:nmap <F1> :make clean<CR>
-:nmap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
-:nmap <F3> :make debug<CR>
-:nmap <F6> :make release<CR>
-:nmap <F4> :make test<CR>
-:nmap <F5> :make run<CR>
-:nmap <F9> :sp<CR>
-:nmap <F12> :terminal<CR>i 
+:nnoremap <F1> :make clean<CR>
+:nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
+:nnoremap <F3> :make debug<CR>
+:nnoremap <F6> :make release<CR>
+:nnoremap <F4> :make test<CR>
+:nnoremap <F5> :make run<CR>
+:nnoremap <F9> :sp<CR>
+:nnoremap <F12> :terminal<CR>i 
 
 "
 " Useful set commands
@@ -389,10 +389,10 @@ let g:auto_save_silent = 1  " do not display the auto-save notification
 "
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+xnoremap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+nnoremap ga <Plug>(EasyAlign)
 
 " Align Fortran :: symbols
 vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
@@ -402,13 +402,13 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 "
 
 " remapping the basic :: send line
-nmap , <Plug>RDSendLine
+nnoremap , <Plug>RDSendLine
 
 " remapping selection :: send multiple lines
-vmap , <Plug>RDSendSelection
+vnoremap , <Plug>RDSendSelection
 
 " remapping selection :: send multiple lines + echo lines
-vmap ,e <Plug>RESendSelection
+vnoremap ,e <Plug>RESendSelection
 
 " settings :: Nvim-R plugin
 " R output is highlighted with current colorscheme
