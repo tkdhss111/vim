@@ -42,6 +42,9 @@ endif
 
 silent !setxkbmap -option "ctrl:nocaps"
 
+noremap ; :
+noremap : ;
+
 "
 " Move to the beginning and end of the line
 "
