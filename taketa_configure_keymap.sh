@@ -26,16 +26,22 @@ xkb_symbols "keymap" {
 EOF
 
 # Set keymap settings as a rule
+# The rule is either in evdev or base
+# N.B. TABs are included in evdev
 cd /usr/share/X11/xkb/rules
 cp evdev evdev_till${NOW}
 sed -i '/MYKEYMAP/d' evdev
-sed -i 's|! option\t=\tsymbols|&\n\tMYKEYMAP:keymap = +MYKEYMAP(keymap) // added by user|' evdev
+sed -i 's|! option\t=\tsymbols|&\nMYKEYMAP:keymap\t=\t+MYKEYMAP(keymap) // added by user|' evdev
+
+cp base base_till${NOW}
+sed -i '/MYKEYMAP/d' base
+sed -i 's|! option\t=\tsymbols|&\nMYKEYMAP:keymap\t=\t+MYKEYMAP(keymap) // added by user|' base
 
 #
 # Set keymap and print settings
 #
 #/usr/bin/setxkbmap us -option MYKEYMAP:keymap
-/usr/bin/setxkbmap -option MYKEYMAP:keymap
+/usr/bin/setxkbmap -v 10 -option MYKEYMAP:keymap
 /usr/bin/setxkbmap -print
 
 #cat <<'EOF'>>~/.bashrc
