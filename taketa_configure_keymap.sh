@@ -6,6 +6,9 @@
 # Created by: Hisashi Takeda, Ph.D. 2019-01-26
 #=====================================================
 
+# To see original keymap
+cat /usr/share/X11/xkb/symbols/jp # JP keymap
+
 #
 # Create keymap file named with username 
 #
@@ -19,6 +22,8 @@ xkb_symbols "keymapjp" {
     replace key <CAPS> { [ Control_L, Control_L ] };  //CapsをCtrlに変更
     replace key <HZTG> { [ Escape, Escape ] };        //Zenkaku_HankakuをEscに変更
     replace key <ESC> { [ Zenkaku_Hankaku, Kanji ] }; //EscをZenkaku_Hankakuに変更
+    replace key <AC10> {[ colon, plus ] };            //コロンとセミコロンを交換
+    replace key <AC11> {[ semicolon, asterisk ] };    //コロンとセミコロンを交換
   };
 EOF
 
