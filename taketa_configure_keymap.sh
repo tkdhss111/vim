@@ -67,7 +67,7 @@ setxkbmap -print
 
 sed -i '/MYKEYMAPJP/d' ~/.bashrc
 sed -i '/MYKEYMAPUS/d' ~/.bashrc
-cat <<'EOF'>>~/.bashrc
+cat <<'EOF'>>~/.profile
 #setxkbmap -option MYKEYMAPJP:keymapjp
 setxkbmap us -option MYKEYMAPUS:keymapus
 EOF
