@@ -10,11 +10,11 @@ cat <<EOF>~/.xbindkeysrc
 # History Back & Forward
 #"xte 'keydown Alt_L' 'keydown Left' 'keyup Left' 'keyup Alt_L'"
 "xdotool key alt+Left"
-     b:6
+     b:6 + release
 
 #"xte 'keydown Alt_L' 'keydown Right' 'keyup Right' 'keyup Alt_L'"
 "xdotool key alt+Right"
-     b:7
+     b:7 + release
 EOF
 
 killall xbindkeys
