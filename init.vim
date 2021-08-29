@@ -101,8 +101,8 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 :nnoremap <F4> :make test<CR>
 :nnoremap <F5> :make run<CR>
 :nnoremap <F9> :sp<CR>
-:nnoremap <F11> :vsp :terminal<CR>i 
-:nnoremap <F12> :sp :terminal<CR>i 
+:nnoremap <F11> :vsp<CR>:terminal<CR>i 
+:nnoremap <F12> :sp<CR>:terminal<CR>i 
 
 "
 " Useful set commands
