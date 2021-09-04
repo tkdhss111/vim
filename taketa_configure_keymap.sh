@@ -62,14 +62,14 @@ sudo sed -i 's|! option\t=\tsymbols|&\n  MYKEYMAPUS:keymapus\t=\t+MYKEYMAPUS(key
 setxkbmap us -v 10 -option MYKEYMAPUS:keymapus
 setxkbmap -print
 
-#setxkbmap -v 10 -option MYKEYMAPJP:keymapjp
+#setxkbmap jp -v 10 -option MYKEYMAPJP:keymapjp
 #setxkbmap -print
 
 sed -i '/MYKEYMAPJP/d' ~/.bashrc
 sed -i '/MYKEYMAPUS/d' ~/.bashrc
 cat <<'EOF'>>~/.bashrc
 setxkbmap -option
-#setxkbmap -option MYKEYMAPJP:keymapjp
+#setxkbmap jp -option MYKEYMAPJP:keymapjp
 setxkbmap us -option MYKEYMAPUS:keymapus
 setxkbmap -print | grep MYKEYMAP
 EOF
