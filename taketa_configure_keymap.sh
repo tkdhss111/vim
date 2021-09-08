@@ -35,7 +35,7 @@ partial hidden modifier_keys
 xkb_symbols "keymapus" {
     replace key <CAPS> {[ Control_L, Control_L ]};      //CapsをCtrlに変更
     replace key <AC10> {[ colon, semicolon ] };         //コロンとセミコロンを交換
-    replace key <ESC> {[ Zenkaku_Hankaku, quoteleft ]}; //ESCをZenkaku_Hankakuに変更，Shift+Escで右クオート
+#    replace key <ESC> {[ Zenkaku_Hankaku, quoteleft ]}; //ESCをZenkaku_Hankakuに変更，Shift+Escで右クオート
     replace key <TLDE> {[ Escape, asciitilde ]};        //チルダをEscに変更，Shift＋Escでチルダ
   };
 EOF
