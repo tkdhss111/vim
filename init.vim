@@ -162,10 +162,6 @@ if dein#load_state('~/.cache/dein')
   endif
 
 " taketa begin -------------------------------------------
-  "
-  " (Database; dbext) 
-  "
-  call dein#add('vim-scripts/dbext.vim')
 
   "
   " (Python) 
@@ -285,11 +281,6 @@ if dein#load_state('~/.cache/dein')
   call dein#save_state()
 
 endif
-
-"
-" Database access by dbext.vim 
-"
-let g:dbext_default_profile_sqlite = 'type=SQLITE:dbname=/mnt/data/test.db'
 
 "
 " ALE for Fortran linting
