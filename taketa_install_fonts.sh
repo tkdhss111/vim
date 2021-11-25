@@ -18,6 +18,7 @@ mkdir ~/.fonts/
 cp -f Ricty*.ttf ~/.fonts/
 fc-cache -vf
 rm -r Ricty
+cd ..
 
 #
 # IPA fonts
@@ -37,7 +38,7 @@ sudo apt install unity-tweak-tool
 #
 # Morisawa fonts 
 #
-sudo cp -r fonts/morisawa_kyokasho /usr/share/fonts/opentype/
+sudo cp -r ./fonts/morisawa_kyokasho /usr/share/fonts/opentype/
 sudo fc-cache -vf
 sudo fc-list | rg morisawa_kyokasho
 

@@ -324,7 +324,8 @@ else
   let g:vimtex_view_method = 'zathura'
 endif
 
-let g:tex_flavor = 'latex'
+"let g:tex_flavor = 'latex'
+let g:tex_flavor = 'ptex2pdf'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
 " Disable overfull/underfull \hbox and all package warnings
 let g:vimtex_quickfix_latexlog = {
