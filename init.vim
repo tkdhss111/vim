@@ -319,7 +319,6 @@ if (has('win32') || has('win64') || has('win32unix'))
   let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
   let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 else
-  let g:vimtex_fold_envs = 0
   let g:vimtex_compiler_progname = 'nvr'
   let g:vimtex_view_method = 'zathura'
 endif
@@ -328,13 +327,6 @@ endif
 let g:tex_flavor = 'ptex2pdf'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
 " Disable overfull/underfull \hbox and all package warnings
-let g:vimtex_quickfix_latexlog = {
-      \ 'overfull' : 0,
-      \ 'underfull' : 0,
-      \ 'packages' : {
-      \   'default' : 0,
-      \ },
-      \}
 augroup filetype
   autocmd!
   " tex file (I always use latex)
