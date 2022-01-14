@@ -5,6 +5,11 @@ sudo apt install zathura libsynctex-dev libgtk-3-dev xdotool -y
 mkdir -p ~/.config/zathura/
 cp .zathurarc ~/.config/zathura/.zathurarc
 
+cat <<EOF>~/.config/zathura/.zathurarc
+set synctex true
+set synctex-editor-command "nvr --remote-silent +%{line} %{input}"
+EOF
+
 sudo pip3 install neovim-remote
 
 sudo cp mediabb.sty /usr/share/texlive/texmf-dist/tex/platex/base/mediabb.sty
