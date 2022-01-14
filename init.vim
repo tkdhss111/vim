@@ -319,8 +319,13 @@ if (has('win32') || has('win64') || has('win32unix'))
   let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
   let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 else
+  let g:latex_view_general_viewer = 'zathura'
   let g:vimtex_compiler_progname = 'nvr'
   let g:vimtex_view_method = 'zathura'
+  let g:vimtex_view_general_options = '--synctex-forward @line:0:@tex @pdf'
+  "Add the following to your ~/.config/zathura/zathurarc:
+  "set synctex true
+  "set synctex-editor-command "nvr --remote-silent +%{line} %{input}"
 endif
 
 "let g:tex_flavor = 'latex'
@@ -365,6 +370,9 @@ let autodate_lines        = 1000
 "
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
+let g:auto_save_in_insert_mode = 0
+" This will run :TagsGenerate after each save
+let g:auto_save_postsave_hook = 'TagsGenerate'
 
 "
 " vim-easy-align
@@ -384,13 +392,16 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 "
 
 " remapping the basic :: send line
-nnoremap , <Plug>RDSendLine
+"nnoremap , <Plug>RDSendLine
+nmap , <Plug>RDSendLine
 
 " remapping selection :: send multiple lines
-vnoremap , <Plug>RDSendSelection
+"vnoremap , <Plug>RDSendSelection
+vmap , <Plug>RDSendSelection
 
 " remapping selection :: send multiple lines + echo lines
-vnoremap ,e <Plug>RESendSelection
+"vnoremap ,e <Plug>RESendSelection
+vmap ,e <Plug>RESendSelection
 
 " settings :: Nvim-R plugin
 " R output is highlighted with current colorscheme
@@ -445,7 +456,7 @@ let g:NERDTreeDirArrowCollapsible = '▼'
 
 "N.B. set full path to bookmarksfile instead of using ~ as home dir
 "Auto open bookmarks is slow for some reason
-let g:NERDTreeBookmarksFile = '/home/jma/vim/.NERDTreeBookmarks' 
+let g:NERDTreeBookmarksFile = '.NERDTreeBookmarks' 
 let NERDTreeShowBookmarks=1
 
 "
