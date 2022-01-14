@@ -317,12 +317,13 @@ let g:previm_enable_realtime = 1
 if (has('win32') || has('win64') || has('win32unix'))
   let g:vimtex_view_general_viewer = 'C:/02_Tools/PDF/SumatraPDF/SumatraPDF'
   let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-  let g:vimtex_view_general_options_latexmk = '-reuse-instance'
 else
-  let g:latex_view_general_viewer = 'zathura'
   let g:vimtex_compiler_progname = 'nvr'
-  let g:vimtex_view_method = 'zathura'
-  let g:vimtex_view_general_options = '--synctex-forward @line:0:@tex @pdf'
+  let g:vimtex_view_general_viewer = 'okular'
+  let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+  "let g:latex_view_general_viewer = 'zathura'
+  "let g:vimtex_view_method = 'zathura'
+  "let g:vimtex_view_general_options = '--synctex-forward @line:1:@tex @pdf'
   "Add the following to your ~/.config/zathura/zathurarc:
   "set synctex true
   "set synctex-editor-command "nvr --remote-silent +%{line} %{input}"
@@ -330,6 +331,7 @@ endif
 
 "let g:tex_flavor = 'latex'
 let g:tex_flavor = 'ptex2pdf'
+"let g:tex_flavor = 'ptex2pdf -l -ot "-syctex=-1 -interaction=nonstopmode -recorder"'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
 " Disable overfull/underfull \hbox and all package warnings
 augroup filetype
@@ -373,6 +375,7 @@ let g:auto_save_silent = 1  " do not display the auto-save notification
 let g:auto_save_in_insert_mode = 0
 " This will run :TagsGenerate after each save
 let g:auto_save_postsave_hook = 'TagsGenerate'
+let g:auto_save_no_updatetime = 1
 
 "
 " vim-easy-align
