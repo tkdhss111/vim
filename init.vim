@@ -493,7 +493,7 @@ let g:auto_ctags = 1
 "let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_name = 'tags'
 "let g:auto_ctags_tags_args = ['--tag-relative=yes', '--recurse=yes', '--sort=yes', 'pwd']
-let g:auto_ctags_filetype_mode = 1
+"let g:auto_ctags_filetype_mode = 1
 let g:auto_ctags_set_tags_option = 1
 let g:auto_ctags_warn_once = 1
 "set exrc

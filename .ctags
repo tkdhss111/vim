@@ -1,0 +1,8 @@
+--recurse=yes
+--exclude=.git
+--exclude=archives
+--exclude=old
+--exclude=build
+--fields=+l
+--tag-relative=no
+--languages=Fortran
