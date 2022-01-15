@@ -229,7 +229,8 @@ if dein#load_state('~/.cache/dein')
   "
   " vim-tags
   "
-  call dein#add('szw/vim-tags')
+  "call dein#add('szw/vim-tags')
+  call dein#add('soramugi/auto-ctags.vim')
 
   "
   " CSV 
@@ -374,7 +375,7 @@ let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
 let g:auto_save_in_insert_mode = 0
 " This will run :TagsGenerate after each save
-let g:auto_save_postsave_hook = 'TagsGenerate'
+"let g:auto_save_postsave_hook = 'TagsGenerate'
 let g:auto_save_no_updatetime = 1
 
 "
@@ -487,8 +488,18 @@ onoremap <silent> d d:call ClipboardYank()<cr>
 "
 " ctags
 "
-set tags=tags;/
-let g:vim_tags_auto_generate = 1
+set tags=./tags;,tags;
+let g:auto_ctags = 1
+"let g:auto_ctags_directory_list = ['.git']
+let g:auto_ctags_tags_name = 'tags'
+"let g:auto_ctags_tags_args = ['--tag-relative=yes', '--recurse=yes', '--sort=yes', 'pwd']
+let g:auto_ctags_filetype_mode = 1
+let g:auto_ctags_set_tags_option = 1
+let g:auto_ctags_warn_once = 1
+"set exrc
+"set secure
+"let g:vim_tags_main_file = 'tags'
+"let g:vim_tags_auto_generate = 1
 let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative --languages=Fortran `pwd` 2>/dev/null'
 "let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran `pwd` 2>/dev/null'
 

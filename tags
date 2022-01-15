@@ -1,0 +1,156 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+,	init.vim	/^nmap , <Plug>RDSendLine$/;"	m
+,	init.vim	/^vmap , <Plug>RDSendSelection$/;"	m
+,	win/init.vim	/^inoremap <expr> , smartchr#loop(', ', ',')$/;"	m
+,	win/init.vim	/^nmap , <Plug>RDSendLine$/;"	m
+,	win/init.vim	/^vmap , <Plug>RDSendSelection$/;"	m
+,e	init.vim	/^vmap ,e <Plug>RESendSelection$/;"	m
+,e	win/init.vim	/^vmap ,e <Plug>RESendSelection$/;"	m
+:	win/init.vim	/^inoremap : ;$/;"	m
+;	win/init.vim	/^inoremap ; :$/;"	m
+;	win/init.vim	/^nnoremap ; :$/;"	m
+<A-j>	init.vim	/^inoremap <A-j> <Esc>:m .+1<CR>==gi$/;"	m
+<A-j>	init.vim	/^nnoremap <A-j> :m .+1<CR>==$/;"	m
+<A-j>	init.vim	/^vnoremap <A-j> :m '>+1<CR>gv=gv$/;"	m
+<A-j>	win/init.vim	/^inoremap <A-j> <Esc>:m .+1<CR>==gi$/;"	m
+<A-j>	win/init.vim	/^nnoremap <A-j> :m .+1<CR>==$/;"	m
+<A-j>	win/init.vim	/^vnoremap <A-j> :m '>+1<CR>gv=gv$/;"	m
+<A-k>	init.vim	/^inoremap <A-k> <Esc>:m .-2<CR>==gi$/;"	m
+<A-k>	init.vim	/^nnoremap <A-k> :m .-2<CR>==$/;"	m
+<A-k>	init.vim	/^vnoremap <A-k> :m '<-2<CR>gv=gv$/;"	m
+<A-k>	win/init.vim	/^inoremap <A-k> <Esc>:m .-2<CR>==gi$/;"	m
+<A-k>	win/init.vim	/^nnoremap <A-k> :m .-2<CR>==$/;"	m
+<A-k>	win/init.vim	/^vnoremap <A-k> :m '<-2<CR>gv=gv$/;"	m
+<C-c>	init.vim	/^nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>$/;"	m
+<C-c>	win/init.vim	/^nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>$/;"	m
+<C-h>	init.vim	/^noremap <C-h> ^$/;"	m
+<C-h>	win/init.vim	/^nnoremap <C-h> <C-w>h$/;"	m
+<C-j>	init.vim	/^noremap <C-j> 20j$/;"	m
+<C-j>	win/init.vim	/^nnoremap <C-j> <C-w>j$/;"	m
+<C-k>	init.vim	/^noremap <C-k> 20k$/;"	m
+<C-k>	win/init.vim	/^nnoremap <C-k> <C-w>k$/;"	m
+<C-l>	init.vim	/^noremap <C-l> \$$/;"	m
+<C-l>	win/init.vim	/^nnoremap <C-l> <C-w>l$/;"	m
+<C-n>	init.vim	/^nnoremap <silent><C-n> :NERDTreeToggle<CR>$/;"	m
+<C-n>	win/init.vim	/^nnoremap <silent><C-n> :NERDTreeToggle<CR>$/;"	m
+<F2>	init.vim	/^vnoremap <F2> :s\/=\/<equal>\/ge<CR> :'<,'>s\/::\/=\/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s\/=\/::\/g<CR> :'<,'>s\/<equal>\/=\/ge<CR>$/;"	m
+<F2>	win/init.vim	/^vnoremap <F2> :s\/=\/<equal>\/ge<CR> :'<,'>s\/::\/=\/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s\/=\/::\/g<CR> :'<,'>s\/<equal>\/=\/ge<CR>$/;"	m
+<S-h>	init.vim	/^nnoremap <S-h> <C-w>h$/;"	m
+<S-h>	win/init.vim	/^noremap <S-h> ^$/;"	m
+<S-j>	init.vim	/^nnoremap <S-j> <C-w>j$/;"	m
+<S-k>	init.vim	/^nnoremap <S-k> <C-w>k$/;"	m
+<S-l>	init.vim	/^nnoremap <S-l> <C-w>l$/;"	m
+<S-l>	win/init.vim	/^noremap <S-l> \$$/;"	m
+<Space>	init.vim	/^noremap <Space> i$/;"	m
+<Space>	win/init.vim	/^noremap <Space> i$/;"	m
+ClipboardPaste	init.vim	/^function! ClipboardPaste()$/;"	f
+ClipboardPaste	win/init.vim	/^function! ClipboardPaste()$/;"	f
+ClipboardYank	init.vim	/^function! ClipboardYank()$/;"	f
+ClipboardYank	win/init.vim	/^function! ClipboardYank()$/;"	f
+NERDTreeQuitOnOpen	init.vim	/^let NERDTreeQuitOnOpen=1$/;"	v
+NERDTreeQuitOnOpen	win/init.vim	/^let NERDTreeQuitOnOpen=1$/;"	v
+NERDTreeShowBookmarks	init.vim	/^let NERDTreeShowBookmarks=1$/;"	v
+autodate_format	init.vim	/^let autodate_format       = '%F'$/;"	v
+autodate_format	win/init.vim	/^let autodate_format       = '%Y-%m-%d %H:%M:%S'$/;"	v
+autodate_keyword_post	init.vim	/^let autodate_keyword_post = '\\.'$/;"	v
+autodate_keyword_post	win/init.vim	/^let autodate_keyword_post = '\\.'$/;"	v
+autodate_keyword_pre	init.vim	/^let autodate_keyword_pre  = '\\c@date '$/;"	v
+autodate_keyword_pre	win/init.vim	/^let autodate_keyword_pre  = '\\cLast updated:'$/;"	v
+autodate_lines	init.vim	/^let autodate_lines        = 1000$/;"	v
+b:current_syntax	neomutt_syntax.vim	/^let b:current_syntax = "neomuttrc"$/;"	v
+boolQuadGen	neomutt_syntax.vim	/^function! s:boolQuadGen(type, vars, deprecated)$/;"	f
+ciy	init.vim	/^nnoremap <silent> ciy ciw<C-r>0<ESC>:let@\/=@1<CR>:noh<CR>$/;"	m
+ciy	win/init.vim	/^nnoremap <silent> ciy ciw<C-r>0<ESC>:let@\/=@1<CR>:noh<CR>$/;"	m
+cy	init.vim	/^nnoremap <silent> cy   ce<C-r>0<ESC>:let@\/=@1<CR>:noh<CR>$/;"	m
+cy	init.vim	/^vnoremap <silent> cy   c<C-r>0<ESC>:let@\/=@1<CR>:noh<CR>$/;"	m
+cy	win/init.vim	/^nnoremap <silent> cy   ce<C-r>0<ESC>:let@\/=@1<CR>:noh<CR>$/;"	m
+cy	win/init.vim	/^vnoremap <silent> cy   c<C-r>0<ESC>:let@\/=@1<CR>:noh<CR>$/;"	m
+d	init.vim	/^onoremap <silent> d d:call ClipboardYank()<cr>$/;"	m
+d	init.vim	/^vnoremap <silent> d d:call ClipboardYank()<cr>$/;"	m
+d	win/init.vim	/^onoremap <silent> d d:call ClipboardYank()<cr>$/;"	m
+d	win/init.vim	/^vnoremap <silent> d d:call ClipboardYank()<cr>$/;"	m
+did_load_csvfiletype	filetype.vim	/^let did_load_csvfiletype=1$/;"	v
+did_load_csvfiletype	win/filetype.vim	/^let did_load_csvfiletype=1$/;"	v
+escapesConditionals	neomutt_syntax.vim	/^function! s:escapesConditionals(baseName, sequence, padding, conditional)$/;"	f
+filetype	init.vim	/^augroup filetype$/;"	a
+filetype	win/init.vim	/^augroup filetype$/;"	a
+filetypedetect	filetype.vim	/^augroup filetypedetect$/;"	a
+filetypedetect	win/filetype.vim	/^augroup filetypedetect$/;"	a
+g:NERDTreeBookmarksFile	init.vim	/^let g:NERDTreeBookmarksFile = '.NERDTreeBookmarks' $/;"	v
+g:NERDTreeDirArrowCollapsible	init.vim	/^let g:NERDTreeDirArrowCollapsible = '▼'$/;"	v
+g:NERDTreeDirArrowCollapsible	win/init.vim	/^let g:NERDTreeDirArrowCollapsible = '▼'$/;"	v
+g:NERDTreeDirArrowExpandable	init.vim	/^let g:NERDTreeDirArrowExpandable  = '+'$/;"	v
+g:NERDTreeDirArrowExpandable	win/init.vim	/^let g:NERDTreeDirArrowExpandable  = '+'$/;"	v
+g:NERDTreeDirArrows	init.vim	/^let g:NERDTreeDirArrows = 1$/;"	v
+g:NERDTreeDirArrows	win/init.vim	/^let g:NERDTreeDirArrows = 1$/;"	v
+g:Rout_more_colors	init.vim	/^let g:Rout_more_colors = 1$/;"	v
+g:Rout_more_colors	win/init.vim	/^let g:Rout_more_colors = 1$/;"	v
+g:airline#extensions#tabline#enabled	init.vim	/^let g:airline#extensions#tabline#enabled = 1$/;"	v
+g:airline#extensions#tabline#enabled	win/init.vim	/^let g:airline#extensions#tabline#enabled = 1$/;"	v
+g:airline_theme	init.vim	/^let g:airline_theme = 'simple'$/;"	v
+g:airline_theme	win/init.vim	/^let g:airline_theme = 'simple'$/;"	v
+g:ale_fortran_gcc_executable	init.vim	/^let g:ale_fortran_gcc_executable ='gfortran'$/;"	v
+g:ale_fortran_gcc_options	init.vim	/^let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'$/;"	v
+g:ale_fortran_gcc_use_free_form	init.vim	/^let g:ale_fortran_gcc_use_free_form = 1$/;"	v
+g:auto_ctags	init.vim	/^let g:auto_ctags = 1$/;"	v
+g:auto_ctags_filetype_mode	init.vim	/^let g:auto_ctags_filetype_mode = 1$/;"	v
+g:auto_ctags_set_tags_option	init.vim	/^let g:auto_ctags_set_tags_option = 1$/;"	v
+g:auto_ctags_tags_name	init.vim	/^let g:auto_ctags_tags_name = 'tags'$/;"	v
+g:auto_ctags_warn_once	init.vim	/^let g:auto_ctags_warn_once = 1$/;"	v
+g:auto_save	init.vim	/^let g:auto_save = 1  " enable AutoSave on Vim startup$/;"	v
+g:auto_save	win/init.vim	/^let g:auto_save = 1  " enable AutoSave on Vim startup$/;"	v
+g:auto_save_in_insert_mode	init.vim	/^let g:auto_save_in_insert_mode = 0$/;"	v
+g:auto_save_no_updatetime	init.vim	/^let g:auto_save_no_updatetime = 1$/;"	v
+g:auto_save_silent	init.vim	/^let g:auto_save_silent = 1  " do not display the auto-save notification$/;"	v
+g:auto_save_silent	win/init.vim	/^let g:auto_save_silent = 1  " do not display the auto-save notification$/;"	v
+g:deoplete#enable_at_startup	init.vim	/^let g:deoplete#enable_at_startup = 1$/;"	v
+g:deoplete#enable_at_startup	win/init.vim	/^let g:deoplete#enable_at_startup = 1$/;"	v
+g:previm_enable_realtime	init.vim	/^let g:previm_enable_realtime = 1$/;"	v
+g:previm_open_cmd	init.vim	/^let g:previm_open_cmd = ''$/;"	v
+g:python2_host_prog	init.vim	/^  let g:python2_host_prog='C:\\Python27'$/;"	v
+g:python3_host_prog	init.vim	/^  let g:python3_host_prog='C:\\Python38'$/;"	v
+g:python3_host_prog	init.vim	/^let g:python3_host_prog='\/usr\/bin\/python3'$/;"	v
+g:python3_host_prog	win/init.vim	/^  let g:python3_host_prog='C:\\Python38\\python.exe'$/;"	v
+g:python_host_prog	init.vim	/^let g:python_host_prog='\/usr\/bin\/python2'$/;"	v
+g:python_host_prog	win/init.vim	/^  let g:python_host_prog='C:\\Python27\\python.exe'$/;"	v
+g:rout_follow_colorscheme	init.vim	/^let g:rout_follow_colorscheme = 1$/;"	v
+g:rout_follow_colorscheme	win/init.vim	/^let g:rout_follow_colorscheme = 1$/;"	v
+g:tex_flavor	init.vim	/^let g:tex_flavor = 'ptex2pdf'$/;"	v
+g:tex_flavor	win/init.vim	/^let g:tex_flavor = 'latex'$/;"	v
+g:vim_tags_auto_generate	win/init.vim	/^let g:vim_tags_auto_generate = 1$/;"	v
+g:vim_tags_project_tags_command	init.vim	/^let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative --languages=Fortran `pwd` 2>\/dev\/null'$/;"	v
+g:vim_tags_project_tags_command	win/init.vim	/^let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~\/1_Projects\/tags --languages=Fortran ~\/1_Projects 2>\/dev\/null'$/;"	v
+g:vimtex_compiler_latexmk	init.vim	/^let g:vimtex_compiler_latexmk = {'build_dir': 'build'}$/;"	v
+g:vimtex_compiler_latexmk	win/init.vim	/^let g:vimtex_compiler_latexmk = {'build_dir': 'build'}$/;"	v
+g:vimtex_compiler_progname	init.vim	/^  let g:vimtex_compiler_progname = 'nvr'$/;"	v
+g:vimtex_compiler_progname	win/init.vim	/^  let g:vimtex_compiler_progname = 'nvr'$/;"	v
+g:vimtex_fold_envs	win/init.vim	/^  let g:vimtex_fold_envs = 0$/;"	v
+g:vimtex_quickfix_latexlog	win/init.vim	/^let g:vimtex_quickfix_latexlog = {$/;"	v
+g:vimtex_view_general_options	init.vim	/^  let g:vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'$/;"	v
+g:vimtex_view_general_options	init.vim	/^  let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'$/;"	v
+g:vimtex_view_general_options	win/init.vim	/^  let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'$/;"	v
+g:vimtex_view_general_options_latexmk	win/init.vim	/^  let g:vimtex_view_general_options_latexmk = '-reuse-instance'$/;"	v
+g:vimtex_view_general_viewer	init.vim	/^  let g:vimtex_view_general_viewer = 'C:\/02_Tools\/PDF\/SumatraPDF\/SumatraPDF'$/;"	v
+g:vimtex_view_general_viewer	init.vim	/^  let g:vimtex_view_general_viewer = 'okular'$/;"	v
+g:vimtex_view_general_viewer	win/init.vim	/^  let g:vimtex_view_general_viewer = 'C:\/02_Tools\/PDF\/SumatraPDF\/SumatraPDF'$/;"	v
+g:vimtex_view_method	win/init.vim	/^  let g:vimtex_view_method = 'zathura'$/;"	v
+ga	init.vim	/^nnoremap ga <Plug>(EasyAlign)$/;"	m
+ga	win/init.vim	/^nmap ga <Plug>(EasyAlign)$/;"	m
+genFunctions	neomutt_syntax.vim	/^function! s:genFunctions(functions)$/;"	f
+jj	win/init.vim	/^inoremap <silent> jj <ESC>$/;"	m
+p	init.vim	/^nnoremap <silent> p :call ClipboardPaste()<cr>p$/;"	m
+p	win/init.vim	/^nnoremap <silent> p :call ClipboardPaste()<cr>p$/;"	m
+s:cpo_save	neomutt_syntax.vim	/^let s:cpo_save = &cpo$/;"	v
+s:is_linux	init.vim	/^let s:is_linux = !s:is_win && !s:is_mac$/;"	v
+s:is_mac	init.vim	/^let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')$/;"	v
+s:is_win	init.vim	/^let s:is_win = has('win32') || has('win64')$/;"	v
+w!	init.vim	/^cnoremap w! w !sudo tee > \/dev\/null %<CR> :e!<CR>$/;"	m
+y	init.vim	/^onoremap <silent> y y:call ClipboardYank()<cr>$/;"	m
+y	init.vim	/^vnoremap <silent> y y:call ClipboardYank()<cr>$/;"	m
+y	win/init.vim	/^onoremap <silent> y y:call ClipboardYank()<cr>$/;"	m
+y	win/init.vim	/^vnoremap <silent> y y:call ClipboardYank()<cr>$/;"	m
