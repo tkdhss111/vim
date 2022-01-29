@@ -339,6 +339,7 @@ augroup filetype
   autocmd!
   " tex file (I always use latex)
   autocmd BufRead,BufNewFile *.tex set filetype=tex
+  autocmd BufRead,BufNewFile *.tex let g:auto_save_in_insert_mode = 0
 augroup END
 
 "
@@ -373,7 +374,7 @@ let autodate_lines        = 1000
 "
 let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
-let g:auto_save_in_insert_mode = 0
+
 " This will run :TagsGenerate after each save
 "let g:auto_save_postsave_hook = 'TagsGenerate'
 let g:auto_save_no_updatetime = 1
