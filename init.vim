@@ -460,7 +460,7 @@ let g:NERDTreeDirArrowCollapsible = '▼'
 
 "N.B. set full path to bookmarksfile instead of using ~ as home dir
 "Auto open bookmarks is slow for some reason
-let g:NERDTreeBookmarksFile = '.NERDTreeBookmarks' 
+let g:NERDTreeBookmarksFile = '~/.NERDTreeBookmarks' 
 let NERDTreeShowBookmarks=1
 
 "
