@@ -47,8 +47,10 @@ silent !setxkbmap -option "ctrl:nocaps"
 "
 noremap <C-h> ^
 noremap <C-l> $
-noremap <C-j> 20j
-noremap <C-k> 20k
+"noremap <C-j> 20j
+"noremap <C-k> 20k
+noremap <C-j> <C-f>
+noremap <C-k> <C-b>
 noremap <Space> i
 
 "
@@ -342,6 +344,7 @@ augroup filetype
   autocmd BufRead,BufNewFile *.tex let g:auto_save_in_insert_mode = 0
 augroup END
 
+
 "
 " NeoDebug
 "
@@ -376,7 +379,7 @@ let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
 
 " This will run :TagsGenerate after each save
-"let g:auto_save_postsave_hook = 'TagsGenerate'
+let g:auto_save_postsave_hook = 'Ctags'
 let g:auto_save_no_updatetime = 1
 
 "
@@ -414,6 +417,11 @@ let g:rout_follow_colorscheme = 1
 
 " R commands in R output are highlighted
 let g:Rout_more_colors = 1
+let r_syntax_folding = 0
+let R_auto_start = 1
+
+" Run entire sourve by 'Ctrl+a' by tkd
+au! FileType r nnoremap <C-a> :execute "normal \\aa"<Cr>
 
 "
 " vim theme
@@ -461,7 +469,7 @@ let g:NERDTreeDirArrowCollapsible = '▼'
 
 "N.B. set full path to bookmarksfile instead of using ~ as home dir
 "Auto open bookmarks is slow for some reason
-let g:NERDTreeBookmarksFile = '~/.NERDTreeBookmarks' 
+let g:NERDTreeBookmarksFile = '.NERDTreeBookmarks' 
 let NERDTreeShowBookmarks=1
 
 "
@@ -490,7 +498,7 @@ onoremap <silent> d d:call ClipboardYank()<cr>
 " ctags
 "
 set tags=./tags;,tags;
-let g:auto_ctags = 1
+let g:auto_ctags = 0
 "let g:auto_ctags_directory_list = ['.git']
 let g:auto_ctags_tags_name = 'tags'
 "let g:auto_ctags_tags_args = ['--tag-relative=yes', '--recurse=yes', '--sort=yes', 'pwd']
