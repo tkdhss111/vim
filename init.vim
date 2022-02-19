@@ -324,17 +324,13 @@ else
   let g:vimtex_compiler_progname = 'nvr'
   let g:vimtex_view_general_viewer = 'okular'
   let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-  "let g:latex_view_general_viewer = 'zathura'
-  "let g:vimtex_view_method = 'zathura'
-  "let g:vimtex_view_general_options = '--synctex-forward @line:1:@tex @pdf'
-  "Add the following to your ~/.config/zathura/zathurarc:
-  "set synctex true
-  "set synctex-editor-command "nvr --remote-silent +%{line} %{input}"
 endif
 
-"let g:tex_flavor = 'latex'
-let g:tex_flavor = 'ptex2pdf'
-"let g:tex_flavor = 'ptex2pdf -l -ot "-syctex=-1 -interaction=nonstopmode -recorder"'
+" Edit .latexmkrc
+"
+"$latex = 'lualatex -interaction=nonstopmode -synctex=-1 -cmdx -recorder %O %S';
+"
+let g:tex_flavor = 'latex'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
 " Disable overfull/underfull \hbox and all package warnings
 augroup filetype
@@ -342,8 +338,8 @@ augroup filetype
   " tex file (I always use latex)
   autocmd BufRead,BufNewFile *.tex set filetype=tex
   autocmd BufRead,BufNewFile *.tex let g:auto_save_in_insert_mode = 0
+  autocmd BufRead,BufNewFile *.tex :execute "normal \\ll"
 augroup END
-
 
 "
 " NeoDebug
@@ -387,15 +383,15 @@ let g:auto_save_no_updatetime = 1
 "
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-xnoremap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nnoremap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 " Align Fortran :: symbols
 vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
 
-"
+"===================================================================
 " R plugins
 "
 
@@ -421,9 +417,11 @@ let r_syntax_folding = 0
 let R_auto_start = 1
 
 " Run entire sourve by 'Ctrl+a' by tkd
-au! FileType r nnoremap <C-a> :execute "normal \\aa"<Cr>
+au FileType r nnoremap <C-a> :execute "normal \\aa"<Cr>
 
-"
+"au! FileType tex nnoremap <ESC> <ESC> <ESC>
+
+"====================================================================
 " vim theme
 "
 syntax enable
