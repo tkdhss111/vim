@@ -1,3 +1,4 @@
+
 " Last Updated:2019-07-24 23:09:50
 " by H. Takeda, Ph.D.
 
@@ -12,17 +13,26 @@
 " Go to the bottom 'Henshu' botton and add entry, then press all six entries
 " with Escape and 'Nolify IME after cancellation' by 'triple' clicking cells.
 
-"
-" Install pynvim msgpack
-"pip2 install --upgrade pynvim msgpack
-"pip3 install --upgrade pynvim msgpack
-
 " Install python2 and 3 using the commands: choco install python2, python3
 " and set the following path before dein is used.
+
+" Define OS variable
+let s:is_win = has('win32') || has('win64')
+let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')
+            \ || system('uname') =~? '^darwin')
+let s:is_linux = !s:is_win && !s:is_mac
+
+let g:python_host_prog='/usr/bin/python2'
+let g:python3_host_prog='/usr/bin/python3'
+
 " Windows only:
-if (has('win32') || has('win64') || has('win32unix'))
-  let g:python_host_prog='C:\Python27\python.exe'
-  let g:python3_host_prog='C:\Python38\python.exe'
+if s:is_win
+  let g:python2_host_prog='C:\Python27'
+  let g:python3_host_prog='C:\Users\hss\AppData\Local\Programs\Python\Python310\python.exe'
+elseif s:is_mac
+"pip3 uninstall neovim
+"pip3 uninstall pynvim
+"pip3 install pynvim
 endif
 
 "
@@ -31,18 +41,14 @@ endif
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 "
-" Key swich
-"
-nnoremap ; :
-
-inoremap ; :
-inoremap : ;
-
-"
 " Move to the beginning and end of the line
 "
-noremap <S-h> ^
-noremap <S-l> $
+noremap <C-h> ^
+noremap <C-l> $
+"noremap <C-j> 20j
+"noremap <C-k> 20k
+noremap <C-j> <C-f>
+noremap <C-k> <C-b>
 noremap <Space> i
 
 "
@@ -58,7 +64,7 @@ vnoremap <A-k> :m '<-2<CR>gv=gv
 "
 " Get back to normal mode from insert mode by typing 'jj' or 'kk' or 'hh'
 "
-inoremap <silent> jj <ESC>
+"inoremap <silent> jj <ESC>
 
 "
 " Return from terminal by ESC
@@ -73,10 +79,10 @@ nnoremap <C-c> :cd %:p:h<CR>:pwd<CR>
 "
 " Change window by typing 'Ctrl-hjkl'
 "
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+nnoremap <S-h> <C-w>h
+nnoremap <S-j> <C-w>j
+nnoremap <S-k> <C-w>k
+nnoremap <S-l> <C-w>l
 
 "
 " Change yanked strings to a word under the cursol
@@ -88,21 +94,23 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 "
 " Set F9 to make run
 "
-:nmap <F1> :q<CR>
-:nmap <F3> :make debug<CR>
-:nmap <F6> :make release<CR>
-:nmap <F4> :make clean_debug<CR> :make debugrun<CR>
-:nmap <F5> :make clean_release<CR> :make run<CR>
+:nnoremap <F1> :make clean<CR>
+:nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
+:nnoremap <F3> :make debug<CR>
+:nnoremap <F6> :make release<CR>
+:nnoremap <F4> :make test<CR>
+:nnoremap <F5> :make run<CR>
+:nnoremap <F9> :sp<CR>
+:nnoremap <F11> :vsp<CR>:terminal<CR>i 
+:nnoremap <F12> :sp<CR>:terminal<CR>i 
 
 "
 " Useful set commands
 "
 set autochdir
 set number
-"set relativenumber
 set cursorline
 set showmatch
-"set autoindent
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -117,7 +125,6 @@ set incsearch
 set inccommand=split
 set noswapfile
 set clipboard+=unnamedplus
-"set termguicolors
 set background=dark
 set viminfo='10
 "set relativenumber
@@ -125,18 +132,8 @@ set viminfo='10
 "set termguicolors
 
 "
-" Make
-"
-:set makeprg=make\ -f\ makefile*
-:set shellpipe=3>
-
-"
 " Shougo's dein
 "
-" Uninstall package
-"call map(dein#check_clean(), "delete(v:val, 'rf')") 
-"call dein#recache_runtimepath()
-
 if &compatible
 
   set nocompatible
@@ -144,16 +141,16 @@ if &compatible
 endif
 
 " Add the dein installation directory into runtimepath
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.cache/dein.vim
 
 " Latex
-set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
+set runtimepath+=~/.cache/tex_quickrun.vim
 
-if dein#load_state('~/.cache/dein')
+if dein#load_state('~/.cache/dein.vim')
 
-  call dein#begin('~/.cache/dein')
+  call dein#begin('~/.cache/dein.vim')
 
-  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.cache/dein.vim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('Shougo/denite.nvim')
 
@@ -167,6 +164,37 @@ if dein#load_state('~/.cache/dein')
 " taketa begin -------------------------------------------
 
   "
+  " (Python) 
+  "
+  call dein#add('deoplete-plugins/deoplete-jedi')
+
+  "
+  " Cmake syntax
+  "
+  call dein#add('pboettch/vim-cmake-syntax')
+
+  "
+  " ALE --Asynchronous Lint Engine-- 
+  "
+  call dein#add('dense-analysis/ale')
+
+  "
+  " vim-syntastic 
+  "
+  "call dein#add('vim-syntastic/syntastic')
+
+  "
+  " Previm
+  "
+  call dein#add('tyru/open-browser.vim')
+  call dein#add('kannokanno/previm')
+
+  "
+  " Neodebug
+  "
+  call dein#add('cpiger/NeoDebug')
+
+  "
   " Latex (vimtex and vim - quickrun)
   "
   call dein#add('lervag/vimtex')
@@ -177,6 +205,11 @@ if dein#load_state('~/.cache/dein')
   "
   call dein#add('tpope/vim-fugitive')
   call dein#add('tpope/vim-rhubarb')
+
+  "
+  " sudo.vim
+  "
+  call dein#add('vim-scripts/sudo.vim')
 
   "
   " Smartchr
@@ -196,7 +229,8 @@ if dein#load_state('~/.cache/dein')
   "
   " vim-tags
   "
-  call dein#add('szw/vim-tags')
+  "call dein#add('szw/vim-tags')
+  call dein#add('soramugi/auto-ctags.vim')
 
   "
   " CSV 
@@ -250,29 +284,50 @@ if dein#load_state('~/.cache/dein')
 endif
 
 "
+" ALE for Fortran linting
+"
+let g:ale_fortran_gcc_use_free_form = 1
+let g:ale_fortran_gcc_executable ='gfortran'
+let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
+
+"
+" Previm
+"
+let g:previm_open_cmd = ''
+let g:previm_enable_realtime = 1
+
+"
+" Openbrowser
+"
+" N.B. @ mark conflicts with macro run
+"
+"nmap @ <Nop>
+"nmap @g <Plug>(openbrowser-search)
+"nmap <C-@> <Plug>(openbrowser-smart-search)
+"nnoremap @a :<C-u>execute 'OpenBrowserSearch -alc' expand('<cWORD>')<CR>
+"nnoremap @d :<C-u>execute 'OpenBrowserSearch -dev' expand('<cWORD>')<CR>
+"let g:openbrowser_search_engines = {
+"    \ 'alc': 'http://eow.alc.co.jp/{query}/UTF-8/',
+"    \ 'dev': 'https://dev.classmethod.jp/?s={query}',
+"    \ }
+
+"
 " Latex (vimtex and vim - quickrun)
 " Install neovim-remote with the command: pip3 install neovim-remote
 " use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
 if (has('win32') || has('win64') || has('win32unix'))
-  let g:vimtex_view_general_viewer = 'C:/02_Tools/PDF/SumatraPDF/SumatraPDF'
+  let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-  let g:vimtex_view_general_options_latexmk = '-reuse-instance'
+
 else
-  let g:vimtex_fold_envs = 0
   let g:vimtex_compiler_progname = 'nvr'
   let g:vimtex_view_method = 'zathura'
 endif
 
-let g:tex_flavor = 'latex'
+"let g:tex_flavor = 'latex'
+let g:tex_flavor = 'ptex2pdf'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
 " Disable overfull/underfull \hbox and all package warnings
-let g:vimtex_quickfix_latexlog = {
-      \ 'overfull' : 0,
-      \ 'underfull' : 0,
-      \ 'packages' : {
-      \   'default' : 0,
-      \ },
-      \}
 augroup filetype
   autocmd!
   " tex file (I always use latex)
@@ -280,17 +335,31 @@ augroup filetype
 augroup END
 
 "
+" NeoDebug
+"
+set mouse=a
+"let g:termdebug_wide = 163
+
+"
 " Smartchr
 "
 "inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
-inoremap <expr> , smartchr#loop(', ', ',')
+"inoremap <expr> + smartchr#loop(' + ', '+')
+"inoremap <expr> - smartchr#loop(' - ', '-', '--')
+"inoremap <expr> , smartchr#loop(', ', ',', '')
 
 "
 " autodate.vim
-"
-let autodate_keyword_pre  = '\cLast updated:'
+" N.B. commas does not work
+" Hisashi Takeda Ph.D. []
+"let autodate_keyword_pre  = '\cHisashi Takeda Ph.D. ['
+let autodate_keyword_pre  = '\c@date '
 let autodate_keyword_post = '\.'
-let autodate_format       = '%Y-%m-%d %H:%M:%S'
+let autodate_format       = '%F'
+"let autodate_start_line   = -1
+let autodate_lines        = 1000
+"let autodate_format       = '%0m %d, %Y'
+"let autodate_format       = '%F %Ex %x %X %B %Om %d, %Y'
 
 "
 " vim-auto-save
@@ -303,10 +372,10 @@ let g:auto_save_silent = 1  " do not display the auto-save notification
 "
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
+xnoremap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
+nnoremap ga <Plug>(EasyAlign)
 
 " Align Fortran :: symbols
 vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
@@ -316,13 +385,13 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 "
 
 " remapping the basic :: send line
-nmap , <Plug>RDSendLine
+nnoremap , <Plug>RDSendLine
 
 " remapping selection :: send multiple lines
-vmap , <Plug>RDSendSelection
+vnoremap , <Plug>RDSendSelection
 
 " remapping selection :: send multiple lines + echo lines
-vmap ,e <Plug>RESendSelection
+vnoremap ,e <Plug>RESendSelection
 
 " settings :: Nvim-R plugin
 " R output is highlighted with current colorscheme
@@ -375,6 +444,11 @@ let g:NERDTreeDirArrows = 1
 let g:NERDTreeDirArrowExpandable  = '+'
 let g:NERDTreeDirArrowCollapsible = '▼'
 
+"N.B. set full path to bookmarksfile instead of using ~ as home dir
+"Auto open bookmarks is slow for some reason
+let g:NERDTreeBookmarksFile = '.NERDTreeBookmarks' 
+let NERDTreeShowBookmarks=1
+
 "
 " Turn off paste mode when leaving insert
 "
@@ -400,6 +474,10 @@ onoremap <silent> d d:call ClipboardYank()<cr>
 "
 " ctags
 "
+set tags=tags;/
 let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command = 'ctags -R --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran ~/1_Projects 2>/dev/null'
+let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative --languages=Fortran `pwd` 2>/dev/null'
+"let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran `pwd` 2>/dev/null'
 
+" 保存時にsudo権限で無理やり保存
+cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
