@@ -28,7 +28,7 @@ let g:python3_host_prog='/usr/bin/python3'
 " Windows only:
 if s:is_win
   let g:python2_host_prog='C:\Python27'
-  let g:python3_host_prog='C:\Python38'
+  let g:python3_host_prog='~\AppData\Local\Programs\Python\Python310\python.exe'
 elseif s:is_mac
 "pip3 uninstall neovim
 "pip3 uninstall pynvim
@@ -40,7 +40,7 @@ endif
 "
 :au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
-silent !setxkbmap -option "ctrl:nocaps"
+"silent !setxkbmap -option "ctrl:nocaps"
 
 "
 " Move to the beginning and end of the line
@@ -141,6 +141,11 @@ if &compatible
   set nocompatible
 
 endif
+
+
+
+
+
 
 " Add the dein installation directory into runtimepath
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
@@ -318,7 +323,7 @@ let g:previm_enable_realtime = 1
 " Install neovim-remote with the command: pip3 install neovim-remote
 " use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
 if (has('win32') || has('win64') || has('win32unix'))
-  let g:vimtex_view_general_viewer = 'C:/02_Tools/PDF/SumatraPDF/SumatraPDF'
+  let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
 else
   let g:vimtex_compiler_progname = 'nvr'
