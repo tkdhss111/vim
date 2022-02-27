@@ -1,4 +1,3 @@
-
 " Last Updated:2019-07-24 23:09:50
 " by H. Takeda, Ph.D.
 
@@ -52,6 +51,22 @@ noremap <C-l> $
 noremap <C-j> <C-f>
 noremap <C-k> <C-b>
 noremap <Space> i
+
+" *** Japanese input instruction by tkdhss
+" Mozc settings - General - keymap style - Kotoeri
+" Add new entry in:
+" ===================================================
+" Mozc keymap editor
+" ===================================================
+" Mode           Key        Command
+" ---------------------------------------------------
+" Direct input   Ctrl Space Activate IME
+" Direct input   Escape     Cancel and deactivate IME
+" Precomposition Escape     Cancel and deactivate IME 
+" Composition    Escape     Cancel and deactivate IME 
+" Conversion     Escape     Cancel and deactivate IME 
+" ===================================================
+" Use gnome-tweek to swap Capslock and Ctrl
 
 "
 " Move line up and down with alt + j and k
@@ -141,11 +156,6 @@ if &compatible
   set nocompatible
 
 endif
-
-
-
-
-
 
 " Add the dein installation directory into runtimepath
 set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
@@ -333,7 +343,7 @@ endif
 
 " Edit .latexmkrc
 "
-"$latex = 'lualatex -interaction=nonstopmode -synctex=-1 -cmdx -recorder %O %S';
+"$latex = 'lualatex -interaction=nonstopmode -synctex=-1 -recorder %O %S';
 "
 let g:tex_flavor = 'latex'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
@@ -342,8 +352,7 @@ augroup filetype
   autocmd!
   " tex file (I always use latex)
   autocmd BufRead,BufNewFile *.tex set filetype=tex
-  autocmd BufRead,BufNewFile *.tex let g:auto_save_in_insert_mode = 0
-  autocmd BufRead,BufNewFile *.tex :execute "normal \\ll"
+  "autocmd BufRead,BufNewFile *.tex :execute "normal \\ll"
 augroup END
 
 "
@@ -376,8 +385,9 @@ let autodate_lines        = 1000
 "
 " vim-auto-save
 "
-let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save = 0  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
+let g:auto_save_in_insert_mode = 0
 
 " This will run :TagsGenerate after each save
 let g:auto_save_postsave_hook = 'Ctags'
@@ -517,3 +527,4 @@ let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archive
 
 " 保存時にsudo権限で無理やり保存
 cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
+
