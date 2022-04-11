@@ -68,9 +68,9 @@ setxkbmap -print
 sed -i '/MYKEYMAPJP/d' ~/.bashrc
 sed -i '/MYKEYMAPUS/d' ~/.bashrc
 cat <<'EOF'>>~/.bashrc
-setxkbmap -option
-#setxkbmap jp -option MYKEYMAPJP:keymapjp
-setxkbmap us -option MYKEYMAPUS:keymapus
+setxkbmap -option ctrl:nocaps
+setxkbmap jp -option MYKEYMAPJP:keymapjp
+#setxkbmap us -option MYKEYMAPUS:keymapus
 setxkbmap -print | grep MYKEYMAP
 EOF
 
