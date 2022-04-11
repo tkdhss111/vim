@@ -49,11 +49,17 @@ nvim -v | grep 'NVIM v'
 echo 'alias vim=nvim             # added by: '${USER} >> /home/${USER}/.profile
 echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.profile
 
-# Shougo's dein (Vim/Neovim plugin manager)
-sudo apt install curl -y
-curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-# For example, we just use `~/.cache/dein` as installation directory
-sh ./installer.sh ~/.cache/dein
+#
+# VundleVim
+#
+ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+#
+# NERDTree Fonts
+#
+git clone https://github.com/ryanoasis/nerd-fonts.git
+cd nerd-fonts
+sh ./install.sh
 
 #
 # Setup configulation files
@@ -67,13 +73,9 @@ INI=/home/${USER}/.config/nvim/init.vim
 echo ${INI}
 
 if [ -e ${INI} ]; then
-
   mv ${INI} ${INI}_till${NOW}
-
 else
-
   mkdir -p /home/${USER}/.config/nvim
-
 fi	
 
 sudo chmod -R 777 /home/${USER}/.config/
@@ -94,20 +96,20 @@ cd ~/.vim/pack/tpope/start
 
 sudo apt install git -y
 
-# repeat.vim
-git clone https://tpope.io/vim/repeat.git
-
-# surround.vim
-git clone https://tpope.io/vim/surround.git
-vim -u NONE -c "helptags surround/doc" -c q
-
-# speeddating.vim
-git clone https://tpope.io/vim/speeddating.git
-vim -u NONE -c "helptags speeddating/doc" -c q
-
-# NERDtree
-git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
-echo 'map <C-n> :NERDTreeToggle<CR>' >> ${INI}
+## repeat.vim
+#git clone https://tpope.io/vim/repeat.git
+#
+## surround.vim
+#git clone https://tpope.io/vim/surround.git
+#vim -u NONE -c "helptags surround/doc" -c q
+#
+## speeddating.vim
+#git clone https://tpope.io/vim/speeddating.git
+#vim -u NONE -c "helptags speeddating/doc" -c q
+#
+## NERDtree
+#git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+#echo 'map <C-n> :NERDTreeToggle<CR>' >> ${INI}
 
 #
 # Neomutt mailer
@@ -173,9 +175,6 @@ sudo apt install ssh-askpass -y
 #eval `ssh-agent`
 #ssh-add -t 1w ~/.ssh/id_rsa
 #
-## keymap
-#setxkbmap us -option MYKEYMAP:keymap
-#
 #EOF
 
 cat <<'EOF'>>~/.bashrc
@@ -189,7 +188,7 @@ else
 fi
 
 alias ssh='ssh -Y'
-setxkbmap us -option MYKEYMAP:keymap
+setxkbmap jp -option MYKEYMAP:keymap
 EOF
 
 #
