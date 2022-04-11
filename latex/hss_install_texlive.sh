@@ -1,3 +1,9 @@
+sudo apt update
+sudo apt install texlive-full -y
+# that's it
+
+
+
 sudo apt install wget perl-tk -y
 
 #wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
