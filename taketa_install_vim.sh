@@ -8,6 +8,10 @@
 
 USER=$USER
 
+sudo apt install xfce4-terminal -y
+sudo update-alternatives --config x-terminal-emulator
+# Select terminal manually
+
 #
 # Need to purge regular vim installed as default to prevent
 # root from using .vimrc
