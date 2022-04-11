@@ -28,6 +28,7 @@ let g:python3_host_prog='/usr/bin/python3'
 if s:is_win
   let g:python2_host_prog='C:\Python27'
   let g:python3_host_prog='~\AppData\Local\Programs\Python\Python310\python.exe'
+  set makeprg=make\ -f\ makefile.win
 elseif s:is_mac
 "pip3 uninstall neovim
 "pip3 uninstall pynvim
@@ -46,10 +47,10 @@ endif
 "
 noremap <C-h> ^
 noremap <C-l> $
-"noremap <C-j> 20j
-"noremap <C-k> 20k
-noremap <C-j> <C-f>
-noremap <C-k> <C-b>
+noremap <C-j> 20j
+noremap <C-k> 20k
+"noremap <C-j> <C-f>
+"noremap <C-k> <C-b>
 noremap <Space> i
 
 " *** Japanese input instruction by tkdhss
@@ -111,15 +112,23 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 "
 " Set F9 to make run
 "
-:nnoremap <F1> :make clean<CR>
-:nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
-:nnoremap <F3> :make debug<CR>
-:nnoremap <F6> :make release<CR>
-:nnoremap <F4> :make test<CR>
-:nnoremap <F5> :make run<CR>
 :nnoremap <F9> :sp<CR>
-:nnoremap <F11> :vsp<CR>:terminal<CR>i 
-:nnoremap <F12> :sp<CR>:terminal<CR>i 
+:nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i 
+:nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
+
+if s:is_win
+:nnoremap <F1> :w <CR> :AsyncRun make -f makefile.win clean<CR>
+:nnoremap <F3> :w <CR> :AsyncRun make -f makefile.win debug<CR>
+:nnoremap <F6> :w <CR> :AsyncRun make -f makefile.win release<CR>
+:nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR>
+:nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR>
+else
+:nnoremap <F1> :w <CR> :AsyncRun make clean<CR>
+:nnoremap <F3> :w <CR> :AsyncRun make debug<CR>
+:nnoremap <F6> :w <CR> :AsyncRun make release<CR>
+:nnoremap <F4> :w <CR> :AsyncRun make test<CR>
+:nnoremap <F5> :w <CR> :AsyncRun make run<CR>
+endif
 
 "
 " Useful set commands
@@ -142,163 +151,162 @@ set incsearch
 set inccommand=split
 set noswapfile
 set clipboard+=unnamedplus
-set background=dark
 set viminfo='10
+"set background=dark
 "set relativenumber
 "set autoindent
 "set termguicolors
 
 "
-" Shougo's dein
+" Vundle
 "
-if &compatible
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-  set nocompatible
-
-endif
-
-" Add the dein installation directory into runtimepath
-set runtimepath+=~/.cache/dein/repos/github.com/Shougo/dein.vim
+Plugin 'VundleVim/Vundle.vim'
 
 " Latex
 set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
 
-if dein#load_state('~/.cache/dein')
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'Shougo/denite.nvim'
 
-  call dein#begin('~/.cache/dein')
+if !has('nvim')
 
-  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
-  call dein#add('Shougo/deoplete.nvim')
-  call dein#add('Shougo/denite.nvim')
+  Plugin 'roxma/nvim-yarp'
+  Plugin 'roxma/vim-hug-neovim-rpc'
 
-  if !has('nvim')
-
-    call dein#add('roxma/nvim-yarp')
-    call dein#add('roxma/vim-hug-neovim-rpc')
-
-  endif
+endif
 
 " taketa begin -------------------------------------------
 
-  "
-  " (Python) 
-  "
-  call dein#add('deoplete-plugins/deoplete-jedi')
+"
+" Ashyncrun 
+"
+Plugin 'skywind3000/asyncrun.vim'
 
-  "
-  " Cmake syntax
-  "
-  call dein#add('pboettch/vim-cmake-syntax')
+"
+" (Python) 
+"
+Plugin 'deoplete-plugins/deoplete-jedi'
 
-  "
-  " ALE --Asynchronous Lint Engine-- 
-  "
-  call dein#add('dense-analysis/ale')
+"
+" Cmake syntax
+"
+Plugin 'pboettch/vim-cmake-syntax'
 
-  "
-  " vim-syntastic 
-  "
-  "call dein#add('vim-syntastic/syntastic')
+"
+" ALE --Asynchronous Lint Engine-- 
+"
+Plugin 'dense-analysis/ale'
 
-  "
-  " Previm
-  "
-  call dein#add('tyru/open-browser.vim')
-  call dein#add('kannokanno/previm')
+"
+" vim-syntastic 
+"
+"Plugin 'vim-syntastic/syntastic'
 
-  "
-  " Neodebug
-  "
-  call dein#add('cpiger/NeoDebug')
+"
+" Previm
+"
+Plugin 'tyru/open-browser.vim'
+Plugin 'kannokanno/previm'
 
-  "
-  " Latex (vimtex and vim - quickrun)
-  "
-  call dein#add('lervag/vimtex')
-  call dein#add('thinca/vim-quickrun')
+"
+" Neodebug
+"
+Plugin 'cpiger/NeoDebug'
 
-  "
-  " vim-fugitive and vim-rhubarb
-  "
-  call dein#add('tpope/vim-fugitive')
-  call dein#add('tpope/vim-rhubarb')
+"
+" Latex (vimtex and vim - quickrun)
+"
+Plugin 'lervag/vimtex'
+Plugin 'thinca/vim-quickrun'
 
-  "
-  " sudo.vim
-  "
-  call dein#add('vim-scripts/sudo.vim')
+"
+" vim-fugitive and vim-rhubarb
+"
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
 
-  "
-  " Smartchr
-  "
-  call dein#add('kana/vim-smartchr')
+"
+" sudo.vim
+"
+Plugin 'vim-scripts/sudo.vim'
 
-  "
-  " autodate.vim
-  "
-  call dein#add('vim-scripts/autodate.vim') 
+"
+" Smartchr
+"
+Plugin 'kana/vim-smartchr'
 
-  "
-  " sakhnik/nvim-gdb
-  "
-  call dein#add('sakhnik/nvim-gdb')
+"
+" autodate.vim
+"
+Plugin 'vim-scripts/autodate.vim' 
 
-  "
-  " vim-tags
-  "
-  "call dein#add('szw/vim-tags')
-  call dein#add('soramugi/auto-ctags.vim')
+"
+" sakhnik/nvim-gdb
+"
+Plugin 'sakhnik/nvim-gdb'
 
-  "
-  " CSV 
-  "
-  call dein#add('chrisbra/csv.vim')
+"
+" vim-tags
+"
+"Plugin 'szw/vim-tags'
+Plugin 'soramugi/auto-ctags.vim'
 
-  "
-  " vim-auto-save
-  "
-  call dein#add('vim-scripts/vim-auto-save')
-  
-  "
-  " vim-easy-align
-  "
-  call dein#add('junegunn/vim-easy-align')
+"
+" CSV 
+"
+Plugin 'chrisbra/csv.vim'
 
-  "
-  " Enhanced multi-file search for Vim
-  "
-  call dein#add('wincent/ferret')
+"
+" vim-auto-save
+"
+Plugin 'vim-scripts/vim-auto-save'
 
-  "
-  " NERDTree
-  "
-  call dein#add('scrooloose/nerdtree')
+"
+" vim-easy-align
+"
+Plugin 'junegunn/vim-easy-align'
 
-  "
-  " vim theme
-  "
-  call dein#add('jdkanani/vim-material-theme')
-  call dein#add('jacoborus/tender.vim')
-  "call dein#add('tomasr/colors/molokai.vim')
-  call dein#add('vim-airline/vim-airline')
-  call dein#add('vim-airline/vim-airline-themes')
-  
-  "
-  " R plugins
-  "
-  call dein#add('jalvesaq/Nvim-R')
-  call dein#add('gaalcaras/ncm-R')
-  call dein#add('ncm2/ncm2')
-  call dein#add('sirver/UltiSnips')
-  call dein#add('ncm2/ncm2-ultisnips')
+"
+" Enhanced multi-file search for Vim
+"
+Plugin 'wincent/ferret'
 
-" taketa ends --------------------------------------------
+"
+" NERDTree
+"
+Plugin 'preservim/nerdtree'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'ryanoasis/vim-devicons'
 
-  call dein#remote_plugins()
-  call dein#end()
-  call dein#save_state()
+"
+" vim theme
+"
+Plugin 'jdkanani/vim-material-theme'
+Plugin 'jacoborus/tender.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
-endif
+"
+" R plugins
+"
+Plugin 'jalvesaq/Nvim-R'
+Plugin 'gaalcaras/ncm-R'
+Plugin 'ncm2/ncm2'
+Plugin 'sirver/UltiSnips'
+Plugin 'ncm2/ncm2-ultisnips'
+
+call vundle#end()
+filetype plugin indent on
+
+"
+" Asyncrun
+"
+:let g:asyncrun_open = 5
 
 "
 " ALE for Fortran linting
@@ -310,7 +318,8 @@ let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
 "
 " Previm
 "
-let g:previm_open_cmd = ''
+autocmd BufNewFile,BufRead *.md set filetype=markdown
+let g:previm_open_cmd = 'firefox'
 let g:previm_enable_realtime = 1
 
 "
@@ -332,9 +341,18 @@ let g:previm_enable_realtime = 1
 " Latex (vimtex and vim - quickrun)
 " Install neovim-remote with the command: pip3 install neovim-remote
 " use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
+
+" Inverse search for SumatraPDF in Windows
+"cmd /c for /F %i in ('type C:\Users\hss\AppData\Local\Temp\vimtexserver.txt') do nvr --servername %i -c 'normal! zzzv' +'%l' '%f'
+function! s:write_server_name() abort
+  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
+  call writefile([v:servername], nvim_server_file)
+endfunction
+
 if (has('win32') || has('win64') || has('win32unix'))
   let g:vimtex_view_general_viewer = 'SumatraPDF'
   let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+  autocmd FileType tex call s:write_server_name()
 else
   let g:vimtex_compiler_progname = 'nvr'
   let g:vimtex_view_general_viewer = 'okular'
@@ -353,6 +371,8 @@ augroup filetype
   " tex file (I always use latex)
   autocmd BufRead,BufNewFile *.tex set filetype=tex
   "autocmd BufRead,BufNewFile *.tex :execute "normal \\ll"
+  autocmd BufRead,BufNewFile *.tex :nnoremap <C-p> :make default<CR>
+  autocmd BufRead,BufNewFile *.tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
 augroup END
 
 "
@@ -385,13 +405,13 @@ let autodate_lines        = 1000
 "
 " vim-auto-save
 "
-let g:auto_save = 0  " enable AutoSave on Vim startup
+let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
-let g:auto_save_in_insert_mode = 0
+let g:auto_save_in_insert_mode = 1
 
 " This will run :TagsGenerate after each save
-let g:auto_save_postsave_hook = 'Ctags'
-let g:auto_save_no_updatetime = 1
+"let g:auto_save_postsave_hook = 'Ctags'
+let g:auto_save_no_updatetime = 0
 
 "
 " vim-easy-align
@@ -431,7 +451,7 @@ let g:Rout_more_colors = 1
 let r_syntax_folding = 0
 let R_auto_start = 1
 
-" Run entire sourve by 'Ctrl+a' by tkd
+" Run entire sourve by 'Ctrl+a' by hss
 au FileType r nnoremap <C-a> :execute "normal \\aa"<Cr>
 
 "au! FileType tex nnoremap <ESC> <ESC> <ESC>
@@ -451,39 +471,6 @@ syntax enable
 
 " Use deoplete.
 let g:deoplete#enable_at_startup = 1
-
-"
-" NERDTree settings (Ctrl+n to open NERDTree)
-"
-let NERDTreeQuitOnOpen=1
-nnoremap <silent><C-n> :NERDTreeToggle<CR>
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-" NERDTress File highlighting
-"function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-" exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-" exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'0'
-"endfunction
-"call NERDTreeHighlightFile('f90',  'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('mod',  'blue',    'none', '#3366FF', '#151515')
-"call NERDTreeHighlightFile('chp',  'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('o',    'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('a',    'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('csv',  'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('html', 'yellow',  'none', 'yellow',  '#151515')
-"call NERDTreeHighlightFile('styl', 'cyan',    'none', 'cyan',    '#151515')
-"call NERDTreeHighlightFile('css',  'cyan',    'none', 'cyan',    '#151515')
-"call NERDTreeHighlightFile('txt',  'Red',     'none', 'red',     '#151515')
-"call NERDTreeHighlightFile('js',   'Red',     'none', '#ffa500', '#151515')
-"call NERDTreeHighlightFile('db',   'Magenta', 'none', '#ff00ff', '#151515')
-let g:NERDTreeDirArrows = 1
-let g:NERDTreeDirArrowExpandable  = '+'
-let g:NERDTreeDirArrowCollapsible = '▼'
-
-"N.B. set full path to bookmarksfile instead of using ~ as home dir
-"Auto open bookmarks is slow for some reason
-let g:NERDTreeBookmarksFile = '.NERDTreeBookmarks' 
-let NERDTreeShowBookmarks=1
 
 "
 " Turn off paste mode when leaving insert
@@ -527,4 +514,49 @@ let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archive
 
 " 保存時にsudo権限で無理やり保存
 cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
+
+"
+" NERDTree settings (Ctrl+n to open NERDTree)
+"
+let NERDTreeQuitOnOpen=1
+nnoremap <silent><C-n> :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let g:NERDTreeDirArrows = 1
+let NERDTreeShowBookmarks=1
+if s:is_win
+  let g:NERDTreeBookmarksFile = 'C:/Users/hss/.NERDTreeBookmarks' 
+else
+  let g:NERDTreeBookmarksFile = '/home/hss/.NERDTreeBookmarks' 
+endif
+
+" change the default dictionary mappings for file extension matches
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tex'] = 'TEX'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['exe'] = 'EXE'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['f90'] = 'F90'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['csv'] = 'CSV'
+let s:brown = "905532"
+let s:aqua =  "3AFFDB"
+let s:blue = "689FB6"
+let s:darkBlue = "44788E"
+let s:purple = "834F79"
+let s:lightPurple = "834F79"
+let s:red = "AE403F"
+let s:beige = "F5C06F"
+let s:yellow = "F09F17"
+let s:orange = "D4843E"
+let s:darkOrange = "F16529"
+let s:pink = "CB6F6F"
+let s:salmon = "EE6E73"
+let s:green = "8FAA54"
+let s:lightGreen = "31B53E"
+let s:white = "FFFFFF"
+let s:rspec_red = 'FE405F'
+let s:git_orange = 'F54D27'
+let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
+let g:NERDTreeExtensionHighlightColor['tex'] = s:lightPurple
+let g:NERDTreeExtensionHighlightColor['exe'] = s:lightGreen
+let g:NERDTreeExtensionHighlightColor['f90'] = s:blue
+let g:NERDTreeExtensionHighlightColor['csv'] = s:beige
 
