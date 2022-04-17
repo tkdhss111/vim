@@ -24,6 +24,9 @@ xkb_symbols "keymapjp" {
     replace key <ESC> { [ Zenkaku_Hankaku, Kanji ] }; //EscをZenkaku_Hankakuに変更
     replace key <AC10> {[ colon, plus ] };            //コロンとセミコロンを交換
     replace key <AC11> {[ semicolon, asterisk ] };    //コロンとセミコロンを交換
+    replace key <HENK> {[ Right, Right ] };          //変換キーを右に変更
+    replace key <MUHE> {[ Left, Left ] };            //無変換キーを左に変更
+    replace key <HKTG> {[ BackSpace, BackSpace ] };  //ひらがなキーをBSに変更
   };
 EOF
 
