@@ -24,21 +24,19 @@ let s:is_linux = !s:is_win && !s:is_mac
 let g:python_host_prog='/usr/bin/python2'
 let g:python3_host_prog='/usr/bin/python3'
 
+"
+" Font
+" For windows, write the followings in ginit.vim
+"C:\Users\hss\AppData\Local\nvim\ginit.vim
+"Guifont! MyricaM\ M:h14
+set guifont=MyricaM\ M:h14
+
 " Windows only:
 if s:is_win
   let g:python2_host_prog='C:\Python27'
   let g:python3_host_prog='~\AppData\Local\Programs\Python\Python310\python.exe'
   set makeprg=make\ -f\ makefile.win
-elseif s:is_mac
-"pip3 uninstall neovim
-"pip3 uninstall pynvim
-"pip3 install pynvim
 endif
-
-"
-" Font
-"
-set guifont=Myrica\ M:h13
 
 "
 " Get back to the last edited line when file is opened.
