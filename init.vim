@@ -24,6 +24,12 @@ let s:is_linux = !s:is_win && !s:is_mac
 let g:python_host_prog='/usr/bin/python2'
 let g:python3_host_prog='/usr/bin/python3'
 
+set encoding=utf-8
+set fileencodings=utf-8
+set fileformats=unix,dos,mac
+
+lang en_US.UTF-8
+
 "
 " Font
 " For windows, write the followings in ginit.vim
@@ -193,6 +199,9 @@ Plugin 'skywind3000/asyncrun.vim'
 " (Python) 
 "
 Plugin 'deoplete-plugins/deoplete-jedi'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'nvie/vim-flake8'
 
 "
 " Cmake syntax
@@ -376,6 +385,12 @@ augroup filetype
   autocmd BufRead,BufNewFile *.tex :nnoremap <C-p> :make default<CR>
   autocmd BufRead,BufNewFile *.tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
 augroup END
+
+"
+" Python
+"
+let python_highlight_all=1
+syntax on
 
 "
 " NeoDebug
