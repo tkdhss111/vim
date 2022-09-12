@@ -35,7 +35,7 @@ lang en_US.UTF-8
 " For windows, write the followings in ginit.vim
 "C:\Users\hss\AppData\Local\nvim\ginit.vim
 "Guifont! MyricaM\ M:h14
-set guifont=MyricaM\ M:h14
+"set guifont=MyricaM\ M:h14
 
 " Windows only:
 if s:is_win
@@ -157,7 +157,7 @@ set shiftround
 set wrapscan
 set incsearch
 set inccommand=split
-set noswapfile
+"set noswapfile
 set clipboard+=unnamedplus
 set viminfo='10
 "set background=dark
@@ -310,6 +310,7 @@ Plugin 'gaalcaras/ncm-R'
 Plugin 'ncm2/ncm2'
 Plugin 'sirver/UltiSnips'
 Plugin 'ncm2/ncm2-ultisnips'
+"Plugin 'ycm-core/YouCompleteMe '
 
 call vundle#end()
 filetype plugin indent on
@@ -422,9 +423,9 @@ let autodate_lines        = 1000
 "
 " vim-auto-save
 "
-let g:auto_save = 1  " enable AutoSave on Vim startup
+let g:auto_save = 0  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
-let g:auto_save_in_insert_mode = 1
+let g:auto_save_in_insert_mode = 0
 
 " This will run :TagsGenerate after each save
 "let g:auto_save_postsave_hook = 'Ctags'
