@@ -201,20 +201,20 @@ Plugin 'tpope/vim-dadbod'
 Plugin 'kristijanhusak/vim-dadbod-ui'
 Plugin 'kristijanhusak/vim-dadbod-completion'
 
-au FileType dbout setlocal nofoldenable
-au FileType dbui let g:auto_save = 1
-
+"autocmd FileType sql let g:auto_save = 0
+autocmd FileType dbout setlocal nofoldenable
+let g:dbs = [
+      \{"name":"test", "url":"mysql://hss@stats.dip.jp:3306/test"},
+      \{"name":"ba", "url":"mysql://tiu@stats.dip.jp:3306/ba"}
+      \]
 let g:db_ui_show_database_icon = 1
-
-let g:db_ui_save_location = '~/.vim/bundle/vim-dadbod-ui'
-
+let g:db_ui_default_query = 'select * from "{table}" limit 10'
 let g:db_ui_table_helpers = {
 \   'mysql': {
-\     'Select * From': 'SELECT * FROM {table} LIMIT 5',
 \     'Desc': 'DESC {table}',
 \     'Show Create Table': 'SHOW CREATE TABLE {table}',
 \     'Show Full Columns From': 'SHOW FULL COLUMNS FROM {table}',
-\     'Selct Count(*)': 'SELECT COUNT(*) FROM {table}'
+\     'Select Count(*)': 'SELECT COUNT(*) FROM {table}'
 \   }
 \ }
 
