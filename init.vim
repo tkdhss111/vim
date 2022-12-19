@@ -204,6 +204,7 @@ Plugin 'kristijanhusak/vim-dadbod-completion'
 "autocmd FileType sql let g:auto_save = 0
 autocmd FileType dbout setlocal nofoldenable
 let g:dbs = [
+      \{"name":"sqlite", "url":"sqlite://var/www/stats.dip.jp/admin/fortran-www.db"},
       \{"name":"admin", "url":"mysql://admin@stats.dip.jp:3306/admin"},
       \{"name":"test", "url":"mysql://hss@stats.dip.jp:3306/test"},
       \{"name":"ba", "url":"mysql://tiu@stats.dip.jp:3306/ba"}
