@@ -136,6 +136,8 @@ else
 :nnoremap <F6> :w <CR> :AsyncRun make release<CR>
 :nnoremap <F4> :w <CR> :AsyncRun make test<CR>
 :nnoremap <F5> :w <CR> :AsyncRun make run<CR>
+:nnoremap <F7> :w <CR> :AsyncRun make showquizho<CR>
+:nnoremap <F8> :w <CR> :AsyncRun make showlecho<CR>
 endif
 
 "
@@ -164,6 +166,7 @@ set viminfo='10
 "set relativenumber
 "set autoindent
 "set termguicolors
+:set colorcolumn=80
 
 "
 " Vundle
@@ -189,6 +192,31 @@ if !has('nvim')
 endif
 
 " taketa begin -------------------------------------------
+
+
+"
+" vim-dadbod, ui and completion 
+"
+Plugin 'tpope/vim-dadbod'
+Plugin 'kristijanhusak/vim-dadbod-ui'
+Plugin 'kristijanhusak/vim-dadbod-completion'
+
+au FileType dbout setlocal nofoldenable
+au FileType dbui let g:auto_save = 1
+
+let g:db_ui_show_database_icon = 1
+
+let g:db_ui_save_location = '~/.vim/bundle/vim-dadbod-ui'
+
+let g:db_ui_table_helpers = {
+\   'mysql': {
+\     'Select * From': 'SELECT * FROM {table} LIMIT 5',
+\     'Desc': 'DESC {table}',
+\     'Show Create Table': 'SHOW CREATE TABLE {table}',
+\     'Show Full Columns From': 'SHOW FULL COLUMNS FROM {table}',
+\     'Selct Count(*)': 'SELECT COUNT(*) FROM {table}'
+\   }
+\ }
 
 "
 " Ashyncrun 
@@ -218,11 +246,16 @@ Plugin 'dense-analysis/ale'
 "
 "Plugin 'vim-syntastic/syntastic'
 
+""
+"" Previm
+""
+"Plugin 'tyru/open-browser.vim'
+"Plugin 'kannokanno/previm'
+
 "
-" Previm
+" Markdown Viewer
 "
-Plugin 'tyru/open-browser.vim'
-Plugin 'kannokanno/previm'
+Plugin 'iamcco/markdown-preview.nvim'
 
 "
 " Neodebug
@@ -423,9 +456,9 @@ let autodate_lines        = 1000
 "
 " vim-auto-save
 "
-let g:auto_save = 0  " enable AutoSave on Vim startup
+let g:auto_save = 1  " enable AutoSave on Vim startup
 let g:auto_save_silent = 1  " do not display the auto-save notification
-let g:auto_save_in_insert_mode = 0
+let g:auto_save_in_insert_mode = 1
 
 " This will run :TagsGenerate after each save
 "let g:auto_save_postsave_hook = 'Ctags'
@@ -470,7 +503,17 @@ let r_syntax_folding = 0
 let R_auto_start = 1
 
 " Run entire sourve by 'Ctrl+a' by hss
-au FileType r nnoremap <C-a> :execute "normal \\aa"<Cr>
+au FileType r nnoremap <F5> :execute "normal \\aa"<Cr>
+
+"
+" Python
+"
+au BufNewFile,BufRead *.py
+    \ set expandtab       |" replace tabs with spaces
+    \ set autoindent      |" copy indent when starting a new line
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
 
 "au! FileType tex nnoremap <ESC> <ESC> <ESC>
 
