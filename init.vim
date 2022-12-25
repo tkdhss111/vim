@@ -24,6 +24,9 @@ let s:is_linux = !s:is_win && !s:is_mac
 let g:python_host_prog='/usr/bin/python2'
 let g:python3_host_prog='/usr/bin/python3'
 
+"
+" File Encoding and Formats
+"
 set encoding=utf-8
 set fileencodings=utf-8,cp932 " 文字コードをUTF-8，Shift-JISの順に試す
 set fileformats=unix,dos,mac
@@ -47,7 +50,7 @@ endif
 "
 " Get back to the last edited line when file is opened.
 "
-:au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+:autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 
 "
@@ -120,25 +123,42 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 "
 " Set F9 to make run
 "
-:nnoremap <F9> :sp<CR>
-:nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i 
-:nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
+nnoremap <F9> :sp<CR>
+nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i 
+nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
 
 if s:is_win
-:nnoremap <F1> :w <CR> :AsyncRun make -f makefile.win clean<CR>
-:nnoremap <F3> :w <CR> :AsyncRun make -f makefile.win debug<CR>
-:nnoremap <F6> :w <CR> :AsyncRun make -f makefile.win release<CR>
-:nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR>
-:nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR>
+  nnoremap <F1> :w <CR> :AsyncRun make -f makefile.win clean<CR>
+  nnoremap <F3> :w <CR> :AsyncRun make -f makefile.win debug<CR>
+  nnoremap <F6> :w <CR> :AsyncRun make -f makefile.win release<CR>
+  nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR>
+  nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR>
 else
-:nnoremap <F1> :w <CR> :AsyncRun make clean<CR>
-:nnoremap <F3> :w <CR> :AsyncRun make debug<CR>
-:nnoremap <F6> :w <CR> :AsyncRun make release<CR>
-:nnoremap <F4> :w <CR> :AsyncRun make test<CR>
-:nnoremap <F5> :w <CR> :AsyncRun make run<CR>
-:nnoremap <F7> :w <CR> :AsyncRun make showquizho<CR>
-:nnoremap <F8> :w <CR> :AsyncRun make showlecho<CR>
+  nnoremap <F1> :w <CR> :AsyncRun make clean<CR>
+  nnoremap <F3> :w <CR> :AsyncRun make debug<CR>
+  nnoremap <F6> :w <CR> :AsyncRun make release<CR>
+  nnoremap <F4> :w <CR> :AsyncRun make test<CR>
+  nnoremap <F5> :w <CR> :AsyncRun make run<CR>
+  nnoremap <F7> :w <CR> :AsyncRun make showquizho<CR>
+  nnoremap <F8> :w <CR> :AsyncRun make showlecho<CR>
 endif
+
+"
+" Clipboard
+"
+function! ClipboardYank()
+  call system('xclip -i -selection clipboard', @@)
+endfunction
+
+function! ClipboardPaste()
+  let @@ = system('xclip -o -selection clipboard')
+endfunction
+
+vnoremap <silent> y y:call ClipboardYank()<CR>
+vnoremap <silent> d d:call ClipboardYank()<CR>
+nnoremap <silent> p :call ClipboardPaste()<CR>p
+onoremap <silent> y y:call ClipboardYank()<CR>
+onoremap <silent> d d:call ClipboardYank()<CR>
 
 "
 " Useful set commands
@@ -191,12 +211,14 @@ let autodate_format       = '%F'
 let autodate_lines        = 1000
 "let autodate_format       = '%0m %d, %Y'
 "let autodate_format       = '%F %Ex %x %X %B %Om %d, %Y'
+
 "
 " Auto Completion (deoplete and denite)
 "
 
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'Shougo/denite.nvim'
+let g:deoplete#enable_at_startup = 1
 
 if !has('nvim')
   Plugin 'roxma/nvim-yarp'
@@ -327,7 +349,7 @@ set mouse=a
 Plugin 'soramugi/auto-ctags.vim'
 
 "
-" CSV Viewr
+" CSV Viewer
 "
 Plugin 'chrisbra/csv.vim'
 
@@ -340,7 +362,6 @@ let g:auto_save = 1
 let g:auto_save_silent = 1
 let g:auto_save_in_insert_mode = 1
 let g:auto_save_no_updatetime = 0
-
 " Run Ctags command after each save
 "let g:auto_save_postsave_hook = 'Ctags'
 
@@ -377,6 +398,10 @@ Plugin 'jdkanani/vim-material-theme'
 Plugin 'jacoborus/tender.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+
+syntax enable
+let g:airline_theme = 'simple'
+let g:airline#extensions#tabline#enabled = 1
 
 call vundle#end()
 filetype plugin indent on
@@ -469,43 +494,10 @@ augroup END
 "" Use markdown-preview instead of using Nvim-R function
 "let R_openhtml = 0
 
-"====================================================================
-" vim theme
-"
-syntax enable
-"colorscheme tender 
-let g:airline_theme = 'simple'
-let g:airline#extensions#tabline#enabled = 1
-"let g:molokai_original = 1
-"let g:rehash256 = 1
-
-filetype plugin indent on
-syntax enable
-
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-
 "
 " Turn off paste mode when leaving insert
 "
 autocmd InsertLeave * set nopaste
-
-"
-" Clipboard
-"
-function! ClipboardYank()
-  call system('xclip -i -selection clipboard', @@)
-endfunction
-
-function! ClipboardPaste()
-  let @@ = system('xclip -o -selection clipboard')
-endfunction
-
-vnoremap <silent> y y:call ClipboardYank()<cr>
-vnoremap <silent> d d:call ClipboardYank()<cr>
-nnoremap <silent> p :call ClipboardPaste()<cr>p
-onoremap <silent> y y:call ClipboardYank()<cr>
-onoremap <silent> d d:call ClipboardYank()<cr>
 
 "
 " ctags
