@@ -351,7 +351,31 @@ Plugin 'soramugi/auto-ctags.vim'
 "
 " CSV Viewer
 "
+" Interact wit airline-theme
 Plugin 'chrisbra/csv.vim'
+
+let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
+let g:csv_hiHeader = 'Pmenu'
+let g:csv_start = 1
+let g:csv_end = 100
+let g:csv_autocmd_arrange	= 1
+let g:csv_autocmd_arrange_size = 1024*1024
+let g:csv_highlight_column = 'y'
+filetype plugin on
+
+"
+" Theme
+"
+" vim-airline implements csv.vim
+"
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+let g:airline_theme = 'papercolor'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#csv#enabled = 1
+let g:airline#extensions#csv#column_display = 'Name'
+syntax enable
 
 "
 " Document Auto-Save
@@ -390,18 +414,6 @@ Plugin 'wincent/ferret'
 Plugin 'preservim/nerdtree'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'ryanoasis/vim-devicons'
-
-"
-" Theme
-"
-Plugin 'jdkanani/vim-material-theme'
-Plugin 'jacoborus/tender.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-syntax enable
-let g:airline_theme = 'simple'
-let g:airline#extensions#tabline#enabled = 1
 
 call vundle#end()
 filetype plugin indent on
