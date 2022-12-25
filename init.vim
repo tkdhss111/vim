@@ -25,7 +25,7 @@ let g:python_host_prog='/usr/bin/python2'
 let g:python3_host_prog='/usr/bin/python3'
 
 set encoding=utf-8
-set fileencodings=utf-8
+set fileencodings=utf-8,cp932 " 文字コードをUTF-8，Shift-JISの順に試す
 set fileformats=unix,dos,mac
 
 lang en_US.UTF-8
@@ -143,14 +143,16 @@ endif
 "
 " Useful set commands
 "
-set autochdir
-set number
+set number         " 行番号表示
+set autochdir      " カレントディレクリに自動設定
+set smartindent    " インデント自動挿入
+set shiftwidth=2   " smartindentの空白数
+set softtabstop=0  " タブで挿入する空白数
+set tabstop=2
+set clipboard+=unnamedplus    " Vimの無名レジスタとクリップボードを連携
+set colorcolumn=74            " 指定するカラムに赤い縦線を表示
 set cursorline
 set showmatch
-set smartindent
-set tabstop=2
-set shiftwidth=2
-set softtabstop=0
 set expandtab
 set smarttab
 set shiftround
@@ -160,49 +162,60 @@ set wrapscan
 set incsearch
 set inccommand=split
 "set noswapfile
-set clipboard+=unnamedplus
 set viminfo='10
 "set background=dark
 "set relativenumber
 "set autoindent
 "set termguicolors
-:set colorcolumn=80
 
-"
-" Vundle
-"
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+"
+" Plugin Manager
+"
 Plugin 'VundleVim/Vundle.vim'
 
-" Latex
-set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
+"
+" Time Stamp
+"
+Plugin 'vim-scripts/autodate.vim' 
+
+" N.B. commas does not work
+let autodate_keyword_pre  = '\c@date '
+let autodate_keyword_post = '\.'
+let autodate_format       = '%F'
+"let autodate_start_line   = -1
+let autodate_lines        = 1000
+"let autodate_format       = '%0m %d, %Y'
+"let autodate_format       = '%F %Ex %x %X %B %Om %d, %Y'
+"
+" Auto Completion (deoplete and denite)
+"
 
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'Shougo/denite.nvim'
 
 if !has('nvim')
-
   Plugin 'roxma/nvim-yarp'
   Plugin 'roxma/vim-hug-neovim-rpc'
-
 endif
 
-" taketa begin -------------------------------------------
-
-
 "
-" vim-dadbod, ui and completion 
+" Database Tool(vim-dadbod, ui and completion)
 "
 Plugin 'tpope/vim-dadbod'
 Plugin 'kristijanhusak/vim-dadbod-ui'
 Plugin 'kristijanhusak/vim-dadbod-completion'
 
-"autocmd FileType sql let g:auto_save = 0
-autocmd FileType dbout setlocal nofoldenable
+augroup sql
+  autocmd!
+  "autocmd FileType sql let g:auto_save = 0
+  autocmd FileType dbout setlocal nofoldenable
+augroup END
+
 let g:dbs = [
       \{"name":"sqlite", "url":"sqlite://var/www/stats.dip.jp/admin/fortran-www.db"},
       \{"name":"admin", "url":"mysql://admin@stats.dip.jp:3306/admin"},
@@ -224,54 +237,68 @@ let g:db_ui_table_helpers = {
 " Ashyncrun 
 "
 Plugin 'skywind3000/asyncrun.vim'
+let g:asyncrun_open = 5
 
 "
-" (Python) 
+" R
+"
+Plugin 'jalvesaq/Nvim-R'
+Plugin 'gaalcaras/ncm-R'
+Plugin 'ncm2/ncm2'
+Plugin 'sirver/UltiSnips'
+Plugin 'ncm2/ncm2-ultisnips'
+
+"
+" Python
 "
 Plugin 'deoplete-plugins/deoplete-jedi'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
+Plugin 'jalvesaq/vimcmdline'
+augroup py
+  autocmd!
+  "autocmd BufRead,BufNewFile *.py :execute "normal \\s"<CR>
+  autocmd BufRead,BufNewFile *.py :nnoremap <F5> :execute "normal \\f"<CR>
+  autocmd BufNewFile,BufRead *.py
+    \ set expandtab       |" replace tabs with spaces
+    \ set autoindent      |" copy indent when starting a new line
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+  "autocmd! FileType tex nnoremap <ESC> <ESC> <ESC>
+  autocmd BufNewFile,BufRead *.py let python_highlight_all=1
+  syntax on
+augroup END
 
 "
-" Cmake syntax
+" Cmake Syntax Highlighting
 "
 Plugin 'pboettch/vim-cmake-syntax'
 
 "
-" ALE --Asynchronous Lint Engine-- 
+" Lint
 "
 Plugin 'dense-analysis/ale'
-
-"
-" vim-syntastic 
-"
-"Plugin 'vim-syntastic/syntastic'
-
-""
-"" Previm
-""
-"Plugin 'tyru/open-browser.vim'
-"Plugin 'kannokanno/previm'
+let g:ale_fortran_gcc_use_free_form = 1
+let g:ale_fortran_gcc_executable ='gfortran'
+let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
 
 "
 " Markdown Viewer
 "
 Plugin 'iamcco/markdown-preview.nvim'
+let g:mkdp_auto_start = 1
 
 "
-" Neodebug
-"
-Plugin 'cpiger/NeoDebug'
-
-"
-" Latex (vimtex and vim - quickrun)
+" Latex
 "
 Plugin 'lervag/vimtex'
 Plugin 'thinca/vim-quickrun'
+set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
 
 "
-" vim-fugitive and vim-rhubarb
+" Git
 "
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
@@ -287,87 +314,72 @@ Plugin 'vim-scripts/sudo.vim'
 Plugin 'kana/vim-smartchr'
 
 "
-" autodate.vim
-"
-Plugin 'vim-scripts/autodate.vim' 
-
-"
-" sakhnik/nvim-gdb
+" Debagger (sakhnik/nvim-gdb)
 "
 Plugin 'sakhnik/nvim-gdb'
+Plugin 'cpiger/NeoDebug'
+set mouse=a
+"let g:termdebug_wide = 163
 
 "
-" vim-tags
+" Tags
 "
-"Plugin 'szw/vim-tags'
 Plugin 'soramugi/auto-ctags.vim'
 
 "
-" CSV 
+" CSV Viewr
 "
 Plugin 'chrisbra/csv.vim'
 
 "
-" vim-auto-save
+" Document Auto-Save
 "
 Plugin 'vim-scripts/vim-auto-save'
 
+let g:auto_save = 1
+let g:auto_save_silent = 1
+let g:auto_save_in_insert_mode = 1
+let g:auto_save_no_updatetime = 0
+
+" Run Ctags command after each save
+"let g:auto_save_postsave_hook = 'Ctags'
+
 "
-" vim-easy-align
+" Word Alignment
 "
 Plugin 'junegunn/vim-easy-align'
 
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Align Fortran :: symbols
+vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
+
 "
-" Enhanced multi-file search for Vim
+" Enhanced Multi-File Search
 "
 Plugin 'wincent/ferret'
 
 "
-" NERDTree
+" File Manager
 "
 Plugin 'preservim/nerdtree'
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'ryanoasis/vim-devicons'
 
 "
-" vim theme
+" Theme
 "
 Plugin 'jdkanani/vim-material-theme'
 Plugin 'jacoborus/tender.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-"
-" R plugins
-"
-Plugin 'jalvesaq/Nvim-R'
-Plugin 'gaalcaras/ncm-R'
-Plugin 'ncm2/ncm2'
-Plugin 'sirver/UltiSnips'
-Plugin 'ncm2/ncm2-ultisnips'
-"Plugin 'ycm-core/YouCompleteMe '
-
 call vundle#end()
 filetype plugin indent on
-
-"
-" Asyncrun
-"
-:let g:asyncrun_open = 5
-
-"
-" ALE for Fortran linting
-"
-let g:ale_fortran_gcc_use_free_form = 1
-let g:ale_fortran_gcc_executable ='gfortran'
-let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
-
-"
-" Previm
-"
-autocmd BufNewFile,BufRead *.md set filetype=markdown
-let g:previm_open_cmd = 'firefox'
-let g:previm_enable_realtime = 1
 
 "
 " Openbrowser
@@ -396,16 +408,6 @@ function! s:write_server_name() abort
   call writefile([v:servername], nvim_server_file)
 endfunction
 
-if (has('win32') || has('win64') || has('win32unix'))
-  let g:vimtex_view_general_viewer = 'SumatraPDF'
-  let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-  autocmd FileType tex call s:write_server_name()
-else
-  let g:vimtex_compiler_progname = 'nvr'
-  let g:vimtex_view_general_viewer = 'okular'
-  let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-endif
-
 " Edit .latexmkrc
 "
 "$latex = 'lualatex -interaction=nonstopmode -synctex=-1 -recorder %O %S';
@@ -413,71 +415,24 @@ endif
 let g:tex_flavor = 'latex'
 let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
 " Disable overfull/underfull \hbox and all package warnings
-augroup filetype
+"augroup filetype
+augroup tex
   autocmd!
-  " tex file (I always use latex)
   autocmd BufRead,BufNewFile *.tex set filetype=tex
-  "autocmd BufRead,BufNewFile *.tex :execute "normal \\ll"
-  autocmd BufRead,BufNewFile *.tex :nnoremap <C-p> :make default<CR>
-  autocmd BufRead,BufNewFile *.tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
+  "autocmd FileType tex :execute "normal \\ll"
+  autocmd FileType tex :nnoremap <C-p> :make default<CR>
+  autocmd FileType tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
+  autocmd FileType tex let g:auto_save = 0
+  if (has('win32') || has('win64') || has('win32unix'))
+    let g:vimtex_view_general_viewer = 'SumatraPDF'
+    let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+    autocmd FileType tex call s:write_server_name()
+  else
+    let g:vimtex_compiler_progname = 'nvr'
+    let g:vimtex_view_general_viewer = 'okular'
+    let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+  endif
 augroup END
-
-"
-" Python
-"
-let python_highlight_all=1
-syntax on
-
-"
-" NeoDebug
-"
-set mouse=a
-"let g:termdebug_wide = 163
-
-"
-" Smartchr
-"
-"inoremap <expr> = smartchr#loop(' = ', '=', ' == ')
-"inoremap <expr> + smartchr#loop(' + ', '+')
-"inoremap <expr> - smartchr#loop(' - ', '-', '--')
-"inoremap <expr> , smartchr#loop(', ', ',', '')
-
-"
-" autodate.vim
-" N.B. commas does not work
-" Hisashi Takeda Ph.D. []
-"let autodate_keyword_pre  = '\cHisashi Takeda Ph.D. ['
-let autodate_keyword_pre  = '\c@date '
-let autodate_keyword_post = '\.'
-let autodate_format       = '%F'
-"let autodate_start_line   = -1
-let autodate_lines        = 1000
-"let autodate_format       = '%0m %d, %Y'
-"let autodate_format       = '%F %Ex %x %X %B %Om %d, %Y'
-
-"
-" vim-auto-save
-"
-let g:auto_save = 1  " enable AutoSave on Vim startup
-let g:auto_save_silent = 1  " do not display the auto-save notification
-let g:auto_save_in_insert_mode = 1
-
-" This will run :TagsGenerate after each save
-"let g:auto_save_postsave_hook = 'Ctags'
-let g:auto_save_no_updatetime = 0
-
-"
-" vim-easy-align
-"
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" Align Fortran :: symbols
-vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
 
 "===================================================================
 " R plugins
@@ -504,20 +459,15 @@ let g:Rout_more_colors = 1
 let r_syntax_folding = 0
 let R_auto_start = 1
 
-" Run entire sourve by 'Ctrl+a' by hss
-au FileType r nnoremap <F5> :execute "normal \\aa"<Cr>
+augroup r
+  autocmd!
+  " Run entire sourve by 'Ctrl+a' by hss
+  autocmd FileType r nnoremap <F5> :execute "normal \\aa"<Cr>
+  autocmd BufRead,BufNewFile *.Rmd nnoremap <F4> :execute "normal \\kh"<Cr>
+augroup END
 
-"
-" Python
-"
-au BufNewFile,BufRead *.py
-    \ set expandtab       |" replace tabs with spaces
-    \ set autoindent      |" copy indent when starting a new line
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-
-"au! FileType tex nnoremap <ESC> <ESC> <ESC>
+"" Use markdown-preview instead of using Nvim-R function
+"let R_openhtml = 0
 
 "====================================================================
 " vim theme
@@ -581,12 +531,12 @@ cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
 "
 " NERDTree settings (Ctrl+n to open NERDTree)
 "
-let NERDTreeQuitOnOpen=1
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+let NERDTreeQuitOnOpen=1
 let g:NERDTreeDirArrows = 1
-let NERDTreeShowBookmarks=1
+let NERDTreeShowBookmarks = 1
 if s:is_win
   let g:NERDTreeBookmarksFile = 'C:/Users/hss/.NERDTreeBookmarks' 
 else
@@ -618,8 +568,11 @@ let s:white = "FFFFFF"
 let s:rspec_red = 'FE405F'
 let s:git_orange = 'F54D27'
 let g:NERDTreeExtensionHighlightColor = {} " this line is needed to avoid error
-let g:NERDTreeExtensionHighlightColor['tex'] = s:lightPurple
+let g:NERDTreeExtensionHighlightColor['tex'] = s:yellow
 let g:NERDTreeExtensionHighlightColor['exe'] = s:lightGreen
 let g:NERDTreeExtensionHighlightColor['f90'] = s:blue
 let g:NERDTreeExtensionHighlightColor['csv'] = s:beige
+
+" ToDo: not working
+"autocmd BufNewFile *.sh put = '#!/usr/bin/bash'
 
