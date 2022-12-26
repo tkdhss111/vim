@@ -188,6 +188,10 @@ set viminfo='10
 "set autoindent
 "set termguicolors
 
+" 挿入モードからEscでノーマルモードにするとき，
+" 少し時間がかかる場合に設定
+set ttimeoutlen=50
+
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -275,7 +279,6 @@ Plugin 'ncm2/ncm2-ultisnips'
 "
 Plugin 'deoplete-plugins/deoplete-jedi'
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'jalvesaq/vimcmdline'
 augroup py
@@ -294,17 +297,35 @@ augroup py
 augroup END
 
 "
-" Cmake Syntax Highlighting
+" Linter
 "
-Plugin 'pboettch/vim-cmake-syntax'
 
+"" DEPRECATED in favor of ALE
+"Plugin 'vim-syntastic/syntastic'
 "
-" Lint
-"
+"" LatexのALEによる構文エラーチェックのときに抑制したい注意表示を記入
+"let g:syntastic_quiet_messages = { "regex": [
+"        \ '\mpossible unwanted space at "{"',
+"        \ 'SOME OTHER SYNTASTIC MESSAGE TO BE QUIET',
+"        \ ] }
+
 Plugin 'dense-analysis/ale'
+
+" エラー箇所をハイライト
+let g:ale_set_highlights = 1
+
+" Fortran
 let g:ale_fortran_gcc_use_free_form = 1
 let g:ale_fortran_gcc_executable ='gfortran'
 let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
+
+" LaTeX linter choices: chktex(default) or lacheck
+"let g:ale_lacheck_executable = 'lacheck'
+
+"
+" Cmake Syntax Highlighting
+"
+Plugin 'pboettch/vim-cmake-syntax'
 
 "
 " Markdown Viewer
@@ -351,30 +372,50 @@ Plugin 'soramugi/auto-ctags.vim'
 "
 " CSV Viewer
 "
-" Interact wit airline-theme
 Plugin 'chrisbra/csv.vim'
 
-let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
+augroup csv
+  autocmd!
+  autocmd BufRead,BufNewFile *.csv set filetype=csv
+
+  " 自動整列が繰り返し実行されるため自動保存を解除
+  autocmd FileType csv let g:auto_save = 0
+
+  " スクロールしてもヘッダーが見えるように画面分割
+  autocmd FileType csv nnoremap <F5> :CSVHeaderToggle<CR> 
+augroup END
+
 let g:csv_hiHeader = 'Pmenu'
-let g:csv_start = 1
-let g:csv_end = 100
-let g:csv_autocmd_arrange	= 1
-let g:csv_autocmd_arrange_size = 1024*1024
-let g:csv_highlight_column = 'y'
+let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
+let g:csv_autocmd_arrange	= 1 " 自動整列
+let g:csv_autocmd_arrange_size = 1024*1024 " 整列時間節約のため1MB分に限定
+let g:csv_start = 1 " 時間短縮のため，この行から
+let g:csv_end = 100 " この行までを分析しデリミタを決定
+let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
 filetype plugin on
 
 "
 " Theme
 "
-" vim-airline implements csv.vim
-"
+Plugin 'NLKNguyen/papercolor-theme'
+set t_Co=256
+set background=light
+
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
 let g:airline_theme = 'papercolor'
+
+" ヘッダーバー(tabline)を表示
 let g:airline#extensions#tabline#enabled = 1
+
+" csv.vimと連携しフッターバーにカラム名とカラム番号/全カラム数を表示
 let g:airline#extensions#csv#enabled = 1
 let g:airline#extensions#csv#column_display = 'Name'
+
+" ALEによるリント
+let g:airline#extensions#ale#enabled = 1
+
 syntax enable
 
 "
@@ -417,6 +458,9 @@ Plugin 'ryanoasis/vim-devicons'
 
 call vundle#end()
 filetype plugin indent on
+
+" Declare colorscheme after plugin manager
+colorscheme PaperColor
 
 "
 " Openbrowser
@@ -500,6 +544,10 @@ augroup r
   autocmd!
   " Run entire sourve by 'Ctrl+a' by hss
   autocmd FileType r nnoremap <F5> :execute "normal \\aa"<Cr>
+augroup END
+
+augroup rmd
+  autocmd!
   autocmd BufRead,BufNewFile *.Rmd nnoremap <F4> :execute "normal \\kh"<Cr>
 augroup END
 
