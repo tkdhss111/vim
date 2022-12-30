@@ -12,9 +12,6 @@
 " Go to the bottom 'Henshu' botton and add entry, then press all six entries
 " with Escape and 'Nolify IME after cancellation' by 'triple' clicking cells.
 
-" Install python2 and 3 using the commands: choco install python2, python3
-" and set the following path before dein is used.
-
 " Define OS variable
 let s:is_win = has('win32') || has('win64')
 let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')
@@ -24,23 +21,25 @@ let s:is_linux = !s:is_win && !s:is_mac
 let g:python_host_prog='/usr/bin/python2'
 let g:python3_host_prog='/usr/bin/python3'
 
-"
-" File Encoding and Formats
+" 編集後の自動init.vimのリロード
+"autocmd! bufwritepost $MYVIMRC source %
+
+"========================================================================
+" 文字コードとファイルフォーマット
 "
 set encoding=utf-8
 set fileencodings=utf-8,cp932 " 文字コードをUTF-8，Shift-JISの順に試す
 set fileformats=unix,dos,mac
-
 lang en_US.UTF-8
 
+"========================================================================
+" フォント
 "
-" Font
 " For windows, write the followings in ginit.vim
 "C:\Users\hss\AppData\Local\nvim\ginit.vim
 "Guifont! MyricaM\ M:h14
 "set guifont=MyricaM\ M:h14
 
-" Windows only:
 if s:is_win
   let g:python2_host_prog='C:\Python27'
   let g:python3_host_prog='~\AppData\Local\Programs\Python\Python310\python.exe'
@@ -50,8 +49,7 @@ endif
 "
 " Get back to the last edited line when file is opened.
 "
-:autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 "
 " Move to the beginning and end of the line
@@ -64,22 +62,6 @@ noremap <C-k> 20k
 "noremap <C-k> <C-b>
 noremap <Space> i
 
-" *** Japanese input instruction by tkdhss
-" Mozc settings - General - keymap style - Kotoeri
-" Add new entry in:
-" ===================================================
-" Mozc keymap editor
-" ===================================================
-" Mode           Key        Command
-" ---------------------------------------------------
-" Direct input   Ctrl Space Activate IME
-" Direct input   Escape     Cancel and deactivate IME
-" Precomposition Escape     Cancel and deactivate IME 
-" Composition    Escape     Cancel and deactivate IME 
-" Conversion     Escape     Cancel and deactivate IME 
-" ===================================================
-" Use gnome-tweek to swap Capslock and Ctrl
-
 "
 " Move line up and down with alt + j and k
 "
@@ -89,11 +71,6 @@ inoremap <A-j> <Esc>:m .+1<CR>==gi
 inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
- 
-"
-" Get back to normal mode from insert mode by typing 'jj' or 'kk' or 'hh'
-"
-"inoremap <silent> jj <ESC>
 
 "
 " Return from terminal by ESC
@@ -121,12 +98,13 @@ nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 
 "
-" Set F9 to make run
 "
-nnoremap <F9> :sp<CR>
 nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i 
 nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
 
+"
+" makeの非同期実行のキーマップ
+"
 if s:is_win
   nnoremap <F1> :w <CR> :AsyncRun make -f makefile.win clean<CR>
   nnoremap <F3> :w <CR> :AsyncRun make -f makefile.win debug<CR>
@@ -139,8 +117,6 @@ else
   nnoremap <F6> :w <CR> :AsyncRun make release<CR>
   nnoremap <F4> :w <CR> :AsyncRun make test<CR>
   nnoremap <F5> :w <CR> :AsyncRun make run<CR>
-  nnoremap <F7> :w <CR> :AsyncRun make showquizho<CR>
-  nnoremap <F8> :w <CR> :AsyncRun make showlecho<CR>
 endif
 
 "
@@ -181,7 +157,7 @@ set shiftround
 set wrapscan
 set incsearch
 set inccommand=split
-"set noswapfile
+set noswapfile
 set viminfo='10
 "set background=dark
 "set relativenumber
@@ -192,17 +168,26 @@ set viminfo='10
 " 少し時間がかかる場合に設定
 set ttimeoutlen=50
 
+"
+" Turn off paste mode when leaving insert
+"
+"autocmd InsertLeave * set nopaste
+
+" ToDo: not working
+"autocmd BufNewFile *.sh put = '#!/usr/bin/bash'
+
+"------------------------------------------------------------------------
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call vundle#begin() " *** プラグインインパッケージはここから下に書く。***
 
-"
+"========================================================================
 " Plugin Manager
 "
 Plugin 'VundleVim/Vundle.vim'
 
-"
+"========================================================================
 " Time Stamp
 "
 Plugin 'vim-scripts/autodate.vim' 
@@ -216,7 +201,7 @@ let autodate_lines        = 1000
 "let autodate_format       = '%0m %d, %Y'
 "let autodate_format       = '%F %Ex %x %X %B %Om %d, %Y'
 
-"
+"========================================================================
 " Auto Completion (deoplete and denite)
 "
 
@@ -229,7 +214,7 @@ if !has('nvim')
   Plugin 'roxma/vim-hug-neovim-rpc'
 endif
 
-"
+"========================================================================
 " Database Tool(vim-dadbod, ui and completion)
 "
 Plugin 'tpope/vim-dadbod'
@@ -259,13 +244,13 @@ let g:db_ui_table_helpers = {
 \   }
 \ }
 
-"
+"========================================================================
 " Ashyncrun 
 "
 Plugin 'skywind3000/asyncrun.vim'
 let g:asyncrun_open = 5
 
-"
+"========================================================================
 " R
 "
 Plugin 'jalvesaq/Nvim-R'
@@ -273,251 +258,6 @@ Plugin 'gaalcaras/ncm-R'
 Plugin 'ncm2/ncm2'
 Plugin 'sirver/UltiSnips'
 Plugin 'ncm2/ncm2-ultisnips'
-
-"
-" Python
-"
-Plugin 'deoplete-plugins/deoplete-jedi'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'jalvesaq/vimcmdline'
-augroup py
-  autocmd!
-  "autocmd BufRead,BufNewFile *.py :execute "normal \\s"<CR>
-  autocmd BufRead,BufNewFile *.py :nnoremap <F5> :execute "normal \\f"<CR>
-  autocmd BufNewFile,BufRead *.py
-    \ set expandtab       |" replace tabs with spaces
-    \ set autoindent      |" copy indent when starting a new line
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-  "autocmd! FileType tex nnoremap <ESC> <ESC> <ESC>
-  autocmd BufNewFile,BufRead *.py let python_highlight_all=1
-  syntax on
-augroup END
-
-"
-" Linter
-"
-
-"" DEPRECATED in favor of ALE
-"Plugin 'vim-syntastic/syntastic'
-"
-"" LatexのALEによる構文エラーチェックのときに抑制したい注意表示を記入
-"let g:syntastic_quiet_messages = { "regex": [
-"        \ '\mpossible unwanted space at "{"',
-"        \ 'SOME OTHER SYNTASTIC MESSAGE TO BE QUIET',
-"        \ ] }
-
-Plugin 'dense-analysis/ale'
-
-" エラー箇所をハイライト
-let g:ale_set_highlights = 1
-
-" Fortran
-let g:ale_fortran_gcc_use_free_form = 1
-let g:ale_fortran_gcc_executable ='gfortran'
-let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
-
-" LaTeX linter choices: chktex(default) or lacheck
-"let g:ale_lacheck_executable = 'lacheck'
-
-"
-" Cmake Syntax Highlighting
-"
-Plugin 'pboettch/vim-cmake-syntax'
-
-"
-" Markdown Viewer
-"
-Plugin 'iamcco/markdown-preview.nvim'
-let g:mkdp_auto_start = 1
-
-"
-" Latex
-"
-Plugin 'lervag/vimtex'
-Plugin 'thinca/vim-quickrun'
-set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
-
-"
-" Git
-"
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rhubarb'
-
-"
-" sudo.vim
-"
-Plugin 'vim-scripts/sudo.vim'
-
-"
-" Smartchr
-"
-Plugin 'kana/vim-smartchr'
-
-"
-" Debagger (sakhnik/nvim-gdb)
-"
-Plugin 'sakhnik/nvim-gdb'
-Plugin 'cpiger/NeoDebug'
-set mouse=a
-"let g:termdebug_wide = 163
-
-"
-" Tags
-"
-Plugin 'soramugi/auto-ctags.vim'
-
-"
-" CSV Viewer
-"
-Plugin 'chrisbra/csv.vim'
-
-augroup csv
-  autocmd!
-  autocmd BufRead,BufNewFile *.csv set filetype=csv
-
-  " 自動整列が繰り返し実行されるため自動保存を解除
-  autocmd FileType csv let g:auto_save = 0
-
-  " スクロールしてもヘッダーが見えるように画面分割
-  autocmd FileType csv nnoremap <F5> :CSVHeaderToggle<CR> 
-augroup END
-
-let g:csv_hiHeader = 'Pmenu'
-let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
-let g:csv_autocmd_arrange	= 1 " 自動整列
-let g:csv_autocmd_arrange_size = 1024*1024 " 整列時間節約のため1MB分に限定
-let g:csv_start = 1 " 時間短縮のため，この行から
-let g:csv_end = 100 " この行までを分析しデリミタを決定
-let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
-filetype plugin on
-
-"
-" Theme
-"
-Plugin 'NLKNguyen/papercolor-theme'
-set t_Co=256
-set background=light
-
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-let g:airline_theme = 'papercolor'
-
-" ヘッダーバー(tabline)を表示
-let g:airline#extensions#tabline#enabled = 1
-
-" csv.vimと連携しフッターバーにカラム名とカラム番号/全カラム数を表示
-let g:airline#extensions#csv#enabled = 1
-let g:airline#extensions#csv#column_display = 'Name'
-
-" ALEによるリント
-let g:airline#extensions#ale#enabled = 1
-
-syntax enable
-
-"
-" Document Auto-Save
-"
-Plugin 'vim-scripts/vim-auto-save'
-
-let g:auto_save = 1
-let g:auto_save_silent = 1
-let g:auto_save_in_insert_mode = 1
-let g:auto_save_no_updatetime = 0
-" Run Ctags command after each save
-"let g:auto_save_postsave_hook = 'Ctags'
-
-"
-" Word Alignment
-"
-Plugin 'junegunn/vim-easy-align'
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" Align Fortran :: symbols
-vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
-
-"
-" Enhanced Multi-File Search
-"
-Plugin 'wincent/ferret'
-
-"
-" File Manager
-"
-Plugin 'preservim/nerdtree'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
-Plugin 'ryanoasis/vim-devicons'
-
-call vundle#end()
-filetype plugin indent on
-
-" Declare colorscheme after plugin manager
-colorscheme PaperColor
-
-"
-" Openbrowser
-"
-" N.B. @ mark conflicts with macro run
-"
-"nmap @ <Nop>
-"nmap @g <Plug>(openbrowser-search)
-"nmap <C-@> <Plug>(openbrowser-smart-search)
-"nnoremap @a :<C-u>execute 'OpenBrowserSearch -alc' expand('<cWORD>')<CR>
-"nnoremap @d :<C-u>execute 'OpenBrowserSearch -dev' expand('<cWORD>')<CR>
-"let g:openbrowser_search_engines = {
-"    \ 'alc': 'http://eow.alc.co.jp/{query}/UTF-8/',
-"    \ 'dev': 'https://dev.classmethod.jp/?s={query}',
-"    \ }
-
-"
-" Latex (vimtex and vim - quickrun)
-" Install neovim-remote with the command: pip3 install neovim-remote
-" use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
-
-" Inverse search for SumatraPDF in Windows
-"cmd /c for /F %i in ('type C:\Users\hss\AppData\Local\Temp\vimtexserver.txt') do nvr --servername %i -c 'normal! zzzv' +'%l' '%f'
-function! s:write_server_name() abort
-  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
-  call writefile([v:servername], nvim_server_file)
-endfunction
-
-" Edit .latexmkrc
-"
-"$latex = 'lualatex -interaction=nonstopmode -synctex=-1 -recorder %O %S';
-"
-let g:tex_flavor = 'latex'
-let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
-" Disable overfull/underfull \hbox and all package warnings
-"augroup filetype
-augroup tex
-  autocmd!
-  autocmd BufRead,BufNewFile *.tex set filetype=tex
-  "autocmd FileType tex :execute "normal \\ll"
-  autocmd FileType tex :nnoremap <C-p> :make default<CR>
-  autocmd FileType tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
-  autocmd FileType tex let g:auto_save = 0
-  if (has('win32') || has('win64') || has('win32unix'))
-    let g:vimtex_view_general_viewer = 'SumatraPDF'
-    let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
-    autocmd FileType tex call s:write_server_name()
-  else
-    let g:vimtex_compiler_progname = 'nvr'
-    let g:vimtex_view_general_viewer = 'okular'
-    let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-  endif
-augroup END
-
-"===================================================================
-" R plugins
-"
 
 " remapping the basic :: send line
 "nnoremap , <Plug>RDSendLine
@@ -554,14 +294,190 @@ augroup END
 "" Use markdown-preview instead of using Nvim-R function
 "let R_openhtml = 0
 
+"========================================================================
+" Python
 "
-" Turn off paste mode when leaving insert
-"
-autocmd InsertLeave * set nopaste
+Plugin 'deoplete-plugins/deoplete-jedi'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'jalvesaq/vimcmdline'
+augroup py
+  autocmd!
+  "autocmd BufRead,BufNewFile *.py :execute "normal \\s"<CR>
+  autocmd BufRead,BufNewFile *.py :nnoremap <F5> :execute "normal \\f"<CR>
+  autocmd BufNewFile,BufRead *.py
+    \ set expandtab       |" replace tabs with spaces
+    \ set autoindent      |" copy indent when starting a new line
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+  autocmd BufNewFile,BufRead *.py let python_highlight_all=1
+  syntax on
+augroup END
 
+"========================================================================
+" Linter
 "
-" ctags
+
+"" DEPRECATED in favor of ALE
+"Plugin 'vim-syntastic/syntastic'
 "
+"" LatexのALEによる構文エラーチェックのときに抑制したい注意表示を記入
+"let g:syntastic_quiet_messages = { "regex": [
+"        \ '\mpossible unwanted space at "{"',
+"        \ 'SOME OTHER SYNTASTIC MESSAGE TO BE QUIET',
+"        \ ] }
+
+Plugin 'dense-analysis/ale'
+
+" エラー箇所をハイライト
+let g:ale_set_highlights = 1
+
+" Fortran
+let g:ale_fortran_gcc_use_free_form = 1
+let g:ale_fortran_gcc_executable ='gfortran'
+let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
+
+" LaTeX linter choices: chktex(default) or lacheck
+"let g:ale_lacheck_executable = 'lacheck'
+
+"========================================================================
+" Latex (vimtex and vim - quickrun)
+"
+" Install neovim-remote with the command: pip3 install neovim-remote
+" use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
+"
+Plugin 'lervag/vimtex'
+Plugin 'thinca/vim-quickrun'
+set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
+
+" Inverse search for SumatraPDF in Windows
+"cmd /c for /F %i in ('type C:\Users\hss\AppData\Local\Temp\vimtexserver.txt') do nvr --servername %i -c 'normal! zzzv' +'%l' '%f'
+function! s:write_server_name() abort
+  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
+  call writefile([v:servername], nvim_server_file)
+endfunction
+
+" Edit .latexmkrc
+"
+"$latex = 'lualatex -interaction=nonstopmode -synctex=-1 -recorder %O %S';
+"
+let g:tex_flavor = 'latex'
+let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
+" Disable overfull/underfull \hbox and all package warnings
+"augroup filetype
+augroup tex
+  autocmd!
+  autocmd BufRead,BufNewFile *.tex set filetype=tex
+  "autocmd FileType tex :execute "normal \\ll"
+  "autocmd FileType tex :nnoremap <C-p> :make default<CR>
+  "autocmd FileType tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
+
+  if (has('win32') || has('win64') || has('win32unix'))
+    let g:vimtex_view_general_viewer = 'SumatraPDF'
+    let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+    autocmd FileType tex call s:write_server_name()
+  else
+    let g:vimtex_compiler_progname = 'nvr'
+    let g:vimtex_view_general_viewer = 'okular'
+    let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+  endif
+augroup END
+
+"========================================================================
+" Debagger (sakhnik/nvim-gdb)
+"
+Plugin 'sakhnik/nvim-gdb'
+Plugin 'cpiger/NeoDebug'
+set mouse=a
+"let g:termdebug_wide = 163
+
+"========================================================================
+" Markdown Viewer
+"
+Plugin 'iamcco/markdown-preview.nvim'
+let g:mkdp_auto_start = 1
+
+"========================================================================
+" CSV Viewer
+"
+Plugin 'chrisbra/csv.vim'
+
+augroup csv
+  autocmd!
+  autocmd BufRead,BufNewFile *.csv set filetype=csv
+
+  " 自動整列が繰り返し実行されるため自動保存を解除
+  autocmd FileType csv let g:auto_save = 0
+
+  " スクロールしてもヘッダーが見えるように画面分割
+  autocmd FileType csv nnoremap <F5> :CSVHeaderToggle<CR> 
+
+augroup END
+
+let g:csv_hiHeader = 'Pmenu'
+let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
+let g:csv_autocmd_arrange	= 1 " 自動整列
+let g:csv_autocmd_arrange_size = 1024*1024 " 整列時間節約のため1MB分に限定
+let g:csv_start = 1 " 時間短縮のため，この行から
+let g:csv_end = 100 " この行までを分析しデリミタを決定
+let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
+
+"========================================================================
+" Theme
+"
+Plugin 'NLKNguyen/papercolor-theme'
+set t_Co=256
+set background=light
+
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+let g:airline_theme = 'papercolor'
+
+" ヘッダーバー(tabline)を表示
+let g:airline#extensions#tabline#enabled = 1
+
+" csv.vimと連携しフッターバーにカラム名とカラム番号/全カラム数を表示
+let g:airline#extensions#csv#enabled = 1
+let g:airline#extensions#csv#column_display = 'Name'
+
+" ALEによるリント
+let g:airline#extensions#ale#enabled = 1
+
+syntax enable
+
+"========================================================================
+" Document Auto-Save
+"
+Plugin 'vim-scripts/vim-auto-save'
+
+let g:auto_save = 1
+let g:auto_save_silent = 1
+let g:auto_save_in_insert_mode = 1
+let g:auto_save_no_updatetime = 0
+" Run Ctags command after each save
+"let g:auto_save_postsave_hook = 'Ctags'
+
+"========================================================================
+" Word Alignment
+"
+Plugin 'junegunn/vim-easy-align'
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+" Align Fortran :: symbols
+vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'>s/=/::/g<CR> :'<,'>s/<equal>/=/ge<CR>
+
+"========================================================================
+" Tags
+"
+Plugin 'soramugi/auto-ctags.vim'
+
 set tags=./tags;,tags;
 let g:auto_ctags = 0
 "let g:auto_ctags_directory_list = ['.git']
@@ -574,21 +490,28 @@ let g:auto_ctags_warn_once = 1
 "set secure
 "let g:vim_tags_main_file = 'tags'
 "let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative --languages=Fortran `pwd` 2>/dev/null'
+let g:vim_tags_project_tags_command =
+      \ 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative --languages=Fortran `pwd` 2>/dev/null'
 "let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran `pwd` 2>/dev/null'
 
-" 保存時にsudo権限で無理やり保存
-cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
-
+"========================================================================
+" File Manager
 "
 " NERDTree settings (Ctrl+n to open NERDTree)
 "
+Plugin 'preservim/nerdtree'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'ryanoasis/vim-devicons'
+
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
+
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
 let NERDTreeQuitOnOpen=1
-let g:NERDTreeDirArrows = 1
 let NERDTreeShowBookmarks = 1
+let g:NERDTreeDirArrows = 1
+
 if s:is_win
   let g:NERDTreeBookmarksFile = 'C:/Users/hss/.NERDTreeBookmarks' 
 else
@@ -625,6 +548,82 @@ let g:NERDTreeExtensionHighlightColor['exe'] = s:lightGreen
 let g:NERDTreeExtensionHighlightColor['f90'] = s:blue
 let g:NERDTreeExtensionHighlightColor['csv'] = s:beige
 
-" ToDo: not working
-"autocmd BufNewFile *.sh put = '#!/usr/bin/bash'
+"========================================================================
+" その他諸々のプラグイン
+"
 
+" Enhanced Multi-File Search
+Plugin 'wincent/ferret'
+
+" sudo.vim
+Plugin 'vim-scripts/sudo.vim'
+" 保存時にsudo権限で無理やり保存
+cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
+
+" Smartchr
+Plugin 'kana/vim-smartchr'
+
+" Cmake Syntax Highlighting
+Plugin 'pboettch/vim-cmake-syntax'
+
+" Git
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-rhubarb'
+
+" Parenthesis completion (pear-tree)
+Plugin 'tmsvg/pear-tree'
+
+call vundle#end() " *** プラグインインパッケージはここから上に書く。***
+
+filetype plugin on
+filetype plugin indent on
+
+" 画面配色スキームはプラグインマネジャーの後(vundle#end()の後)で宣言する。
+colorscheme PaperColor
+
+"========================================================================
+" 日本語入力（IME）設定
+"
+" 文書作成時に挿入モードに移ると自動でIMEを起動する設定で，
+" 日本語で長い文書を作成するときに便利。
+" Escを１回押すと英語入力，もう一度押すと標準モードになる。
+"
+"【事前準備】
+" 1. 仮想キーボードxvkbdのコマンドラインでのキー送信機能を利用して
+"    IMEを起動/停止するので予めインストールしておく。
+"   （xvkbdはX Window（Linux）向けのアプリでMS-Windows版は無いようである）
+"
+" 2. Mozc SetupのKeymapでKotoeriのキーマップを次のようにカスタマイズしておく。
+"    こうすることでControl+SpaceでIMEを起動，EscapeでIMEを停止することができる。
+"   （竹田は全角/半角キーをEscにしているのでこのようにカスタマイズ）
+"
+"      「Activate IME」       →  Ctrl Space
+"      「Deactivate IME」全て →  Escpape
+
+"       Mozc settings - General - keymap style - Kotoeri
+"       ===================================================
+"       Mozc keymap editor
+"       ===================================================
+"       Mode           Key        Command
+"       ---------------------------------------------------
+"       Direct input   Ctrl Space Activate IME
+"       Precomposition Escape     Deactivate IME 
+"       Composition    Escape     Deactivate IME 
+"       Conversion     Escape     Deactivate IME 
+"       ===================================================
+"       Use gnome-tweek to swap Capslock and Ctrl
+"
+"【注意事項】
+" 挿入モードでIME起動中のときにEscを押すとvimコマンドより先に
+" IMEのIMEDeactivateが起動しIMEが停止し英語入力になる。
+" 当初Esc１回で標準モードに移るようにしようと考えたが難しかった。
+" LaTeXの文書作成では英語 ↔ 日本語の切り替えが頻繁であるため，
+" むしろこのままの方が良い。
+"
+" 拡張子がtex, txt, mdのときにIMEを自動で起動させる。
+" ファイルの種類を増やしたいときは，カンマでスペースなしで区切り追加すること。
+
+if s:is_linux
+  autocmd InsertEnter *.tex,*.txt,*.md 
+        \ call system('xvkbd -text "\[Control]\[space]" >/dev/null 2>&1')
+endif
