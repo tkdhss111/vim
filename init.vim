@@ -4,10 +4,10 @@
 "
 " Japanese entry setup instruction for Windows OS
 "
-" See URL: http://sifue.hatenablog.com/entry/20120411/1334161078 
-" Go to Google Japanese (Windows) or iBus(linux) input 
+" See URL: http://sifue.hatenablog.com/entry/20120411/1334161078
+" Go to Google Japanese (Windows) or iBus(linux) input
 " and right click 'A' icon in the task bar of windows
-" Then select 'property' and press key selection 'Kotorie' 
+" Then select 'property' and press key selection 'Kotorie'
 " and next 'Henshu' botton of 'ippan' tab
 " Go to the bottom 'Henshu' botton and add entry, then press all six entries
 " with Escape and 'Nolify IME after cancellation' by 'triple' clicking cells.
@@ -99,7 +99,7 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 
 "
 "
-nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i 
+nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i
 nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
 
 "
@@ -118,6 +118,25 @@ else
   nnoremap <F4> :w <CR> :AsyncRun make test<CR>
   nnoremap <F5> :w <CR> :AsyncRun make run<CR>
 endif
+
+"
+" Universal Ctags
+"
+"tagsではなく./tagsと指定すると、
+"カレントディレクトリではなく開いているファイルのディレクトリから
+"tagsファイルを探してくれる
+";$HOMEとすることで、
+"ホームディレクトリまで遡ってtagsファイルを探してくれる
+"set tags=./tags;$HOME
+set tags=./tags;~
+nnoremap <F8> :w <CR>
+      \ :!ctags --recurse=yes --tag-relative=yes --sort=yes
+      \ -f ./bak/tags
+      \ --exclude=build
+      \ --exclude=old
+      \ --exclude=bak
+      \ --exclude=.git
+      \ --exclude=archive<CR>
 
 "
 " Clipboard
@@ -190,7 +209,7 @@ Plugin 'VundleVim/Vundle.vim'
 "========================================================================
 " Time Stamp
 "
-Plugin 'vim-scripts/autodate.vim' 
+Plugin 'vim-scripts/autodate.vim'
 
 " N.B. commas does not work
 let autodate_keyword_pre  = '\c@date '
@@ -245,7 +264,7 @@ let g:db_ui_table_helpers = {
 \ }
 
 "========================================================================
-" Ashyncrun 
+" Ashyncrun
 "
 Plugin 'skywind3000/asyncrun.vim'
 let g:asyncrun_open = 5
@@ -291,8 +310,7 @@ augroup rmd
   autocmd BufRead,BufNewFile *.Rmd nnoremap <F4> :execute "normal \\kh"<Cr>
 augroup END
 
-"" Use markdown-preview instead of using Nvim-R function
-"let R_openhtml = 0
+let R_openhtml = 1
 
 "========================================================================
 " Python
@@ -341,6 +359,45 @@ let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
 " LaTeX linter choices: chktex(default) or lacheck
 "let g:ale_lacheck_executable = 'lacheck'
 
+" From https://lyz-code.github.io/blue-book/linux/vim/vim_plugins/#ale
+let g:ale_sign_error                  = '✘'
+let g:ale_sign_warning                = '⚠'
+highlight ALEErrorSign ctermbg        =NONE ctermfg=red
+highlight ALEWarningSign ctermbg      =NONE ctermfg=yellow
+let g:ale_linters_explicit            = 1
+let g:ale_lint_on_text_changed        = 'normal'
+" let g:ale_lint_on_text_changed        = 'never'
+let g:ale_lint_on_enter               = 1
+let g:ale_lint_on_save                = 0
+let g:ale_fix_on_save                 = 0
+"
+"Make symlink to /usr/bin/
+
+" create .chktexrc file in home dir to suppress warnings
+" https://raw.githubusercontent.com/overleaf/chktex/master/chktexrc
+let g:ale_linters = {
+\  'make': ['checkmake'],
+\  'tex': ['chktex', 'lacheck', 'proselint'],
+\  'r': ['lintr', 'styler'],
+\  'sh': ['shellcheck'],
+\  'vim': ['vimls', 'vint'],
+\  'markdown': ['markdownlint', 'writegood', 'alex', 'proselint'],
+\  'json': ['jsonlint'],
+\  'python': ['flake8', 'mypy', 'pylint', 'alex'],
+\  'yaml': ['yamllint', 'alex'],
+\   '*': ['alex', 'writegood'],
+\}
+
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'json': ['jq'],
+\   'python': ['isort'],
+\   'terraform': ['terraform'],
+\}
+
+" Linter for makefile
+"autocmd FileType make :nnoremap <F5> :! checkmake makefile<CR>
+
 "========================================================================
 " Latex (vimtex and vim - quickrun)
 "
@@ -370,6 +427,17 @@ augroup tex
   autocmd!
   autocmd BufRead,BufNewFile *.tex set filetype=tex
   "autocmd FileType tex :execute "normal \\ll"
+  autocmd BufRead,BufNewFile lec.tex :VimtexView %:p:h/debug/lecsol-handout.pdf
+  "autocmd BufRead,BufNewFile lec.tex :AsyncRun ../../tex/hss_auto/auto
+  autocmd BufRead,BufNewFile quiz.tex :VimtexView %:p:h/debug/quizsol-handout.pdf
+
+  "
+  autocmd FileType tex :inoremap <D-h> <Left>
+  autocmd FileType tex :inoremap <D-l> <Right>
+
+  " Escを押し間違えてTabを押しても良いようにTabをEscに割当
+  autocmd FileType tex :inoremap <Tab> <Esc>
+
   "autocmd FileType tex :nnoremap <C-p> :make default<CR>
   "autocmd FileType tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
 
@@ -411,16 +479,15 @@ augroup csv
   autocmd FileType csv let g:auto_save = 0
 
   " スクロールしてもヘッダーが見えるように画面分割
-  autocmd FileType csv nnoremap <F5> :CSVHeaderToggle<CR> 
+  autocmd FileType csv nnoremap <F5> :CSVHeaderToggle<CR>
 
 augroup END
 
+let g:csv_delim=','
 let g:csv_hiHeader = 'Pmenu'
 let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
-let g:csv_autocmd_arrange	= 1 " 自動整列
-let g:csv_autocmd_arrange_size = 1024*1024 " 整列時間節約のため1MB分に限定
-let g:csv_start = 1 " 時間短縮のため，この行から
-let g:csv_end = 100 " この行までを分析しデリミタを決定
+let g:csv_autocmd_arrange	= 0 " 自動整列
+let g:csv_autocmd_arrange_size = 256*256 " 整列時間節約のため1MB分に限定
 let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
 
 "========================================================================
@@ -456,9 +523,14 @@ let g:auto_save = 1
 let g:auto_save_silent = 1
 let g:auto_save_in_insert_mode = 1
 let g:auto_save_no_updatetime = 0
-" Run Ctags command after each save
-"let g:auto_save_postsave_hook = 'Ctags'
-
+let g:auto_save_postsave_hook = 'call SaveBackupFile()'
+" 分単位でバックアップファイルを作成する。
+function! SaveBackupFile()
+  let fname = expand("%:r")."_".strftime("%Y-%m-%d_%H%M") . ".".expand("%:e")
+  silent execute ":!mkdir -p bak"
+  silent execute ":%w! ./bak/" . fname
+  echo "Saved backup file: ./bak/" . fname
+endfunction
 "========================================================================
 " Word Alignment
 "
@@ -476,23 +548,25 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 "========================================================================
 " Tags
 "
-Plugin 'soramugi/auto-ctags.vim'
-
-set tags=./tags;,tags;
-let g:auto_ctags = 0
-"let g:auto_ctags_directory_list = ['.git']
-let g:auto_ctags_tags_name = 'tags'
-"let g:auto_ctags_tags_args = ['--tag-relative=yes', '--recurse=yes', '--sort=yes', 'pwd']
-"let g:auto_ctags_filetype_mode = 1
-let g:auto_ctags_set_tags_option = 1
-let g:auto_ctags_warn_once = 1
-"set exrc
-"set secure
-"let g:vim_tags_main_file = 'tags'
-"let g:vim_tags_auto_generate = 1
-let g:vim_tags_project_tags_command =
-      \ 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative --languages=Fortran `pwd` 2>/dev/null'
-"let g:vim_tags_project_tags_command = 'ctags -R --exclude=.git --exclude=archives --exclude=old --exclude=build --fields=+l --tag-relative -f ~/1_Projects/tags --languages=Fortran `pwd` 2>/dev/null'
+"Plugin 'soramugi/auto-ctags.vim'
+"
+"set tags=./tags;,tags;
+"let g:auto_ctags_tags_name = 'tags'
+"let g:auto_ctags = 0
+""let g:auto_ctags_filetype_mode = 1
+"let g:auto_ctags_set_tags_option = 1
+"let g:auto_ctags_warn_once = 1
+"let g:auto_ctags_tags_args = [
+"      \'--exclude=build',
+"      \'--exclude=old',
+"      \'--exclude=bak',
+"      \'--exclude=archive',
+"      \'--exclude=.git',
+"      \'--languages=TeX',
+"      \'--tag-relative=yes',
+"      \'--recurse=yes',
+"      \'--sort=yes',
+"      \'pwd']
 
 "========================================================================
 " File Manager
@@ -513,9 +587,9 @@ let NERDTreeShowBookmarks = 1
 let g:NERDTreeDirArrows = 1
 
 if s:is_win
-  let g:NERDTreeBookmarksFile = 'C:/Users/hss/.NERDTreeBookmarks' 
+  let g:NERDTreeBookmarksFile = 'C:/Users/hss/.NERDTreeBookmarks'
 else
-  let g:NERDTreeBookmarksFile = '/home/hss/.NERDTreeBookmarks' 
+  let g:NERDTreeBookmarksFile = '/home/hss/.NERDTreeBookmarks'
 endif
 
 " change the default dictionary mappings for file extension matches
@@ -571,7 +645,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rhubarb'
 
 " Parenthesis completion (pear-tree)
-Plugin 'tmsvg/pear-tree'
+"Plugin 'tmsvg/pear-tree'
 
 call vundle#end() " *** プラグインインパッケージはここから上に書く。***
 
@@ -607,9 +681,9 @@ colorscheme PaperColor
 "       Mode           Key        Command
 "       ---------------------------------------------------
 "       Direct input   Ctrl Space Activate IME
-"       Precomposition Escape     Deactivate IME 
-"       Composition    Escape     Deactivate IME 
-"       Conversion     Escape     Deactivate IME 
+"       Precomposition Escape     Deactivate IME
+"       Composition    Escape     Deactivate IME
+"       Conversion     Escape     Deactivate IME
 "       ===================================================
 "       Use gnome-tweek to swap Capslock and Ctrl
 "
@@ -623,7 +697,7 @@ colorscheme PaperColor
 " 拡張子がtex, txt, mdのときにIMEを自動で起動させる。
 " ファイルの種類を増やしたいときは，カンマでスペースなしで区切り追加すること。
 
-if s:is_linux
-  autocmd InsertEnter *.tex,*.txt,*.md 
-        \ call system('xvkbd -text "\[Control]\[space]" >/dev/null 2>&1')
-endif
+"if s:is_linux
+"  autocmd InsertEnter *.tex,*.txt,*.md
+"        \ call system('xvkbd -text "\[Control]\[space]" >/dev/null 2>&1')
+"endif
