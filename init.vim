@@ -529,7 +529,7 @@ function! SaveBackupFile()
   let fname = expand("%:r")."_".strftime("%Y-%m-%d_%H%M") . ".".expand("%:e")
   silent execute ":!mkdir -p bak"
   silent execute ":%w! ./bak/" . fname
-  echo "Saved backup file: ./bak/" . fname
+  "echo "Saved backup file: ./bak/" . fname
 endfunction
 "========================================================================
 " Word Alignment
@@ -628,6 +628,10 @@ let g:NERDTreeExtensionHighlightColor['csv'] = s:beige
 
 " Enhanced Multi-File Search
 Plugin 'wincent/ferret'
+"echo ferret#get_default_arguments('rg')
+let g:FerretExecutableArguments = {
+  \   'rg': '--vimgrep --no-heading --no-config --max-columns 4096 --glob=!bak --glob=!old --glob=!build --glob=!archive --glob=!*.html'
+  \ }
 
 " sudo.vim
 Plugin 'vim-scripts/sudo.vim'
