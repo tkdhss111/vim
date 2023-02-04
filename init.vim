@@ -46,6 +46,8 @@ if s:is_win
   set makeprg=make\ -f\ makefile.win
 endif
 
+inoremap <C-d> <Del>
+
 "
 " Get back to the last edited line when file is opened.
 "
@@ -630,7 +632,7 @@ let g:NERDTreeExtensionHighlightColor['csv'] = s:beige
 Plugin 'wincent/ferret'
 "echo ferret#get_default_arguments('rg')
 let g:FerretExecutableArguments = {
-  \   'rg': '--vimgrep --no-heading --no-config --max-columns 4096 --glob=!bak --glob=!old --glob=!build --glob=!archive --glob=!*.html'
+  \   'rg': '--vimgrep --no-heading --no-config --max-columns 4096 --glob=!tags --glob=!bak --glob=!old --glob=!build --glob=!archive --glob=!*.html'
   \ }
 
 " sudo.vim
