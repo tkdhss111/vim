@@ -21,6 +21,10 @@ let s:is_linux = !s:is_win && !s:is_mac
 let g:python_host_prog='/usr/bin/python2'
 let g:python3_host_prog='/usr/bin/python3'
 
+if s:is_mac
+  let g:python3_host_prog='/usr/local/bin/python3'
+endif
+
 " 編集後の自動init.vimのリロード
 "autocmd! bufwritepost $MYVIMRC source %
 
@@ -102,13 +106,13 @@ vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 "
 "
 nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i
-nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
 
 "
 " makeの非同期実行のキーマップ
 "
 if s:is_win
   nnoremap <F1> :w <CR> :AsyncRun make -f makefile.win clean<CR>
+  nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
   nnoremap <F3> :w <CR> :AsyncRun make -f makefile.win debug<CR>
   nnoremap <F6> :w <CR> :AsyncRun make -f makefile.win release<CR>
   nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR>
@@ -359,7 +363,8 @@ let g:ale_fortran_gcc_executable ='gfortran'
 let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
 
 " LaTeX linter choices: chktex(default) or lacheck
-"let g:ale_lacheck_executable = 'lacheck'
+let g:ale_lacheck_executable = 'chktex'
+let g:ale_tex_chktex_options = "-n 1 36"
 
 " From https://lyz-code.github.io/blue-book/linux/vim/vim_plugins/#ale
 let g:ale_sign_error                  = '✘'
@@ -377,9 +382,10 @@ let g:ale_fix_on_save                 = 0
 
 " create .chktexrc file in home dir to suppress warnings
 " https://raw.githubusercontent.com/overleaf/chktex/master/chktexrc
+"\  'tex': ['chktex', 'lacheck', 'proselint'],
 let g:ale_linters = {
 \  'make': ['checkmake'],
-\  'tex': ['chktex', 'lacheck', 'proselint'],
+\  'tex': ['chktex', 'proselint'],
 \  'r': ['lintr', 'styler'],
 \  'sh': ['shellcheck'],
 \  'vim': ['vimls', 'vint'],
@@ -429,13 +435,23 @@ augroup tex
   autocmd!
   autocmd BufRead,BufNewFile *.tex set filetype=tex
   "autocmd FileType tex :execute "normal \\ll"
-  autocmd BufRead,BufNewFile lec.tex :VimtexView %:p:h/debug/lecsol-handout.pdf
+  "autocmd BufRead,BufNewFile lec.tex :VimtexView %:p:h/debug/lecsol-handout.pdf
   "autocmd BufRead,BufNewFile lec.tex :AsyncRun ../../tex/hss_auto/auto
-  autocmd BufRead,BufNewFile quiz.tex :VimtexView %:p:h/debug/quizsol-handout.pdf
+  "autocmd BufRead,BufNewFile quiz.tex :VimtexView %:p:h/debug/quizsol-handout.pdf
 
   "
   autocmd FileType tex :inoremap <D-h> <Left>
   autocmd FileType tex :inoremap <D-l> <Right>
+
+  if s:is_linux || s:is_win
+    autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+  endif
+
+  if s:is_mac
+    autocmd FileType tex :nnoremap <F2> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F3> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+  endif
 
   " Escを押し間違えてTabを押しても良いようにTabをEscに割当
   autocmd FileType tex :inoremap <Tab> <Esc>
@@ -443,16 +459,29 @@ augroup tex
   "autocmd FileType tex :nnoremap <C-p> :make default<CR>
   "autocmd FileType tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
 
-  if (has('win32') || has('win64') || has('win32unix'))
+  "if (has('win32') || has('win64') || has('win32unix'))
+  if s:is_win
     let g:vimtex_view_general_viewer = 'SumatraPDF'
     let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
     autocmd FileType tex call s:write_server_name()
-  else
+  endif
+
+  if s:is_linux
     let g:vimtex_compiler_progname = 'nvr'
     let g:vimtex_view_general_viewer = 'okular'
     let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
   endif
+
+  if s:is_mac
+    let g:vimtex_view_general_viewer = 'open -a skim'
+  endif
+
 augroup END
+
+"========================================================================
+" Bibtexcite
+"
+"Plugin 'ferdinandyb/bibtexcite.vim'
 
 "========================================================================
 " Debagger (sakhnik/nvim-gdb)
@@ -529,7 +558,7 @@ let g:auto_save_postsave_hook = 'call SaveBackupFile()'
 " 分単位でバックアップファイルを作成する。
 function! SaveBackupFile()
   let fname = expand("%:r")."_".strftime("%Y-%m-%d_%H%M") . ".".expand("%:e")
-  silent execute ":!mkdir -p bak"
+  silent execute ":!mkdir bak"
   silent execute ":%w! ./bak/" . fname
   "echo "Saved backup file: ./bak/" . fname
 endfunction
@@ -573,11 +602,17 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 "========================================================================
 " File Manager
 "
+" Install Nerd-Font first as follows:
+" brew tap homebrew/cask-fonts
+" brew install font-hack-nerd-font
+" Terminal manual setting - Font: Hack Nerd Font
+"
 " NERDTree settings (Ctrl+n to open NERDTree)
 "
 Plugin 'preservim/nerdtree'
-Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plugin 'ryanoasis/vim-devicons'
+"Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+"https://ja.stackoverflow.com/questions/29595/vim%E8%B5%B7%E5%8B%95%E3%81%AE%E9%9A%9B-w18-invalid-character-in-group-name-%E3%81%8C%E5%87%BA%E5%8A%9B%E3%81%95%E3%82%8C%E3%82%8B
 
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
 
@@ -590,7 +625,13 @@ let g:NERDTreeDirArrows = 1
 
 if s:is_win
   let g:NERDTreeBookmarksFile = 'C:/Users/hss/.NERDTreeBookmarks'
-else
+endif
+
+if s:is_mac
+  let g:NERDTreeBookmarksFile = '/Users/hss/.NERDTreeBookmarks'
+endif
+
+if s:is_linux
   let g:NERDTreeBookmarksFile = '/home/hss/.NERDTreeBookmarks'
 endif
 
