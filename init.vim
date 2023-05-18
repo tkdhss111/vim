@@ -46,7 +46,7 @@ lang en_US.UTF-8
 
 if s:is_win
   let g:python2_host_prog='C:\Python27'
-  let g:python3_host_prog='~\AppData\Local\Programs\Python\Python310\python.exe'
+  let g:python3_host_prog='~\AppData\Local\Programs\Python\Python311\python.exe'
   set makeprg=make\ -f\ makefile.win
 endif
 
@@ -120,7 +120,8 @@ if s:is_win
 else
   nnoremap <F1> :w <CR> :AsyncRun make clean<CR>
   nnoremap <F3> :w <CR> :AsyncRun make debug<CR>
-  nnoremap <F6> :w <CR> :AsyncRun make release<CR>
+  nnoremap <F6> :w <CR> :make -j release<CR>
+  "nnoremap <F6> :w <CR> :AsyncRun make release<CR>
   nnoremap <F4> :w <CR> :AsyncRun make test<CR>
   nnoremap <F5> :w <CR> :AsyncRun make run<CR>
 endif
@@ -135,9 +136,9 @@ endif
 "ホームディレクトリまで遡ってtagsファイルを探してくれる
 "set tags=./tags;$HOME
 set tags=./tags;~
-nnoremap <F8> :w <CR>
+nnoremap <F8> :w <CR> :!touch tags<CR>
       \ :!ctags --recurse=yes --tag-relative=yes --sort=yes
-      \ -f ./bak/tags
+      \ -f tags
       \ --exclude=build
       \ --exclude=old
       \ --exclude=bak
@@ -278,7 +279,9 @@ let g:asyncrun_open = 5
 "========================================================================
 " R
 "
+Plugin 'hrsh7th/nvim-cmp'
 Plugin 'jalvesaq/Nvim-R'
+Plugin 'jalvesaq/cmp-nvim-r'
 Plugin 'gaalcaras/ncm-R'
 Plugin 'ncm2/ncm2'
 Plugin 'sirver/UltiSnips'
@@ -296,7 +299,23 @@ vmap , <Plug>RDSendSelection
 "vnoremap ,e <Plug>RESendSelection
 vmap ,e <Plug>RESendSelection
 
+"
 " settings :: Nvim-R plugin
+"
+" https://github-wiki-see.page/m/jamespeapen/Nvim-R/wiki/options#r-path-and-application-names
+"
+" N.B. 初回nvmcomのコンパイル時に.Rprofileを読み込みコンパイルエラーとなる場合は，
+" Documents/.Rprofileをリネームしてからコンパイルする。コンパイル完了後元のファイル名に戻す。
+" 以下のパス設定はコンパイルに必要
+if s:is_win
+  let R_path = 'C:\rtools42\x86_64-w64-mingw32.static.posix\bin;C:\rtools42\usr\bin;C:\Program Files\R\R-4.2.3\bin\x64'
+endif
+let R_args = ['--no-save', '--quiet']
+let R_start_libs = 'base,stats,graphics,grDevices,utils,methods'
+let Rout_more_colors = 1
+let R_hi_fun_paren = 1
+let R_hi_fun_globenv = 1 " Highlight after an InsertEnter event
+
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
 
@@ -423,12 +442,34 @@ function! s:write_server_name() abort
   call writefile([v:servername], nvim_server_file)
 endfunction
 
-" Edit .latexmkrc
+" Place this at the header of latex file like !$bash
+" %! TeX program = lualatex
+" Or edit ~/.latexmkrc
 "
-"$latex = 'lualatex -interaction=nonstopmode -synctex=-1 -recorder %O %S';
-"
+let g:vimtex_compiler_latexmk = {
+      \ 'build_dir': 'build',
+      \ 'background': 1,
+      \ 'continuous': 1,
+      \ 'options': [
+      \    '-pdflatex=lualatex',
+      \    '-recorder',
+      \    '-shell-escape',
+      \    '-verbose',
+      \    '-file-line-error',
+      \    '-halt-on-error',
+      \    '-synctex=-1',
+      \    '-interaction=nonstopmode',
+      \],
+      \}
 let g:tex_flavor = 'latex'
-let g:vimtex_compiler_latexmk = {'build_dir': 'build'}
+let g:vimtex_quickfix_enabled = 2
+let g:vimtex_quickfix_autoclose_after_keystrokes = 2
+let g:vimtex_quickfix_open_on_warning = 0
+
+let g:vimtex_quickfix_ignore_filters = [
+        \ 'Underfull',
+        \ 'Overfull',
+      \]
 " Disable overfull/underfull \hbox and all package warnings
 "augroup filetype
 augroup tex
@@ -443,9 +484,15 @@ augroup tex
   autocmd FileType tex :inoremap <D-h> <Left>
   autocmd FileType tex :inoremap <D-l> <Right>
 
-  if s:is_linux || s:is_win
+  if s:is_linux
     autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    "autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test LINE=:echo line('.')<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+  endif
+
+  if s:is_win
+    autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
   endif
 
   if s:is_mac
@@ -459,7 +506,8 @@ augroup tex
   "autocmd FileType tex :nnoremap <C-p> :make default<CR>
   "autocmd FileType tex :nnoremap <F9> :sp<CR>:resize 2<CR>:terminal<CR>i auto<CR>
 
-  "if (has('win32') || has('win64') || has('win32unix'))
+  " N.B. makefileで直にコンパイルしてるので逆順検索は使えない。
+  " Vimtexの機能（latexmkを使っている）<leader>lvでコンパイルするできるかも。
   if s:is_win
     let g:vimtex_view_general_viewer = 'SumatraPDF'
     let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
@@ -468,12 +516,18 @@ augroup tex
 
   if s:is_linux
     let g:vimtex_compiler_progname = 'nvr'
+    " ToDo: get zathura to work!
+    "let g:vimtex_view_method = 'zathura'
+    "let g:vimtex_view_general_viewer = 'zathura'
+    "let g:vimtex_view_general_options = '-x \"nvr +%{line} %{input}\" --synctex-forward=@line:0:@tex @pdf'
     let g:vimtex_view_general_viewer = 'okular'
     let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
   endif
 
   if s:is_mac
     let g:vimtex_view_general_viewer = 'open -a skim'
+    let g:vimtex_view_skim_sync = 1
+    let g:vimtex_view_skim_activate = 1
   endif
 
 augroup END
@@ -557,7 +611,12 @@ let g:auto_save_no_updatetime = 0
 let g:auto_save_postsave_hook = 'call SaveBackupFile()'
 " 分単位でバックアップファイルを作成する。
 function! SaveBackupFile()
-  let fname = expand("%:r")."_".strftime("%Y-%m-%d_%H%M") . ".".expand("%:e")
+  let EXT = expand("%:e")
+  if EXT == ''
+    let fname = expand("%:r")."_".strftime("%Y-%m-%d_%H%M")
+  else
+    let fname = expand("%:r")."_".strftime("%Y-%m-%d_%H%M") . ".".expand("%:e")
+  endif
   silent execute ":!mkdir bak"
   silent execute ":%w! ./bak/" . fname
   "echo "Saved backup file: ./bak/" . fname
