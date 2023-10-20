@@ -18,8 +18,14 @@ let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')
             \ || system('uname') =~? '^darwin')
 let s:is_linux = !s:is_win && !s:is_mac
 
-let g:python_host_prog='/usr/bin/python2'
-let g:python3_host_prog='/usr/bin/python3'
+if s:is_linux
+  let g:python_host_prog='/usr/bin/python2'
+  let g:python3_host_prog='/usr/bin/python3'
+endif
+
+if s:is_win
+ " let g:python3_host_prog='C:\Python311\python.exe'
+endif
 
 if s:is_mac
   let g:python3_host_prog='/usr/local/bin/python3'
@@ -45,12 +51,24 @@ lang en_US.UTF-8
 "set guifont=MyricaM\ M:h14
 
 if s:is_win
-  let g:python2_host_prog='C:\Python27'
-  let g:python3_host_prog='~\AppData\Local\Programs\Python\Python311\python.exe'
-  set makeprg=make\ -f\ makefile.win
+  " In MSYS2 MING64 console
+  " $ pacman -S make
+  " $ where make
+  " Set path in environment variable in Windows
+  "set makeprg=make\ -f\ makefile.win
 endif
 
+" インサートモードでCtrl+dをDeleteにアサイン
 inoremap <C-d> <Del>
+
+" インサートモードでCtrl+fをBackspaceにアサイン
+inoremap <C-f> <Backspace>
+
+" インサートモードで移動できるようにする。
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
 
 "
 " Get back to the last edited line when file is opened.
@@ -110,21 +128,21 @@ nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i
 "
 " makeの非同期実行のキーマップ
 "
-if s:is_win
-  nnoremap <F1> :w <CR> :AsyncRun make -f makefile.win clean<CR>
-  nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
-  nnoremap <F3> :w <CR> :AsyncRun make -f makefile.win debug<CR>
-  nnoremap <F6> :w <CR> :AsyncRun make -f makefile.win release<CR>
-  nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR>
-  nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR>
-else
+"if s:is_win
+"  nnoremap <F1> :w <CR> :AsyncRun make -f makefile.win clean<CR>
+"  nnoremap <F2> :NeoDebug <CR> file ~/gdb/fortran_debug <CR>
+"  nnoremap <F3> :w <CR> :AsyncRun make -f makefile.win debug<CR>
+"  nnoremap <F6> :w <CR> :AsyncRun make -f makefile.win release<CR>
+"  nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR>
+"  nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR>
+"else
   nnoremap <F1> :w <CR> :AsyncRun make clean<CR>
   nnoremap <F3> :w <CR> :AsyncRun make debug<CR>
   nnoremap <F6> :w <CR> :make -j release<CR>
   "nnoremap <F6> :w <CR> :AsyncRun make release<CR>
   nnoremap <F4> :w <CR> :AsyncRun make test<CR>
   nnoremap <F5> :w <CR> :AsyncRun make run<CR>
-endif
+"endif
 
 "
 " Universal Ctags
@@ -308,7 +326,7 @@ vmap ,e <Plug>RESendSelection
 " Documents/.Rprofileをリネームしてからコンパイルする。コンパイル完了後元のファイル名に戻す。
 " 以下のパス設定はコンパイルに必要
 if s:is_win
-  let R_path = 'C:\rtools42\x86_64-w64-mingw32.static.posix\bin;C:\rtools42\usr\bin;C:\Program Files\R\R-4.2.3\bin\x64'
+  let R_path = 'C:\rtools43\x86_64-w64-mingw32.static.posix\bin;C:\rtools43\usr\bin;C:\Program Files\R\R-4.3.1\bin\x64'
 endif
 let R_args = ['--no-save', '--quiet']
 let R_start_libs = 'base,stats,graphics,grDevices,utils,methods'
@@ -485,14 +503,19 @@ augroup tex
   autocmd FileType tex :inoremap <D-l> <Right>
 
   if s:is_linux
+    " 既存のパス.にLaTeXのパスを追加
+    :let $PATH .= ':/usr/local/texlive/2022/bin/x86_64-linux'
+
     autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     "autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test LINE=:echo line('.')<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
   endif
 
   if s:is_win
-    autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
-    autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+    "autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    "autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
   endif
 
   if s:is_mac
@@ -511,6 +534,8 @@ augroup tex
   if s:is_win
     let g:vimtex_view_general_viewer = 'SumatraPDF'
     let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+    "let g:vimtex_view_general_viewer = 'okular'
+    "let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
     autocmd FileType tex call s:write_server_name()
   endif
 
@@ -561,7 +586,7 @@ augroup csv
   autocmd BufRead,BufNewFile *.csv set filetype=csv
 
   " 自動整列が繰り返し実行されるため自動保存を解除
-  autocmd FileType csv let g:auto_save = 0
+  "autocmd FileType csv let g:auto_save = 0
 
   " スクロールしてもヘッダーが見えるように画面分割
   autocmd FileType csv nnoremap <F5> :CSVHeaderToggle<CR>
@@ -682,9 +707,10 @@ let NERDTreeQuitOnOpen=1
 let NERDTreeShowBookmarks = 1
 let g:NERDTreeDirArrows = 1
 
-if s:is_win
-  let g:NERDTreeBookmarksFile = 'C:/Users/hss/.NERDTreeBookmarks'
-endif
+" DEPRECATED: default path is homepath of windows
+"if s:is_win
+  "let g:NERDTreeBookmarksFile = '$HOME/.NERDTreeBookmarks'
+"endif
 
 if s:is_mac
   let g:NERDTreeBookmarksFile = '/Users/hss/.NERDTreeBookmarks'
@@ -807,3 +833,13 @@ colorscheme PaperColor
 "  autocmd InsertEnter *.tex,*.txt,*.md
 "        \ call system('xvkbd -text "\[Control]\[space]" >/dev/null 2>&1')
 "endif
+
+"function QfMakeConv()
+"    let qflist = getqflist()
+"    for i in qflist
+"        let i.text = iconv(i.text, "cp936", "utf-8")
+"    endfor
+"    call setqflist(qflist)
+"  endfunction
+"
+"au QuickfixCmdPost make call QfMakeConv()
