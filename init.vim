@@ -24,7 +24,10 @@ if s:is_linux
 endif
 
 if s:is_win
- " let g:python3_host_prog='C:\Python311\python.exe'
+  " N.B.
+  " Install pynvim from the master, or import imp error will occur.
+  " pip install git+https://github.com/neovim/pynvim.git
+  let g:python3_host_prog='C:\Users\tkdhs\AppData\Local\Programs\Python\Python312\python.exe'
 endif
 
 if s:is_mac
