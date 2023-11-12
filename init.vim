@@ -1,4 +1,4 @@
-" Last Updated:2019-07-24 23:09:50
+"年末調整への対応・完了 Last Updated:2019-07-24 23:09:50
 " by H. Takeda, Ph.D.
 
 "
@@ -27,7 +27,7 @@ if s:is_win
   " N.B.
   " Install pynvim from the master, or import imp error will occur.
   " pip install git+https://github.com/neovim/pynvim.git
-  let g:python3_host_prog='C:\Users\tkdhs\AppData\Local\Programs\Python\Python312\python.exe'
+  "let g:python3_host_prog='C:\Users\tkdhs\AppData\Local\Programs\Python\Python312\python.exe'
 endif
 
 if s:is_mac
@@ -323,19 +323,19 @@ vmap ,e <Plug>RESendSelection
 "
 " settings :: Nvim-R plugin
 "
-" https://github-wiki-see.page/m/jamespeapen/Nvim-R/wiki/options#r-path-and-application-names
-"
+"https://github.com/jamespeapen/Nvim-R/wiki/options
 " N.B. 初回nvmcomのコンパイル時に.Rprofileを読み込みコンパイルエラーとなる場合は，
 " Documents/.Rprofileをリネームしてからコンパイルする。コンパイル完了後元のファイル名に戻す。
 " 以下のパス設定はコンパイルに必要
+" C:\Users\%USERNAME%\AppData\Local\R\win-library\*.*\nvimcomにRパッケージライブラリーが追加される。
 if s:is_win
-  let R_path = 'C:\rtools43\x86_64-w64-mingw32.static.posix\bin;C:\rtools43\usr\bin;C:\Program Files\R\R-4.3.1\bin\x64'
+  let R_path = 'C:\rtools43\x86_64-w64-mingw32.static.posix\bin;C:\rtools43\usr\bin;C:\Program Files\R\R-4.3.2\bin\x64'
+  "let R_path = 'C:\Program Files\R\R-4.3.2\bin\x64'
 endif
 let R_args = ['--no-save', '--quiet']
 let R_start_libs = 'base,stats,graphics,grDevices,utils,methods'
 let Rout_more_colors = 1
 let R_hi_fun_paren = 1
-let R_hi_fun_globenv = 1 " Highlight after an InsertEnter event
 
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
@@ -367,8 +367,15 @@ Plugin 'nvie/vim-flake8'
 Plugin 'jalvesaq/vimcmdline'
 augroup py
   autocmd!
+  "autocmd filetype python nnoremap <F5> :!python %:p<CR>
+  autocmd filetype python nnoremap <F5> :QuickRun python<CR>
+  autocmd filetype python vnoremap <F5> :QuickRun python<CR>
+  autocmd filetype python nnoremap <C-Enter> :execute 'python' getline('.')<CR>
+  "autocmd filetype python nnoremap <C-Enter> :execute 'python' getline('.')<CR> /^.<CR>
+
   "autocmd BufRead,BufNewFile *.py :execute "normal \\s"<CR>
-  autocmd BufRead,BufNewFile *.py :nnoremap <F5> :execute "normal \\f"<CR>
+  "autocmd BufRead,BufNewFile *.py :nnoremap <F5> :execute "normal \\f"<CR>
+  "
   autocmd BufNewFile,BufRead *.py
     \ set expandtab       |" replace tabs with spaces
     \ set autoindent      |" copy indent when starting a new line
@@ -377,6 +384,7 @@ augroup py
     \ set shiftwidth=4
   autocmd BufNewFile,BufRead *.py let python_highlight_all=1
   syntax on
+
 augroup END
 
 "========================================================================
@@ -449,19 +457,21 @@ let g:ale_fixers = {
 "========================================================================
 " Latex (vimtex and vim - quickrun)
 "
-" Install neovim-remote with the command: pip3 install neovim-remote
-" use the followings: nvr --remote-silent %f -c %l for SumatraPDF inverse search
-"
 Plugin 'lervag/vimtex'
 Plugin 'thinca/vim-quickrun'
 set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
 
+" Install neovim-remote with the command: pip3 install neovim-remote
+" use the followings: nvr --remote-silent +%l '%f' for SumatraPDF inverse search
+"
+" DEPRECATED in favor of the above
 " Inverse search for SumatraPDF in Windows
+" N.B. Do not forget to change username!
 "cmd /c for /F %i in ('type C:\Users\hss\AppData\Local\Temp\vimtexserver.txt') do nvr --servername %i -c 'normal! zzzv' +'%l' '%f'
-function! s:write_server_name() abort
-  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
-  call writefile([v:servername], nvim_server_file)
-endfunction
+"function! s:write_server_name() abort
+"  let nvim_server_file = (has('win32') ? $TEMP : '/tmp') . '/vimtexserver.txt'
+"  call writefile([v:servername], nvim_server_file)
+"endfunction
 
 " Place this at the header of latex file like !$bash
 " %! TeX program = lualatex
@@ -539,7 +549,7 @@ augroup tex
     let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
     "let g:vimtex_view_general_viewer = 'okular'
     "let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-    autocmd FileType tex call s:write_server_name()
+    "autocmd FileType tex call s:write_server_name()
   endif
 
   if s:is_linux
