@@ -234,6 +234,20 @@ call vundle#begin() " *** プラグインインパッケージはここから下
 "
 Plugin 'VundleVim/Vundle.vim'
 
+
+"========================================================================
+" Grammar Checker
+"
+Plugin 'rhysd/vim-grammarous'
+
+let g:grammarous#enable_spell_check=1
+let g:grammarous#use_vim_spelllang=1
+
+" Workround for level setting
+let g:grammarous#jar_url = 'https://www.languagetool.org/download/LanguageTool-5.9.zip'
+
+Plugin 'gianarb/coc-grammarly'
+
 "========================================================================
 " Time Stamp
 "
