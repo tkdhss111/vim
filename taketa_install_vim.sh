@@ -156,6 +156,8 @@ git config --global browser.ff.cmd "open -a Firefox.app"
 #
 # ssh-agent
 #
+# N.B. For Windows, use passphrase-less id_rsa since ssh-agent does not work.
+#
 sudo apt install ssh-askpass -y
 #apt install git-gui -y
 
