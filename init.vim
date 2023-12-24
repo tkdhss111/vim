@@ -1,7 +1,6 @@
 "年末調整への対応・完了 Last Updated:2019-07-24 23:09:50
 " by H. Takeda, Ph.D.
 
-
 "
 " Japanese entry setup instruction for Windows OS
 "
