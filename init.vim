@@ -603,6 +603,11 @@ set mouse=a
 Plugin 'iamcco/markdown-preview.nvim'
 let g:mkdp_auto_start = 1
 
+" Escを押し間違えてTabを押しても良いようにTabをEscに割当
+autocmd FileType md :inoremap <Tab> <Esc>
+autocmd FileType txt :inoremap <Tab> <Esc>
+autocmd FileType vim :inoremap <Tab> <Esc>
+
 "========================================================================
 " CSV Viewer
 "
@@ -626,6 +631,9 @@ let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなく
 let g:csv_autocmd_arrange	= 0 " 自動整列
 let g:csv_autocmd_arrange_size = 256*256 " 整列時間節約のため1MB分に限定
 let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
+
+" Escを押し間違えてTabを押しても良いようにTabをEscに割当
+autocmd FileType csv :inoremap <Tab> <Esc>
 
 "========================================================================
 " Theme
