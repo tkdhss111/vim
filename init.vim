@@ -1,4 +1,3 @@
-"年末調整への対応・完了 Last Updated:2019-07-24 23:09:50
 " by H. Takeda, Ph.D.
 
 "
@@ -19,8 +18,12 @@ let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')
 let s:is_linux = !s:is_win && !s:is_mac
 
 if s:is_linux
-  let g:python_host_prog='/usr/bin/python2'
-  let g:python3_host_prog='/usr/bin/python3'
+  "let g:python_host_prog='/usr/bin/python2'
+  "let g:python3_host_prog='/usr/local/bin/python3'
+  let g:python3_host_prog='/opt/python/3.12.1/bin/python3'
+
+  " Default shell is sh, which can not use 'source' commmand.
+  set makeprg=make\ SHELL=/bin/bash
 endif
 
 if s:is_win
@@ -28,6 +31,7 @@ if s:is_win
   " Install pynvim from the master, or import imp error will occur.
   " pip install git+https://github.com/neovim/pynvim.git
   "let g:python3_host_prog='C:\Users\tkdhs\AppData\Local\Programs\Python\Python312\python.exe'
+  let g:python3_host_prog='C:\Python312\python'
 endif
 
 if s:is_mac
@@ -61,17 +65,17 @@ if s:is_win
   "set makeprg=make\ -f\ makefile.win
 endif
 
-" インサートモードでCtrl+dをDeleteにアサイン
-inoremap <C-d> <Del>
+" インサートモードでCtrl+lをDeleteにアサイン
+inoremap <C-l> <Del>
 
-" インサートモードでCtrl+fをBackspaceにアサイン
-inoremap <C-f> <Backspace>
+" インサートモードでCtrl+hをBackspaceにアサイン
+inoremap <C-h> <Backspace>
 
-" インサートモードで移動できるようにする。
-inoremap <C-h> <Left>
+" インサートモードで左右移動
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
-inoremap <C-l> <Right>
+"inoremap <C-h> <Left> DEPRECATED: use muhenkan key
+"inoremap <C-l> <Right> DEPRECATED: use henkan key
 
 "
 " Get back to the last edited line when file is opened.
@@ -124,9 +128,7 @@ nnoremap <silent> ciy ciw<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 nnoremap <silent> cy   ce<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 vnoremap <silent> cy   c<C-r>0<ESC>:let@/=@1<CR>:noh<CR>
 
-"
-"
-nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i
+let basename = expand('%:t:r')
 
 "
 " makeの非同期実行のキーマップ
@@ -138,13 +140,13 @@ nnoremap <F12> :sp<CR>:resize 3<CR>:terminal<CR>i
 "  nnoremap <F6> :w <CR> :AsyncRun make -f makefile.win release<CR>
 "  nnoremap <F4> :w <CR> :AsyncRun make -f makefile.win test<CR>
 "  nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR>
-"else
-  nnoremap <F1> :w <CR> :AsyncRun make clean<CR>
-  nnoremap <F3> :w <CR> :AsyncRun make debug<CR>
-  nnoremap <F6> :w <CR> :make -j release<CR>
-  "nnoremap <F6> :w <CR> :AsyncRun make release<CR>
-  nnoremap <F4> :w <CR> :AsyncRun make test<CR>
-  nnoremap <F5> :w <CR> :AsyncRun make run<CR>
+"
+"  nnoremap <F1> :w <CR> :AsyncRun make clean<CR>
+"  nnoremap <F3> :w <CR> :AsyncRun make debug<CR>
+"  nnoremap <F6> :w <CR> :make -j release<CR>
+"  nnoremap <F6> :w <CR> :AsyncRun make release<CR>
+"  nnoremap <F4> :w <CR> :AsyncRun make test<CR>
+"  nnoremap <F5> :w <CR> :AsyncRun make run<CR>
 "endif
 
 "
@@ -193,7 +195,7 @@ set shiftwidth=2   " smartindentの空白数
 set softtabstop=0  " タブで挿入する空白数
 set tabstop=2
 set clipboard+=unnamedplus    " Vimの無名レジスタとクリップボードを連携
-set colorcolumn=74            " 指定するカラムに赤い縦線を表示
+"set colorcolumn=101           " 指定するカラムに赤い縦線を表示
 set cursorline
 set showmatch
 set expandtab
@@ -224,21 +226,21 @@ set ttimeoutlen=50
 "autocmd BufNewFile *.sh put = '#!/usr/bin/bash'
 
 "------------------------------------------------------------------------
-set nocompatible
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin() " *** プラグインインパッケージはここから下に書く。***
+"set nocompatible
+"filetype off
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin() " *** プラグインインパッケージはここから下に書く。***
+call plug#begin('~/.vim/plugins/') " *** プラグインインパッケージはここから下に書く。***
 
 "========================================================================
 " Plugin Manager
 "
-Plugin 'VundleVim/Vundle.vim'
-
+"Plug 'VundleVim/Vundle.vim'
 
 "========================================================================
 " Grammar Checker
 "
-Plugin 'rhysd/vim-grammarous'
+Plug 'rhysd/vim-grammarous'
 
 let g:grammarous#enable_spell_check=1
 let g:grammarous#use_vim_spelllang=1
@@ -246,12 +248,12 @@ let g:grammarous#use_vim_spelllang=1
 " Workround for level setting
 let g:grammarous#jar_url = 'https://www.languagetool.org/download/LanguageTool-5.9.zip'
 
-Plugin 'gianarb/coc-grammarly'
+Plug 'gianarb/coc-grammarly'
 
 "========================================================================
 " Time Stamp
 "
-Plugin 'vim-scripts/autodate.vim'
+Plug 'vim-scripts/autodate.vim'
 
 " N.B. commas does not work
 let autodate_keyword_pre  = '\c@date '
@@ -265,22 +267,14 @@ let autodate_lines        = 1000
 "========================================================================
 " Auto Completion (deoplete and denite)
 "
-
-Plugin 'Shougo/deoplete.nvim'
-Plugin 'Shougo/denite.nvim'
-let g:deoplete#enable_at_startup = 1
-
-if !has('nvim')
-  Plugin 'roxma/nvim-yarp'
-  Plugin 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'roxma/vim-hug-neovim-rpc'
 
 "========================================================================
 " Database Tool(vim-dadbod, ui and completion)
 "
-Plugin 'tpope/vim-dadbod'
-Plugin 'kristijanhusak/vim-dadbod-ui'
-Plugin 'kristijanhusak/vim-dadbod-completion'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'kristijanhusak/vim-dadbod-completion'
 
 augroup sql
   autocmd!
@@ -308,19 +302,19 @@ let g:db_ui_table_helpers = {
 "========================================================================
 " Ashyncrun
 "
-Plugin 'skywind3000/asyncrun.vim'
-let g:asyncrun_open = 5
+Plug 'skywind3000/asyncrun.vim'
+let g:asyncrun_open = 20
 
 "========================================================================
 " R
 "
-Plugin 'hrsh7th/nvim-cmp'
-Plugin 'jalvesaq/Nvim-R'
-Plugin 'jalvesaq/cmp-nvim-r'
-Plugin 'gaalcaras/ncm-R'
-Plugin 'ncm2/ncm2'
-Plugin 'sirver/UltiSnips'
-Plugin 'ncm2/ncm2-ultisnips'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'jalvesaq/Nvim-R'
+Plug 'jalvesaq/cmp-nvim-r'
+Plug 'gaalcaras/ncm-R'
+Plug 'ncm2/ncm2'
+Plug 'sirver/UltiSnips'
+Plug 'ncm2/ncm2-ultisnips'
 
 " remapping the basic :: send line
 "nnoremap , <Plug>RDSendLine
@@ -350,7 +344,7 @@ let R_args = ['--no-save', '--quiet']
 let R_start_libs = 'base,stats,graphics,grDevices,utils,methods'
 let Rout_more_colors = 1
 let R_hi_fun_paren = 1
-
+let R_pdfviewer = 'okular'
 " R output is highlighted with current colorscheme
 let g:rout_follow_colorscheme = 1
 
@@ -361,8 +355,10 @@ let R_auto_start = 1
 
 augroup r
   autocmd!
-  " Run entire sourve by 'Ctrl+a' by hss
   autocmd FileType r nnoremap <F5> :execute "normal \\aa"<Cr>
+  autocmd FileType r let g:lsp_diagnostics_enabled = 0
+  autocmd FileType R let g:lsp_diagnostics_enabled = 0
+  autocmd FileType Rmd let g:lsp_diagnostics_enabled = 0
 augroup END
 
 augroup rmd
@@ -373,106 +369,191 @@ augroup END
 let R_openhtml = 1
 
 "========================================================================
+" Debugger
+"
+Plug 'puremourning/vimspector'
+
+" Neovim does not have winber capability
+let g:vimspector_enable_winbar=0
+
+let g:vimspector_sidebar_width = 20
+let g:vimspector_bottombar_height = 5
+let g:vimspector_code_minwidth = 90
+let g:vimspector_terminal_maxwidth = 100
+let g:vimspector_terminal_minwidth = 20
+
+"let g:vimspector_enable_mappings = 'HUMAN'
+
+augroup python
+  autocmd!
+  autocmd FileType py :nonremap <F5> <Plug>VimspectorContinue
+  autocmd FileType py :nonremap <F9> <Plug>VimspectorToggleBreakpoint
+  autocmd FileType py :nonremap <F4> <Plug>VimspectorRestart
+  autocmd FileType py :nonremap <F3> <Plug>VimspectorStop
+  autocmd FileType py :nonremap <Leader><F8> <Plug>VimspectorRunToCursor
+  autocmd FileType py :nonremap <F10> <Plug>VimspectorStepOver
+  autocmd FileType py :nonremap <F11> <Plug>VimspectorStepInto
+  autocmd FileType py :nonremap <F12> <Plug>VimspectorStepOut
+augroup END
+
+":nmap <F5> <Plug>VimspectorContinue
+":nmap <F9> <Plug>VimspectorToggleBreakpoint
+":nmap <F4> <Plug>VimspectorRestart
+":nmap <F3> <Plug>VimspectorStop
+":nmap <Leader><F8> <Plug>VimspectorRunToCursor
+":nmap <F10> <Plug>VimspectorStepOver
+":nmap <F11> <Plug>VimspectorStepInto
+":nmap <F12> <Plug>VimspectorStepOut
+
+" mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
+
+" for normal mode - the word under the cursor
+nmap <Leader>di <Plug>VimspectorBalloonEval
+" for visual mode, the visually selected text
+xmap <Leader>di <Plug>VimspectorBalloonEval
+
+" Use F9 to toggle break point
+nmap <Leader>db <Plug>VimspectorBreakpoints
+
+nmap <LocalLeader><F11> <Plug>VimspectorUpFrame
+nmap <LocalLeader><F12> <Plug>VimspectorDownFrame
+nmap <LocalLeader>B     <Plug>VimspectorBreakpoints
+nmap <LocalLeader>D     <Plug>VimspectorDisassemble
+
+"========================================================================
+" Auto Completion 
+"
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+"========================================================================
+" Language Server Protocol (LSP)
+"
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
+Plug 'mattn/vim-lsp-icons'
+
+"let g:lsp_log_file = 'lsp.log'
+"let g:lsp_log_verbose = 1
+
+highlight lspReference ctermfg=red guifg=red ctermbg=green guibg=green
+
+if executable('pylsp')
+    " pip install python-lsp-server
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'pylsp',
+        \ 'cmd': {server_info->['pylsp']},
+        \ 'allowlist': ['python'],
+        \ })
+endif
+
+if executable('fortls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'fortls',
+        \ 'cmd': {server_info->['fortls']},
+        \ 'allowlist': ['fortran'],
+        \ })
+endif
+
+let g:lsp_settings = {
+\   'pylsp-all': {
+\     'workspace_config': {
+\       'pylsp': {
+\         'plugins': {
+\           'pycodestyle': {
+\             'ignore': ["E221", "E501"]
+\           }
+\         }
+\       }
+\     }
+\   },
+\}
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+    if exists('+tagfunc') | setlocal tagfunc=lsp#tagfunc | endif
+    nmap <buffer> gd <plug>(lsp-definition)
+    nmap <buffer> gs <plug>(lsp-document-symbol-search)
+    nmap <buffer> gS <plug>(lsp-workspace-symbol-search)
+    nmap <buffer> gr <plug>(lsp-references)
+    nmap <buffer> gi <plug>(lsp-implementation)
+    nmap <buffer> gt <plug>(lsp-type-definition)
+    nmap <buffer> <leader>rn <plug>(lsp-rename)
+    nmap <buffer> [g <plug>(lsp-previous-diagnostic)
+    nmap <buffer> ]g <plug>(lsp-next-diagnostic)
+   " nmap <buffer> K <plug>(lsp-hover)
+    nnoremap <buffer> <expr><c-f> lsp#scroll(+4)
+    nnoremap <buffer> <expr><c-d> lsp#scroll(-4)
+
+    let g:lsp_format_sync_timeout = 1000
+    autocmd! BufWritePre *.rs,*.go call execute('LspDocumentFormatSync')
+endfunction
+
+" URL: https://mattn.kaoriya.net/software/vim/20191231213507.htm
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
+"let g:lsp_diagnostics_echo_cursor = 1
+"let g:lsp_diagnostics_enabled = 0
+"let g:asyncomplete_auto_popup = 1
+"let g:asyncomplete_auto_completeopt = 0
+"let g:asyncomplete_popup_delay = 500
+"let g:lsp_text_edit_enabled = 1
+"========================================================================
 " Python
 "
-Plugin 'deoplete-plugins/deoplete-jedi'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'jalvesaq/vimcmdline'
-augroup py
+"Plug 'deoplete-plugins/deoplete-jedi'
+"Plug 'vim-scripts/indentpython.vim'
+"Plug 'nvie/vim-flake8'
+
+Plug 'jalvesaq/vimcmdline'
+
+augroup python
   autocmd!
-  "autocmd filetype python nnoremap <F5> :!python %:p<CR>
-  autocmd filetype python nnoremap <F5> :QuickRun python<CR>
-  autocmd filetype python vnoremap <F5> :QuickRun python<CR>
-  autocmd filetype python nnoremap <C-Enter> :execute 'python' getline('.')<CR>
-  "autocmd filetype python nnoremap <C-Enter> :execute 'python' getline('.')<CR> /^.<CR>
-
-  "autocmd BufRead,BufNewFile *.py :execute "normal \\s"<CR>
-  "autocmd BufRead,BufNewFile *.py :nnoremap <F5> :execute "normal \\f"<CR>
-  "
-  autocmd BufNewFile,BufRead *.py
-    \ set expandtab       |" replace tabs with spaces
-    \ set autoindent      |" copy indent when starting a new line
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-  autocmd BufNewFile,BufRead *.py let python_highlight_all=1
-  syntax on
-
+  autocmd BufRead,BufNewFile *.py set filetype=python
+  let cmdline_follow_colorscheme = 1
+  let cmdline_vsplit = 0
+  let cmdline_term_height = 15
+  let cmdline_term_width = 90
+  let cmdline_app = {}
+  let cmdline_app['python'] = 'python'
+  let cmdline_map_send = ','
 augroup END
 
 "========================================================================
-" Linter
-"
-
-"" DEPRECATED in favor of ALE
-"Plugin 'vim-syntastic/syntastic'
-"
-"" LatexのALEによる構文エラーチェックのときに抑制したい注意表示を記入
-"let g:syntastic_quiet_messages = { "regex": [
-"        \ '\mpossible unwanted space at "{"',
-"        \ 'SOME OTHER SYNTASTIC MESSAGE TO BE QUIET',
-"        \ ] }
-
-Plugin 'dense-analysis/ale'
-
-" エラー箇所をハイライト
-let g:ale_set_highlights = 1
-
 " Fortran
-let g:ale_fortran_gcc_use_free_form = 1
-let g:ale_fortran_gcc_executable ='gfortran'
-let g:ale_fortran_gcc_options ='-Wall -Wextra -cpp'
-
-" LaTeX linter choices: chktex(default) or lacheck
-let g:ale_lacheck_executable = 'chktex'
-let g:ale_tex_chktex_options = "-n 1 36"
-
-" From https://lyz-code.github.io/blue-book/linux/vim/vim_plugins/#ale
-let g:ale_sign_error                  = '✘'
-let g:ale_sign_warning                = '⚠'
-highlight ALEErrorSign ctermbg        =NONE ctermfg=red
-highlight ALEWarningSign ctermbg      =NONE ctermfg=yellow
-let g:ale_linters_explicit            = 1
-let g:ale_lint_on_text_changed        = 'normal'
-" let g:ale_lint_on_text_changed        = 'never'
-let g:ale_lint_on_enter               = 1
-let g:ale_lint_on_save                = 0
-let g:ale_fix_on_save                 = 0
 "
-"Make symlink to /usr/bin/
 
-" create .chktexrc file in home dir to suppress warnings
-" https://raw.githubusercontent.com/overleaf/chktex/master/chktexrc
-"\  'tex': ['chktex', 'lacheck', 'proselint'],
-let g:ale_linters = {
-\  'make': ['checkmake'],
-\  'tex': ['chktex', 'proselint'],
-\  'r': ['lintr', 'styler'],
-\  'sh': ['shellcheck'],
-\  'vim': ['vimls', 'vint'],
-\  'markdown': ['markdownlint', 'writegood', 'alex', 'proselint'],
-\  'json': ['jsonlint'],
-\  'python': ['flake8', 'mypy', 'pylint', 'alex'],
-\  'yaml': ['yamllint', 'alex'],
-\   '*': ['alex', 'writegood'],
-\}
+augroup fortran
+  autocmd!
+  autocmd BufRead,BufNewFile *.f90 set filetype=fortran
+  autocmd FileType fortran let g:lsp_diagnostics_enabled = 1
+  autocmd FileType fortran nnoremap <F1> :AsyncStop<CR> :cclose<CR> 
+  autocmd FileType fortran nnoremap <F4> :w<CR> :AsyncRun make test<CR>
+  autocmd FileType fortran nnoremap <F5> :w<CR> :AsyncRun make debug<CR>
+  "nnoremap <F12> :sp<CR>:resize 10<CR>:terminal<CR>i gdb-oneapi --quiet<CR>
+  "nnoremap <F12> :vsp<CR>:terminal<CR>i gdb-oneapi --quiet<CR>
+  nnoremap <F12> :vsp<CR>:terminal<CR>i
 
-let g:ale_fixers = {
-\   '*': ['remove_trailing_lines', 'trim_whitespace'],
-\   'json': ['jq'],
-\   'python': ['isort'],
-\   'terraform': ['terraform'],
-\}
-
-" Linter for makefile
-"autocmd FileType make :nnoremap <F5> :! checkmake makefile<CR>
+  let g:lsp_diagnostics_echo_cursor = 1
+  let g:lsp_diagnostics_enabled = 1
+  let g:asyncomplete_auto_popup = 1
+  let g:asyncomplete_auto_completeopt = 1
+  let g:asyncomplete_popup_delay = 500
+  let g:lsp_text_edit_enabled = 1
+augroup END
 
 "========================================================================
 " Latex (vimtex and vim - quickrun)
 "
-Plugin 'lervag/vimtex'
-Plugin 'thinca/vim-quickrun'
+Plug 'lervag/vimtex'
+Plug 'thinca/vim-quickrun'
 set runtimepath+=~/latex/ftplugin/tex_quickrun.vim
 
 " Install neovim-remote with the command: pip3 install neovim-remote
@@ -532,10 +613,10 @@ augroup tex
   if s:is_linux
     " 既存のパス.にLaTeXのパスを追加
     :let $PATH .= ':/usr/local/texlive/2022/bin/x86_64-linux'
-
     autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     "autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test LINE=:echo line('.')<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F6> :w <CR> :make -j release<CR>
   endif
 
   if s:is_win
@@ -543,6 +624,7 @@ augroup tex
     autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     "autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make -f makefile.win run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
     autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F6> :w <CR> :AsyncRun make -j release<CR>
   endif
 
   if s:is_mac
@@ -587,20 +669,20 @@ augroup END
 "========================================================================
 " Bibtexcite
 "
-"Plugin 'ferdinandyb/bibtexcite.vim'
+"Plug 'ferdinandyb/bibtexcite.vim'
 
 "========================================================================
 " Debagger (sakhnik/nvim-gdb)
 "
-Plugin 'sakhnik/nvim-gdb'
-Plugin 'cpiger/NeoDebug'
+Plug 'sakhnik/nvim-gdb'
+Plug 'cpiger/NeoDebug'
 set mouse=a
 "let g:termdebug_wide = 163
 
 "========================================================================
 " Markdown Viewer
 "
-Plugin 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim'
 let g:mkdp_auto_start = 1
 
 " Escを押し間違えてTabを押しても良いようにTabをEscに割当
@@ -611,7 +693,7 @@ autocmd FileType vim :inoremap <Tab> <Esc>
 "========================================================================
 " CSV Viewer
 "
-Plugin 'chrisbra/csv.vim'
+Plug 'chrisbra/csv.vim'
 
 augroup csv
   autocmd!
@@ -630,7 +712,7 @@ let g:csv_hiHeader = 'Pmenu'
 let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
 let g:csv_autocmd_arrange	= 0 " 自動整列
 let g:csv_autocmd_arrange_size = 256*256 " 整列時間節約のため1MB分に限定
-let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
+"let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
 
 " Escを押し間違えてTabを押しても良いようにTabをEscに割当
 autocmd FileType csv :inoremap <Tab> <Esc>
@@ -638,13 +720,12 @@ autocmd FileType csv :inoremap <Tab> <Esc>
 "========================================================================
 " Theme
 "
-Plugin 'NLKNguyen/papercolor-theme'
+Plug 'NLKNguyen/papercolor-theme'
 set t_Co=256
 set background=light
 
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 let g:airline_theme = 'papercolor'
 
 " ヘッダーバー(tabline)を表示
@@ -662,7 +743,7 @@ syntax enable
 "========================================================================
 " Document Auto-Save
 "
-Plugin 'vim-scripts/vim-auto-save'
+Plug 'vim-scripts/vim-auto-save'
 
 let g:auto_save = 1
 let g:auto_save_silent = 1
@@ -684,7 +765,7 @@ endfunction
 "========================================================================
 " Word Alignment
 "
-Plugin 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -698,7 +779,7 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 "========================================================================
 " Tags
 "
-"Plugin 'soramugi/auto-ctags.vim'
+"Plug 'soramugi/auto-ctags.vim'
 "
 "set tags=./tags;,tags;
 "let g:auto_ctags_tags_name = 'tags'
@@ -728,12 +809,14 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 "
 " NERDTree settings (Ctrl+n to open NERDTree)
 "
-Plugin 'preservim/nerdtree'
-Plugin 'ryanoasis/vim-devicons'
-"Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "https://ja.stackoverflow.com/questions/29595/vim%E8%B5%B7%E5%8B%95%E3%81%AE%E9%9A%9B-w18-invalid-character-in-group-name-%E3%81%8C%E5%87%BA%E5%8A%9B%E3%81%95%E3%82%8C%E3%82%8B
-
+"
+"nnoremap <silent><C-n> :NERDTreeToggle %:h<CR>
 nnoremap <silent><C-n> :NERDTreeToggle<CR>
+nnoremap <silent><C-c> :NERDTreeFind<CR>
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -790,37 +873,39 @@ let g:NERDTreeExtensionHighlightColor['csv'] = s:beige
 "
 
 " Enhanced Multi-File Search
-Plugin 'wincent/ferret'
+Plug 'wincent/ferret'
 "echo ferret#get_default_arguments('rg')
 let g:FerretExecutableArguments = {
   \   'rg': '--vimgrep --no-heading --no-config --max-columns 4096 --glob=!tags --glob=!bak --glob=!old --glob=!build --glob=!archive --glob=!*.html'
   \ }
 
 " sudo.vim
-Plugin 'vim-scripts/sudo.vim'
+Plug 'vim-scripts/sudo.vim'
 " 保存時にsudo権限で無理やり保存
 cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
 
 " Smartchr
-Plugin 'kana/vim-smartchr'
+Plug 'kana/vim-smartchr'
 
 " Cmake Syntax Highlighting
-Plugin 'pboettch/vim-cmake-syntax'
+Plug 'pboettch/vim-cmake-syntax'
 
 " Git
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-rhubarb'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 
 " Parenthesis completion (pear-tree)
-"Plugin 'tmsvg/pear-tree'
+"Plug 'tmsvg/pear-tree'
 
-call vundle#end() " *** プラグインインパッケージはここから上に書く。***
+call plug#end() " *** プラグインインパッケージはここから上に書く。***
 
 filetype plugin on
 filetype plugin indent on
 
 " 画面配色スキームはプラグインマネジャーの後(vundle#end()の後)で宣言する。
-colorscheme PaperColor
+"colorscheme PaperColor
+"colorscheme evening
+colorscheme default
 
 "========================================================================
 " 日本語入力（IME）設定
