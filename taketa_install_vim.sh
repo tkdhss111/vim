@@ -56,7 +56,7 @@ echo 'export TERM=xterm-256color # added by: '${USER} >> /home/${USER}/.profile
 #
 # VundleVim
 #
- git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 #
 # NERDTree Fonts

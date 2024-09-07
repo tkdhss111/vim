@@ -17,9 +17,9 @@ let s:is_mac = !s:is_win && (has('mac') || has('macunix') || has('gui_macvim')
             \ || system('uname') =~? '^darwin')
 let s:is_linux = !s:is_win && !s:is_mac
 
+" Set the latest Python here, DO NOT UPGRADE Ubuntu default Python in /bin
 if s:is_linux
-  "let g:python_host_prog='/usr/bin/python2'
-  "let g:python3_host_prog='/usr/local/bin/python3'
+  "let g:python3_host_prog='/usr/local/bin/python3.12'
   let g:python3_host_prog='/opt/python/3.12.1/bin/python3'
 
   " Default shell is sh, which can not use 'source' commmand.
@@ -303,7 +303,7 @@ let g:db_ui_table_helpers = {
 " Ashyncrun
 "
 Plug 'skywind3000/asyncrun.vim'
-let g:asyncrun_open = 20
+let g:asyncrun_open = 10
 
 "========================================================================
 " R
@@ -337,7 +337,7 @@ vmap ,e <Plug>RESendSelection
 " 以下のパス設定はコンパイルに必要
 " C:\Users\%USERNAME%\AppData\Local\R\win-library\*.*\nvimcomにRパッケージライブラリーが追加される。
 if s:is_win
-  let R_path = 'C:\rtools43\x86_64-w64-mingw32.static.posix\bin;C:\rtools43\usr\bin;C:\Program Files\R\R-4.3.2\bin\x64'
+  let R_path = 'C:\rtools43\x86_64-w64-mingw32.static.posix\bin;C:\rtools43\usr\bin;C:\Program Files\R\R-4.4.0\bin\x64'
   "let R_path = 'C:\Program Files\R\R-4.3.2\bin\x64'
 endif
 let R_args = ['--no-save', '--quiet']
@@ -371,54 +371,54 @@ let R_openhtml = 1
 "========================================================================
 " Debugger
 "
-Plug 'puremourning/vimspector'
+"Plug 'puremourning/vimspector'
+"
+"" Neovim does not have winber capability
+"let g:vimspector_enable_winbar=0
+"
+"let g:vimspector_sidebar_width = 20
+"let g:vimspector_bottombar_height = 5
+"let g:vimspector_code_minwidth = 90
+"let g:vimspector_terminal_maxwidth = 100
+"let g:vimspector_terminal_minwidth = 20
+"
+""let g:vimspector_enable_mappings = 'HUMAN'
+"
+"augroup python
+"  autocmd!
+"  autocmd FileType py :nonremap <F5> <Plug>VimspectorContinue
+"  autocmd FileType py :nonremap <F9> <Plug>VimspectorToggleBreakpoint
+"  autocmd FileType py :nonremap <F4> <Plug>VimspectorRestart
+"  autocmd FileType py :nonremap <F3> <Plug>VimspectorStop
+"  autocmd FileType py :nonremap <Leader><F8> <Plug>VimspectorRunToCursor
+"  autocmd FileType py :nonremap <F10> <Plug>VimspectorStepOver
+"  autocmd FileType py :nonremap <F11> <Plug>VimspectorStepInto
+"  autocmd FileType py :nonremap <F12> <Plug>VimspectorStepOut
+"augroup END
 
-" Neovim does not have winber capability
-let g:vimspector_enable_winbar=0
-
-let g:vimspector_sidebar_width = 20
-let g:vimspector_bottombar_height = 5
-let g:vimspector_code_minwidth = 90
-let g:vimspector_terminal_maxwidth = 100
-let g:vimspector_terminal_minwidth = 20
-
-"let g:vimspector_enable_mappings = 'HUMAN'
-
-augroup python
-  autocmd!
-  autocmd FileType py :nonremap <F5> <Plug>VimspectorContinue
-  autocmd FileType py :nonremap <F9> <Plug>VimspectorToggleBreakpoint
-  autocmd FileType py :nonremap <F4> <Plug>VimspectorRestart
-  autocmd FileType py :nonremap <F3> <Plug>VimspectorStop
-  autocmd FileType py :nonremap <Leader><F8> <Plug>VimspectorRunToCursor
-  autocmd FileType py :nonremap <F10> <Plug>VimspectorStepOver
-  autocmd FileType py :nonremap <F11> <Plug>VimspectorStepInto
-  autocmd FileType py :nonremap <F12> <Plug>VimspectorStepOut
-augroup END
-
-":nmap <F5> <Plug>VimspectorContinue
-":nmap <F9> <Plug>VimspectorToggleBreakpoint
-":nmap <F4> <Plug>VimspectorRestart
-":nmap <F3> <Plug>VimspectorStop
-":nmap <Leader><F8> <Plug>VimspectorRunToCursor
-":nmap <F10> <Plug>VimspectorStepOver
-":nmap <F11> <Plug>VimspectorStepInto
-":nmap <F12> <Plug>VimspectorStepOut
-
-" mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
-
-" for normal mode - the word under the cursor
-nmap <Leader>di <Plug>VimspectorBalloonEval
-" for visual mode, the visually selected text
-xmap <Leader>di <Plug>VimspectorBalloonEval
-
-" Use F9 to toggle break point
-nmap <Leader>db <Plug>VimspectorBreakpoints
-
-nmap <LocalLeader><F11> <Plug>VimspectorUpFrame
-nmap <LocalLeader><F12> <Plug>VimspectorDownFrame
-nmap <LocalLeader>B     <Plug>VimspectorBreakpoints
-nmap <LocalLeader>D     <Plug>VimspectorDisassemble
+"":nmap <F5> <Plug>VimspectorContinue
+"":nmap <F9> <Plug>VimspectorToggleBreakpoint
+"":nmap <F4> <Plug>VimspectorRestart
+"":nmap <F3> <Plug>VimspectorStop
+"":nmap <Leader><F8> <Plug>VimspectorRunToCursor
+"":nmap <F10> <Plug>VimspectorStepOver
+"":nmap <F11> <Plug>VimspectorStepInto
+"":nmap <F12> <Plug>VimspectorStepOut
+"
+"" mnemonic 'di' = 'debug inspect' (pick your own, if you prefer!)
+"
+"" for normal mode - the word under the cursor
+"nmap <Leader>di <Plug>VimspectorBalloonEval
+"" for visual mode, the visually selected text
+"xmap <Leader>di <Plug>VimspectorBalloonEval
+"
+"" Use F9 to toggle break point
+"nmap <Leader>db <Plug>VimspectorBreakpoints
+"
+"nmap <LocalLeader><F11> <Plug>VimspectorUpFrame
+"nmap <LocalLeader><F12> <Plug>VimspectorDownFrame
+"nmap <LocalLeader>B     <Plug>VimspectorBreakpoints
+"nmap <LocalLeader>D     <Plug>VimspectorDisassemble
 
 "========================================================================
 " Auto Completion 
@@ -435,6 +435,8 @@ inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
 Plug 'prabirshrestha/vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'mattn/vim-lsp-icons'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 "let g:lsp_log_file = 'lsp.log'
 "let g:lsp_log_verbose = 1
@@ -499,6 +501,9 @@ augroup lsp_install
   autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
 
+let g:lsp_diagnostics_highlights_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
+"let g:lsp_document_highlight_enabled = 0
 "let g:lsp_diagnostics_echo_cursor = 1
 "let g:lsp_diagnostics_enabled = 0
 "let g:asyncomplete_auto_popup = 1
@@ -522,7 +527,7 @@ augroup python
   let cmdline_term_height = 15
   let cmdline_term_width = 90
   let cmdline_app = {}
-  let cmdline_app['python'] = 'python'
+  let cmdline_app['python'] = 'python3'
   let cmdline_map_send = ','
 augroup END
 
@@ -535,11 +540,14 @@ augroup fortran
   autocmd BufRead,BufNewFile *.f90 set filetype=fortran
   autocmd FileType fortran let g:lsp_diagnostics_enabled = 1
   autocmd FileType fortran nnoremap <F1> :AsyncStop<CR> :cclose<CR> 
+  autocmd FileType fortran nnoremap <F3> :w<CR> :AsyncRun make debug<CR>
   autocmd FileType fortran nnoremap <F4> :w<CR> :AsyncRun make test<CR>
-  autocmd FileType fortran nnoremap <F5> :w<CR> :AsyncRun make debug<CR>
+  autocmd FileType fortran nnoremap <F5> :w<CR> :AsyncRun make run<CR>
+  autocmd FileType fortran nnoremap <F6> :w<CR> :AsyncRun make relwithdebinfo<CR>
   "nnoremap <F12> :sp<CR>:resize 10<CR>:terminal<CR>i gdb-oneapi --quiet<CR>
   "nnoremap <F12> :vsp<CR>:terminal<CR>i gdb-oneapi --quiet<CR>
-  nnoremap <F12> :vsp<CR>:terminal<CR>i
+  "nnoremap <F12> :vsp<CR>:terminal<CR>i
+  nnoremap <F12> :sp<CR>:terminal<CR>
 
   let g:lsp_diagnostics_echo_cursor = 1
   let g:lsp_diagnostics_enabled = 1
@@ -612,7 +620,7 @@ augroup tex
 
   if s:is_linux
     " 既存のパス.にLaTeXのパスを追加
-    :let $PATH .= ':/usr/local/texlive/2022/bin/x86_64-linux'
+    :let $PATH .= ':/usr/local/texlive/2024/bin/x86_64-linux'
     autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     "autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test LINE=:echo line('.')<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
@@ -682,7 +690,7 @@ set mouse=a
 "========================================================================
 " Markdown Viewer
 "
-Plug 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 let g:mkdp_auto_start = 1
 
 " Escを押し間違えてTabを押しても良いようにTabをEscに割当
@@ -697,21 +705,24 @@ Plug 'chrisbra/csv.vim'
 
 augroup csv
   autocmd!
-  autocmd BufRead,BufNewFile *.csv set filetype=csv
+  autocmd BufRead,BufNewFile *.csv set filetype
+  "autocmd BufRead,BufWritePost *.csv :%ArrangeColumn
+  "autocmd BufWritePre *.csv :%UnArrangeColumn=csv
 
   " 自動整列が繰り返し実行されるため自動保存を解除
   "autocmd FileType csv let g:auto_save = 0
 
   " スクロールしてもヘッダーが見えるように画面分割
-  autocmd FileType csv nnoremap <F5> :CSVHeaderToggle<CR>
-
+  autocmd FileType csv nnoremap <F8> :CSVHeaderToggle<CR>
 augroup END
 
 let g:csv_delim=','
+let g:csv_start = 1
+let g:csv_end = 100
 let g:csv_hiHeader = 'Pmenu'
 let g:no_csv_maps = 1 " キーマップを解除しないと<S-j>が使えなくなる。
 let g:csv_autocmd_arrange	= 0 " 自動整列
-let g:csv_autocmd_arrange_size = 256*256 " 整列時間節約のため1MB分に限定
+"let g:csv_autocmd_arrange_size = 1024*1024 " 整列時間節約のため1MB分に限定
 "let g:csv_highlight_column = 'y' " カラムを黄色でハイライト
 
 " Escを押し間違えてTabを押しても良いようにTabをEscに割当
@@ -810,8 +821,8 @@ vnoremap <F2> :s/=/<equal>/ge<CR> :'<,'>s/::/=/g<CR> :'<,'>EasyAlign =<CR> :'<,'
 " NERDTree settings (Ctrl+n to open NERDTree)
 "
 Plug 'preservim/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-"Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 "https://ja.stackoverflow.com/questions/29595/vim%E8%B5%B7%E5%8B%95%E3%81%AE%E9%9A%9B-w18-invalid-character-in-group-name-%E3%81%8C%E5%87%BA%E5%8A%9B%E3%81%95%E3%82%8C%E3%82%8B
 "
 "nnoremap <silent><C-n> :NERDTreeToggle %:h<CR>
@@ -839,11 +850,11 @@ if s:is_linux
 endif
 
 " change the default dictionary mappings for file extension matches
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tex'] = 'TEX'
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['exe'] = 'EXE'
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['f90'] = 'F90'
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['csv'] = 'CSV'
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = { } " needed
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['tex'] = 'TEX'
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['exe'] = 'EXE'
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['f90'] = 'F90'
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['csv'] = 'CSV'
 let s:brown = "905532"
 let s:aqua =  "3AFFDB"
 let s:blue = "689FB6"
@@ -902,7 +913,7 @@ call plug#end() " *** プラグインインパッケージはここから上に�
 filetype plugin on
 filetype plugin indent on
 
-" 画面配色スキームはプラグインマネジャーの後(vundle#end()の後)で宣言する。
+" 画面配色スキームはプラグインマネジャーの後で宣言する。
 "colorscheme PaperColor
 "colorscheme evening
 colorscheme default
