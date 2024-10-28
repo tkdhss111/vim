@@ -548,12 +548,15 @@ augroup fortran
   autocmd!
   autocmd BufRead,BufNewFile *.f90 set filetype=fortran
   autocmd BufRead,BufNewFile *.f90 set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab conceallevel=1
-  autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=∙
+  "autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=%
+  autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=.
+  "autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=→
+  "autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=∙
   autocmd BufRead,BufNewFile *.f90 hi! link Conceal Operator
   autocmd BufRead,BufNewFile *.f90 setlocal conceallevel=1
   autocmd BufRead,BufNewFile *.f90 setlocal concealcursor=n
-  "autocmd FileType fortran syntax match FortranConceal '%' conceal cchar=→
   autocmd FileType fortran let g:lsp_diagnostics_enabled = 1
+  autocmd FileType fortran inoremap ,, %
   autocmd FileType fortran nnoremap <F1> :AsyncStop<CR> :cclose<CR> 
   autocmd FileType fortran nnoremap <F3> :w<CR> :AsyncRun make debug<CR>
   autocmd FileType fortran nnoremap <F4> :w<CR> :AsyncRun make test<CR>
