@@ -10,6 +10,8 @@ sudo rm -rf /var/lib/texmf
 
 sudo rm -rf /etc/texmf
 
-sudo apt-get remove tex-common --purge
+sudo apt remove tex-common --purge
 
 rm -rf ~/.texlive
+
+find -L /usr/local/bin/ -lname /usr/local/texlive/*/bin/* | xargs -r rm

@@ -1,11 +1,11 @@
-YR=2022
-
 sudo apt install wget perl-tk -y
+rm install-tl-unx.tar.gz
+rm -r install-tl*
 wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 tar -xzf install-tl-unx.tar.gz
 
-cd install-tl-${YR}
-sudo ./install-tl
+cd install-tl-*
+sudo ./install-tl # Press "I" to start installation
 
 cp ~/.bashrc ~/.bashrc_bak
 cat <<EOF>>~/.bashrc

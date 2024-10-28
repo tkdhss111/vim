@@ -85,6 +85,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 "
 " Move to the beginning and end of the line
 "
+noremap <C-g> ^
 noremap <C-h> ^
 noremap <C-l> $
 noremap <C-j> 20j
@@ -268,6 +269,11 @@ let autodate_lines        = 1000
 " Auto Completion (deoplete and denite)
 "
 Plug 'roxma/vim-hug-neovim-rpc'
+
+"========================================================================
+" Parentheses
+"
+Plug 'tpope/vim-surround'
 
 "========================================================================
 " Database Tool(vim-dadbod, ui and completion)
@@ -535,9 +541,18 @@ augroup END
 " Fortran
 "
 
+" Syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 augroup fortran
   autocmd!
   autocmd BufRead,BufNewFile *.f90 set filetype=fortran
+  autocmd BufRead,BufNewFile *.f90 set tabstop=2 softtabstop=0 expandtab shiftwidth=2 smarttab conceallevel=1
+  autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=∙
+  autocmd BufRead,BufNewFile *.f90 hi! link Conceal Operator
+  autocmd BufRead,BufNewFile *.f90 setlocal conceallevel=1
+  autocmd BufRead,BufNewFile *.f90 setlocal concealcursor=n
+  "autocmd FileType fortran syntax match FortranConceal '%' conceal cchar=→
   autocmd FileType fortran let g:lsp_diagnostics_enabled = 1
   autocmd FileType fortran nnoremap <F1> :AsyncStop<CR> :cclose<CR> 
   autocmd FileType fortran nnoremap <F3> :w<CR> :AsyncRun make debug<CR>
@@ -591,8 +606,9 @@ let g:vimtex_compiler_latexmk = {
       \    '-verbose',
       \    '-file-line-error',
       \    '-halt-on-error',
-      \    '-synctex=-1',
+      \    '-synctex=1',
       \    '-interaction=nonstopmode',
+      \    '-output-directory="build"',
       \],
       \}
 let g:tex_flavor = 'latex'
@@ -611,8 +627,8 @@ augroup tex
   autocmd BufRead,BufNewFile *.tex set filetype=tex
   "autocmd FileType tex :execute "normal \\ll"
   "autocmd BufRead,BufNewFile lec.tex :VimtexView %:p:h/debug/lecsol-handout.pdf
-  "autocmd BufRead,BufNewFile lec.tex :AsyncRun ../../tex/hss_auto/auto
   "autocmd BufRead,BufNewFile quiz.tex :VimtexView %:p:h/debug/quizsol-handout.pdf
+  "autocmd BufRead,BufNewFile lec.tex :AsyncRun ../../tex/hss_auto/auto
 
   "
   autocmd FileType tex :inoremap <D-h> <Left>
@@ -621,10 +637,12 @@ augroup tex
   if s:is_linux
     " 既存のパス.にLaTeXのパスを追加
     :let $PATH .= ':/usr/local/texlive/2024/bin/x86_64-linux'
-    autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR>
     "autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test LINE=:echo line('.')<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
-    autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR>
     autocmd FileType tex :nnoremap <F6> :w <CR> :make -j release<CR>
+    autocmd FileType tex :nnoremap <F8> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
+    autocmd FileType tex :nnoremap <F9> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
   endif
 
   if s:is_win
@@ -649,6 +667,7 @@ augroup tex
   " N.B. makefileで直にコンパイルしてるので逆順検索は使えない。
   " Vimtexの機能（latexmkを使っている）<leader>lvでコンパイルするできるかも。
   if s:is_win
+    let g:vimtex_compiler_progname = 'nvr'
     let g:vimtex_view_general_viewer = 'SumatraPDF'
     let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
     "let g:vimtex_view_general_viewer = 'okular'
@@ -672,6 +691,10 @@ augroup tex
     let g:vimtex_view_skim_activate = 1
   endif
 
+  let g:auto_save = 1
+  let g:auto_save_silent = 1
+  let g:auto_save_in_insert_mode = 1
+
 augroup END
 
 "========================================================================
@@ -690,13 +713,20 @@ set mouse=a
 "========================================================================
 " Markdown Viewer
 "
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
-let g:mkdp_auto_start = 1
+"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+let g:mkdp_auto_start = 0
+"let g:mkdp_combine_preview_auto_refresh = 1
 
 " Escを押し間違えてTabを押しても良いようにTabをEscに割当
 autocmd FileType md :inoremap <Tab> <Esc>
 autocmd FileType txt :inoremap <Tab> <Esc>
 autocmd FileType vim :inoremap <Tab> <Esc>
+
+function OpenMarkdownPreview (url)
+  execute "silent ! brave --new-window " . a:url
+endfunction
+let g:mkdp_browserfunc = 'OpenMarkdownPreview'
 
 "========================================================================
 " CSV Viewer
@@ -835,6 +865,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let NERDTreeQuitOnOpen=1
 let NERDTreeShowBookmarks = 1
 let g:NERDTreeDirArrows = 1
+let g:NERDTreeWinSize=60
 
 " DEPRECATED: default path is homepath of windows
 "if s:is_win
@@ -899,7 +930,7 @@ cnoremap w! w !sudo tee > /dev/null %<CR> :e!<CR>
 Plug 'kana/vim-smartchr'
 
 " Cmake Syntax Highlighting
-Plug 'pboettch/vim-cmake-syntax'
+"Plug 'pboettch/vim-cmake-syntax'
 
 " Git
 Plug 'tpope/vim-fugitive'
