@@ -197,7 +197,7 @@ set softtabstop=0  " タブで挿入する空白数
 set tabstop=2
 set clipboard+=unnamedplus    " Vimの無名レジスタとクリップボードを連携
 "set colorcolumn=101           " 指定するカラムに赤い縦線を表示
-set cursorline
+"set cursorline
 set showmatch
 set expandtab
 set smarttab
@@ -266,6 +266,11 @@ let autodate_lines        = 1000
 "let autodate_format       = '%F %Ex %x %X %B %Om %d, %Y'
 
 "========================================================================
+" Github Copilot
+"
+Plug 'github/copilot.vim'
+
+"========================================================================
 " Auto Completion (deoplete and denite)
 "
 Plug 'roxma/vim-hug-neovim-rpc'
@@ -284,15 +289,12 @@ Plug 'kristijanhusak/vim-dadbod-completion'
 
 augroup sql
   autocmd!
-  "autocmd FileType sql let g:auto_save = 0
+  autocmd FileType sql let g:auto_save = 0
   autocmd FileType dbout setlocal nofoldenable
 augroup END
-
 let g:dbs = [
-      \{"name":"sqlite", "url":"sqlite://var/www/stats.dip.jp/admin/fortran-www.db"},
+      \{"name":"load", "url":"sqlite:/mnt/DATA/load/load.db"},
       \{"name":"admin", "url":"mysql://admin@stats.dip.jp:3306/admin"},
-      \{"name":"test", "url":"mysql://hss@stats.dip.jp:3306/test"},
-      \{"name":"ba", "url":"mysql://tiu@stats.dip.jp:3306/ba"}
       \]
 let g:db_ui_show_database_icon = 1
 let g:db_ui_default_query = 'select * from "{table}" limit 10'
@@ -304,6 +306,7 @@ let g:db_ui_table_helpers = {
 \     'Select Count(*)': 'SELECT COUNT(*) FROM {table}'
 \   }
 \ }
+let g:db_ui_auto_execute_table_helpers = 1
 
 "========================================================================
 " Ashyncrun
@@ -314,13 +317,17 @@ let g:asyncrun_open = 10
 "========================================================================
 " R
 "
-Plug 'hrsh7th/nvim-cmp'
 Plug 'jalvesaq/Nvim-R'
 Plug 'jalvesaq/cmp-nvim-r'
 Plug 'gaalcaras/ncm-R'
 Plug 'ncm2/ncm2'
 Plug 'sirver/UltiSnips'
 Plug 'ncm2/ncm2-ultisnips'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'tree-sitter/tree-sitter' "sudo npm install -g tree-sitter-cli
+Plug 'nvim-treesitter/nvim-treesitter'
+"Plug 'R-nvim/cmp-r'
+"Plug 'R-nvim/R.nvim'
 
 " remapping the basic :: send line
 "nnoremap , <Plug>RDSendLine
@@ -541,9 +548,6 @@ augroup END
 " Fortran
 "
 
-" Syntax highlighting
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
 augroup fortran
   autocmd!
   autocmd BufRead,BufNewFile *.f90 set filetype=fortran
@@ -559,7 +563,8 @@ augroup fortran
   autocmd FileType fortran inoremap ,, %
   autocmd FileType fortran nnoremap <F1> :AsyncStop<CR> :cclose<CR> 
   autocmd FileType fortran nnoremap <F3> :w<CR> :AsyncRun make debug<CR>
-  autocmd FileType fortran nnoremap <F4> :w<CR> :AsyncRun make test<CR>
+  "autocmd FileType fortran nnoremap <F4> :w<CR> :AsyncRun make test<CR>
+  autocmd FileType fortran nnoremap <F4> :w<CR> :make test<CR>
   autocmd FileType fortran nnoremap <F5> :w<CR> :AsyncRun make run<CR>
   autocmd FileType fortran nnoremap <F6> :w<CR> :AsyncRun make relwithdebinfo<CR>
   "nnoremap <F12> :sp<CR>:resize 10<CR>:terminal<CR>i gdb-oneapi --quiet<CR>
@@ -643,7 +648,7 @@ augroup tex
     autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test<CR>
     "autocmd FileType tex :nnoremap <F4> :w <CR> :AsyncRun make test LINE=:echo line('.')<CR> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     autocmd FileType tex :nnoremap <F5> :w <CR> :AsyncRun make run<CR>
-    autocmd FileType tex :nnoremap <F6> :w <CR> :make -j release<CR>
+    autocmd FileType tex :nnoremap <F6> :w <CR> :AsyncRun make -j release<CR>
     autocmd FileType tex :nnoremap <F8> :VimtexView %:p:h/debug/quizsol-handout.pdf<CR>
     autocmd FileType tex :nnoremap <F9> :VimtexView %:p:h/debug/lecsol-handout.pdf<CR>
   endif
@@ -716,7 +721,6 @@ set mouse=a
 "========================================================================
 " Markdown Viewer
 "
-"Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 let g:mkdp_auto_start = 0
 "let g:mkdp_combine_preview_auto_refresh = 1
@@ -730,6 +734,20 @@ function OpenMarkdownPreview (url)
   execute "silent ! brave --new-window " . a:url
 endfunction
 let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+
+" Windows
+Plug 'previm/previm'
+Plug 'tyru/open-browser.vim'
+
+augroup md
+  autocmd!
+  autocmd BufRead,BufNewFile *.md set spell 
+augroup END
+
+augroup Rmd
+  autocmd!
+  autocmd BufRead,BufNewFile *.Rmd set spell 
+augroup END
 
 "========================================================================
 " CSV Viewer
@@ -802,9 +820,15 @@ function! SaveBackupFile()
   else
     let fname = expand("%:r")."_".strftime("%Y-%m-%d_%H%M") . ".".expand("%:e")
   endif
-  silent execute ":!mkdir bak"
-  silent execute ":%w! ./bak/" . fname
-  "echo "Saved backup file: ./bak/" . fname
+  if s:is_linux
+    let dname = "~/.local/share/Trash/files/VIM_BAKUP_FILES/" . expand("%:r") . "/"
+    silent execute ":!mkdir -p " . dname
+    silent execute ":%w! " . dname . fname
+  else
+    silent execute ":!mkdir bak"
+    silent execute ":%w! ./bak/" . fname
+    echo "Saved backup file: ./bak/" . fname
+  endif
 endfunction
 "========================================================================
 " Word Alignment
@@ -950,7 +974,8 @@ filetype plugin indent on
 " 画面配色スキームはプラグインマネジャーの後で宣言する。
 "colorscheme PaperColor
 "colorscheme evening
-colorscheme default
+"colorscheme default
+colorscheme torte
 
 "========================================================================
 " 日本語入力（IME）設定
