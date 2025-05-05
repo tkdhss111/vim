@@ -1,4 +1,6 @@
-sudo apt install wget perl-tk -y
+YR = 2025
+# For wget installation
+#sudo apt install wget perl-tk -y
 rm install-tl-unx.tar.gz
 rm -r install-tl*
 wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz

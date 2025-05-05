@@ -557,8 +557,8 @@ augroup fortran
   "autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=→
   "autocmd BufRead,BufNewFile *.f90 syntax match FortranConceal '%' conceal cchar=∙
   autocmd BufRead,BufNewFile *.f90 hi! link Conceal Operator
-  autocmd BufRead,BufNewFile *.f90 setlocal conceallevel=1
-  autocmd BufRead,BufNewFile *.f90 setlocal concealcursor=n
+  autocmd BufRead,BufNewFile *.f90 setlocal conceallevel=2
+  autocmd BufRead,BufNewFile *.f90 setlocal concealcursor="nc"
   autocmd FileType fortran let g:lsp_diagnostics_enabled = 1
   autocmd FileType fortran inoremap ,, %
   autocmd FileType fortran nnoremap <F1> :AsyncStop<CR> :cclose<CR> 

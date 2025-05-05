@@ -1,0 +1,130 @@
+{
+  "Quarto/YAML Front Matter": 
+  { "prefix": "yaml",
+    "body":
+    [
+      "---",
+      "title: '$1'",
+      "subtitle: '$0'",
+      "format:",
+      "\trevealjs:",
+      "\t\tauthor: 'Hisashi Takeda, Ph.D.'",
+      "\t\ttoc: true",
+      "\t\tslide-number: true",
+      "\t\tnumber-sections: true",
+      "\t\tchalkboard: true",
+      "\t\tincremental: false",
+      "\t\tlightbox: true",
+      "\t\tcode-line-numbers: true",
+      "\t\tcode-fold: true",
+      "\t\tcode-copy: true",
+      "\t\tsmaller: true",
+      "\t\tscrollable: true",
+      "\t\tlang: 'ja'",
+      "\t\ttheme: [default, ../../../css/slide.scss]",
+      "\t\tlogo: ../../../css/takenoko.png",
+      "\t\tembed-resources: false",
+      "execute:",
+      "\tcache: true",
+      "\tfreeze: auto",
+      "---\n"
+    ]
+  },
+
+  "Quarto/Table": 
+  { "prefix": "tab",
+    "body":
+    [
+      "|  |  |  |",
+      "|--|--|--|",
+      "|  |  |  |",
+      "",
+      ": {.striped .hover}"
+    ]
+  },
+
+  "Quarto/Two Columns": 
+  { "prefix": "cols",
+    "body":
+    [
+      "::: {layout-ncol=2}",
+      "### Title1",
+      "- Item a",
+      "### Title2",
+      "- Item b",
+      ":::",
+    ]
+  },
+
+  "Quarto/Multiple Columns with Width": 
+  { "prefix": "colsw",
+    "body":
+    [
+      ":::: {.columns}",
+      "::: {.column width=50%}",
+      "",
+      ":::",
+      "::: {.column width=50%}",
+      "",
+      ":::",
+      "::::"
+    ]
+  },
+
+  "Quarto/SpeakerNotes": 
+  { "prefix": "notes",
+    "body":
+    [
+      "::: {.notes}",
+      "",
+      ":::"
+    ]
+  },
+
+  "Quarto/Callout Block": 
+  { "prefix": "callout",
+    "body":
+    [
+      "::: {.callout-note title='Note'}",
+      "",
+      ":::"
+    ]
+  },
+
+  "Quarto/Insert Image": {
+    "prefix": ["fig"],
+    "body": ["![](fig/$0){width=90%}"]
+  },
+
+  "Quarto/Comment": {
+    "prefix": ["comment"],
+    "body": ["<!--", "", "-->"]
+  },
+
+  "Quarto/Carrage Return": {
+    "prefix": ["br"],
+    "body": ["<br/>"]
+  },
+
+  "Quarto/ToDo": {
+    "prefix": ["todo"],
+    "body": ["* [ ] ${1:task} -- due:${2:today} ${3: project:}"]
+  },
+
+  "Rmarkdown/R Chunk Fig": {
+    "prefix": ["rfig"],
+    "body": ["```{r, fig.width=3.5, fig.height=3.5, fig.align='center'}", "", "```"]
+  },
+
+  "Rmarkdown/R Chunk Two Figs": {
+    "prefix": ["rfigs"],
+    "body": [
+      "```{r, fig.width=3.5, fig.height=3.5, fig.align='center'}",
+      "#| layout-ncol: 2",
+      "#| fig-cap:",
+      "#|   - 'cap1'",
+      "#|   - 'cap2'",
+      "",
+      "```"]
+  }
+}

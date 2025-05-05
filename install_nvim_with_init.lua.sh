@@ -1,0 +1,47 @@
+npm install -g tree-sitter-cli
+
+cat <<EOF keymap.toml
+[[manager.prepend_keymap]]
+on = [ "b", "a" ]
+run = "plugin yamb save"
+desc = "Add bookmark"
+
+[[manager.prepend_keymap]]
+on = [ "b", "g" ]
+run = "plugin yamb jump_by_key"
+desc = "Jump bookmark by key"
+
+[[manager.prepend_keymap]]
+on = [ "b", "G" ]
+run = "plugin yamb jump_by_fzf"
+desc = "Jump bookmark by fzf"
+
+[[manager.prepend_keymap]]
+on = [ "b", "d" ]
+run = "plugin yamb delete_by_key"
+desc = "Delete bookmark by key"
+
+[[manager.prepend_keymap]]
+on = [ "b", "D" ]
+run = "plugin yamb delete_by_fzf"
+desc = "Delete bookmark by fzf"
+
+[[manager.prepend_keymap]]
+on = [ "b", "A" ]
+run = "plugin yamb delete_all"
+desc = "Delete all bookmarks"
+
+[[manager.prepend_keymap]]
+on = [ "b", "r" ]
+run = "plugin yamb rename_by_key"
+desc = "Rename bookmark by key"
+
+[[manager.prepend_keymap]]
+on = [ "b", "R" ]
+run = "plugin yamb rename_by_fzf"
+desc = "Rename bookmark by fzf"
+EOF
+
+# Install Windows Terminal and open JSON configuration file by pressing Ctrl + , in the terminal.
+# Then commet out setting of Ctrl+v and Ctrl+c 
+
