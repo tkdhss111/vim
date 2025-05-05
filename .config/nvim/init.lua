@@ -194,7 +194,7 @@ if vim.fn.exists("g:os") == 0 then
 	else
 		local uname_output = vim.fn.system("uname")
 		vim.g.os = string.gsub(uname_output, "\n", "")
-		vim.opt.backupdir = "/home/hss/.local/share/Trash/files/VIM_BAKUP_FILES//"
+		vim.opt.backupdir = "VIM_BAKUP_FILES//"
 	end
 end
 vim.opt.backup = true
