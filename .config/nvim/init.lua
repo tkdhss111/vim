@@ -200,7 +200,7 @@ if vim.fn.exists("g:os") == 0 then
 	else
 		local uname_output = vim.fn.system("uname")
 		vim.g.os = string.gsub(uname_output, "\n", "")
-		vim.opt.backupdir = vim.fn.expand("~/VIM_BAKUP_FILES//")
+		vim.opt.backupdir = vim.fn.expand("/mnt/VIM_BAKUP_FILES//")
 	end
 end
 vim.opt.backup = true
