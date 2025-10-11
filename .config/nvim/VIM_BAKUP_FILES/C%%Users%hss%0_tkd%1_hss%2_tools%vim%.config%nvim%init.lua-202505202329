@@ -25,7 +25,7 @@ vim.opt.mouse = "a"
 vim.opt.showmode = false
 
 -- Enable spell check by default
-vim.opt.spell = false
+vim.opt.spell = true
 
 -- Set the language for spell checking (e.g., "en_us")
 vim.opt.spelllang = { "en_us" }
@@ -84,7 +84,7 @@ vim.opt.expandtab = true
 vim.bo.softtabstop = 2
 
 --Consealer
-vim.opt.conceallevel = 1
+vim.opt.conceallevel = 0
 vim.opt.concealcursor = "nc"
 
 -- added by tkdhss111 and set vim.g.NERDTreeChDirMode = 1
@@ -114,10 +114,7 @@ vim.keymap.set("n", "<C-c>", ":NERDTreeFind<CR>")
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
-vim.keymap.set("n", "<F2>", ":w<CR> :make debug<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<F3>", ":w<CR> :make test<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<F4>", ":w<CR> :make run<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<F6>", ":w<CR> :make release<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<F4>", ":Make<CR>", { noremap = true, silent = true })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -196,15 +193,14 @@ vim.keymap.set(
 
 if vim.fn.exists("g:os") == 0 then
 	local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
-	local username = os.getenv("USER") or os.getenv("USERNAME")
 	if is_windows then
 		vim.g.os = "Windows"
-		--vim.opt.backupdir = "C://Users//" .. username .. "//VIM_BAKUP_FILES//"
+		vim.opt.backupdir = "VIM_BAKUP_FILES//"
 		vim.g.python3_host_prog = "C:/Python312/python.exe"
 	else
 		local uname_output = vim.fn.system("uname")
 		vim.g.os = string.gsub(uname_output, "\n", "")
-		vim.opt.backupdir = vim.fn.expand("/home/" .. username .. "/VIM_BAKUP_FILES//")
+		vim.opt.backupdir = vim.fn.expand("VIM_BAKUP_FILES//")
 	end
 end
 vim.opt.backup = true
@@ -236,18 +232,18 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-	--	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
-	--		"lewis6991/gitsigns.nvim",
-	--		opts = {
-	--			signs = {
-	--				add = { text = "+" },
-	--				change = { text = "~" },
-	--				delete = { text = "_" },
-	--				topdelete = { text = "‾" },
-	--				changedelete = { text = "~" },
-	--			},
-	--		},
-	--	},
+	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
+		"lewis6991/gitsigns.nvim",
+		opts = {
+			signs = {
+				add = { text = "+" },
+				change = { text = "~" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "~" },
+			},
+		},
+	},
 
 	{
 		"sindrets/diffview.nvim",
@@ -278,10 +274,6 @@ require("lazy").setup({
 		end,
 	},
 	--CSV Viewer
-	{
-		"chrisbra/csv.vim",
-		ft = { "csv" }, -- only load when editing CSV files
-	},
 	{
 		"hat0uma/csvview.nvim",
 		---@module "csvview"
@@ -326,7 +318,7 @@ require("lazy").setup({
 				magic_window = true,
 				auto_resize_height = true, -- Set to true if you want quickfix to resize automatically
 				preview = {
-					auto_preview = true,
+					auto_preview = false,
 					border = "rounded", -- Options: 'none', 'single', 'double', 'rounded', 'shadow'
 					show_title = true,
 					show_scroll_bar = true,
@@ -365,7 +357,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-
 	-- Ack
 	{
 		"wincent/ferret",
@@ -381,8 +372,9 @@ require("lazy").setup({
 	{
 		"skywind3000/asyncrun.vim",
 		config = function()
+			vim.g.asyncrun_open = 35
+			--vim.g.asyncrun_open = 10
 			vim.api.nvim_create_user_command("Make", function(opts)
-				vim.g.asyncrun_open = 20
 				vim.cmd("AsyncRun make " .. (opts.args or ""))
 			end, { nargs = "*" })
 			-- Open QuickFix list when AsyncRun is invoked and close it when success, otherwise keep opening it.
@@ -778,30 +770,28 @@ require("lazy").setup({
 			},
 		},
 	},
-	{
-		"neovim/nvim-lspconfig",
-		dependencies = {
-			{
-				"williamboman/mason.nvim",
-				version = "^1.0.0",
-				config = true,
-			},
-			{
-				"mason-org/mason-lspconfig.nvim",
-				version = "^1.0.0",
-				config = function()
-					require("mason-lspconfig").setup()
-				end,
-			},
-		},
-		config = function()
-			require("mason-lspconfig").setup_handlers({
-				function(server_name)
-					require("lspconfig")[server_name].setup({})
-				end,
-			})
-		end,
-	},
+{
+  "neovim/nvim-lspconfig",
+  dependencies = {
+    {
+      "williamboman/mason.nvim",
+      config = true,
+    },
+    {
+      "williamboman/mason-lspconfig.nvim",
+      config = function()
+        require("mason-lspconfig").setup()
+      end,
+    },
+  },
+  config = function()
+    require("mason-lspconfig").setup_handlers({
+      function(server_name)
+        require("lspconfig")[server_name].setup({})
+      end,
+    })
+  end,
+}
 
 	{ -- Autoformat
 		"stevearc/conform.nvim",
@@ -1287,15 +1277,15 @@ vim.api.nvim_create_autocmd("filetype", {
 vim.api.nvim_create_autocmd("filetype", {
 	pattern = "make",
 	callback = function()
-		--		vim.api.nvim_buf_set_keymap(0, "n", "<F3>", ":w<CR>:AsyncRun make debug<CR>", { noremap = true, silent = true })
-		--		vim.api.nvim_buf_set_keymap(0, "n", "<F4>", ":w<CR>:AsyncRun make test<CR>", { noremap = true, silent = true })
-		--		vim.api.nvim_buf_set_keymap(
-		--			0,
-		--			"n",
-		----			"<F6>",
-		--		":w<CR>:AsyncRun make release<CR>",
-		--		{ noremap = true, silent = true }
-		--	)
+		vim.api.nvim_buf_set_keymap(0, "n", "<F3>", ":w<CR>:AsyncRun make debug<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "<F4>", ":w<CR>:AsyncRun make run<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(
+			0,
+			"n",
+			"<F6>",
+			":w<CR>:AsyncRun make release<CR>",
+			{ noremap = true, silent = true }
+		)
 	end,
 })
 
@@ -1306,10 +1296,16 @@ vim.api.nvim_create_autocmd("filetype", {
 		vim.cmd([[ syntax match FortranConceal /%/ conceal cchar=. ]])
 		vim.cmd([[ highlight link FortranConceal Special ]])
 		vim.api.nvim_buf_set_keymap(0, "i", ",,", "%", { noremap = true, silent = true })
-		--	vim.api.nvim_buf_set_keymap(0, "n", "<F3>", ":w<CR>:make debug<CR>", { noremap = true, silent = true })
-		--	vim.api.nvim_buf_set_keymap(0, "n", "<F4>", ":w<CR>:AsyncRun make test<CR>", { noremap = true, silent = true })
-		--	vim.api.nvim_buf_set_keymap(0, "n", "<F5>", ":w<CR>:AsyncRun make run<CR>", { noremap = true, silent = true })
-		vim.api.nvim_buf_set_keymap(0, "n", "<F6>", ":w<CR>:Make relwithdebinfo<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "<F3>", ":w<CR>:make debug<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "<F4>", ":w<CR>:make test<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "<F5>", ":w<CR>:make run<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(
+			0,
+			"n",
+			"<F6>",
+			":w<CR>:AsyncRunmake relwithdebinfo<CR>",
+			{ noremap = true, silent = true }
+		)
 	end,
 })
 
@@ -1319,49 +1315,48 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		local current_file_path = vim.api.nvim_buf_get_name(0)
 		vim.api.nvim_buf_set_keymap(0, "n", "<F3>", ":AsyncRun make quizsol<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(
+			0,
+			"n",
+			"<F4>",
+			":AsyncRun make render file='" .. current_file_path .. "'<CR>",
+			--":AsyncRun make file='" .. current_file_path .. "'<CR><Esc><C-w>k",
+			{ noremap = true, silent = true }
+		)
 		--		vim.api.nvim_buf_set_keymap(
 		--			0,
 		--			"n",
-		--			"<F4>",
-		--			":AsyncRun make render file='" .. current_file_path .. "'<CR>",
-		--			--":AsyncRun make file='" .. current_file_path .. "'<CR><Esc><C-w>k",
-		--			{ noremap = true, silent = false }
+		--			"<F5>",
+		--			":sp<CR>:res 5<CR>:terminal<CR>i make preview file='" .. current_file_path .. "'<CR><Esc><C-w>k",
+		--			{ noremap = true, silent = true }
 		--		)
-		--		--		vim.api.nvim_buf_set_keymap(
-		--		--			0,
-		--		--			"n",
-		--		--			"<F5>",
-		--		--			":sp<CR>:res 5<CR>:terminal<CR>i make preview file='" .. current_file_path .. "'<CR><Esc><C-w>k",
-		--		--			{ noremap = true, silent = true }
-		--		--		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F5>",
-			":make release<CR>",
-			--":AsyncRun make preview file='" .. current_file_path .. "'<CR>",
-			{ noremap = true, silent = false }
+			":AsyncRun make preview file='" .. current_file_path .. "'<CR>",
+			{ noremap = true, silent = true }
 		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F7>",
 			":sp<CR>:res 25<CR>:terminal<CR>i make preview file='" .. current_file_path .. "'<CR>",
-			{ noremap = true, silent = false }
+			{ noremap = true, silent = true }
 		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F8>",
 			":sp<CR>:res 25<CR>:terminal<CR>i make render file='" .. current_file_path .. "'<CR>",
-			{ noremap = true, silent = false }
+			{ noremap = true, silent = true }
 		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F9>",
 			":AsyncRun make html_self_contained<CR>",
-			{ noremap = true, silent = false }
+			{ noremap = true, silent = true }
 		)
 	end,
 })
@@ -1389,9 +1384,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		vim.opt.backupext = "-" .. vim.fn.strftime("%Y%m%d%H%M")
 	end,
 })
-
--- Press F1 to repeat the last Ex command (same as typing @:)
-vim.keymap.set("n", "<F1>", ":execute 'normal! @:'<CR>", { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et

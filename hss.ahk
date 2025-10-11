@@ -8,8 +8,5 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 $capslock::ctrl
 #if
 
-$`;::Send `:
-$+`;::Send `;
-
 `::Escape
 Escape::`

@@ -84,7 +84,7 @@ vim.opt.expandtab = true
 vim.bo.softtabstop = 2
 
 --Consealer
-vim.opt.conceallevel = 1
+vim.opt.conceallevel = 0
 vim.opt.concealcursor = "nc"
 
 -- added by tkdhss111 and set vim.g.NERDTreeChDirMode = 1
@@ -114,10 +114,9 @@ vim.keymap.set("n", "<C-c>", ":NERDTreeFind<CR>")
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
-vim.keymap.set("n", "<F2>", ":w<CR> :make debug<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<F3>", ":w<CR> :make test<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<F4>", ":w<CR> :make run<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<F6>", ":w<CR> :make release<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<F3>", ":make debug<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<F4>", ":make test<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<F5>", ":Make run<CR>", { noremap = true, silent = true })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -236,18 +235,18 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
-	--	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
-	--		"lewis6991/gitsigns.nvim",
-	--		opts = {
-	--			signs = {
-	--				add = { text = "+" },
-	--				change = { text = "~" },
-	--				delete = { text = "_" },
-	--				topdelete = { text = "‾" },
-	--				changedelete = { text = "~" },
-	--			},
-	--		},
-	--	},
+	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
+		"lewis6991/gitsigns.nvim",
+		opts = {
+			signs = {
+				add = { text = "+" },
+				change = { text = "~" },
+				delete = { text = "_" },
+				topdelete = { text = "‾" },
+				changedelete = { text = "~" },
+			},
+		},
+	},
 
 	{
 		"sindrets/diffview.nvim",
@@ -326,7 +325,7 @@ require("lazy").setup({
 				magic_window = true,
 				auto_resize_height = true, -- Set to true if you want quickfix to resize automatically
 				preview = {
-					auto_preview = true,
+					auto_preview = false,
 					border = "rounded", -- Options: 'none', 'single', 'double', 'rounded', 'shadow'
 					show_title = true,
 					show_scroll_bar = true,
@@ -365,7 +364,6 @@ require("lazy").setup({
 			})
 		end,
 	},
-
 	-- Ack
 	{
 		"wincent/ferret",
@@ -381,8 +379,9 @@ require("lazy").setup({
 	{
 		"skywind3000/asyncrun.vim",
 		config = function()
+			vim.g.asyncrun_open = 35
+			--vim.g.asyncrun_open = 10
 			vim.api.nvim_create_user_command("Make", function(opts)
-				vim.g.asyncrun_open = 20
 				vim.cmd("AsyncRun make " .. (opts.args or ""))
 			end, { nargs = "*" })
 			-- Open QuickFix list when AsyncRun is invoked and close it when success, otherwise keep opening it.
@@ -1319,49 +1318,48 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		local current_file_path = vim.api.nvim_buf_get_name(0)
 		vim.api.nvim_buf_set_keymap(0, "n", "<F3>", ":AsyncRun make quizsol<CR>", { noremap = true, silent = true })
+		vim.api.nvim_buf_set_keymap(
+			0,
+			"n",
+			"<F4>",
+			":AsyncRun make render file='" .. current_file_path .. "'<CR>",
+			--":AsyncRun make file='" .. current_file_path .. "'<CR><Esc><C-w>k",
+			{ noremap = true, silent = true }
+		)
 		--		vim.api.nvim_buf_set_keymap(
 		--			0,
 		--			"n",
-		--			"<F4>",
-		--			":AsyncRun make render file='" .. current_file_path .. "'<CR>",
-		--			--":AsyncRun make file='" .. current_file_path .. "'<CR><Esc><C-w>k",
-		--			{ noremap = true, silent = false }
+		--			"<F5>",
+		--			":sp<CR>:res 5<CR>:terminal<CR>i make preview file='" .. current_file_path .. "'<CR><Esc><C-w>k",
+		--			{ noremap = true, silent = true }
 		--		)
-		--		--		vim.api.nvim_buf_set_keymap(
-		--		--			0,
-		--		--			"n",
-		--		--			"<F5>",
-		--		--			":sp<CR>:res 5<CR>:terminal<CR>i make preview file='" .. current_file_path .. "'<CR><Esc><C-w>k",
-		--		--			{ noremap = true, silent = true }
-		--		--		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F5>",
-			":make release<CR>",
-			--":AsyncRun make preview file='" .. current_file_path .. "'<CR>",
-			{ noremap = true, silent = false }
+			":AsyncRun make preview file='" .. current_file_path .. "'<CR>",
+			{ noremap = true, silent = true }
 		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F7>",
 			":sp<CR>:res 25<CR>:terminal<CR>i make preview file='" .. current_file_path .. "'<CR>",
-			{ noremap = true, silent = false }
+			{ noremap = true, silent = true }
 		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F8>",
 			":sp<CR>:res 25<CR>:terminal<CR>i make render file='" .. current_file_path .. "'<CR>",
-			{ noremap = true, silent = false }
+			{ noremap = true, silent = true }
 		)
 		vim.api.nvim_buf_set_keymap(
 			0,
 			"n",
 			"<F9>",
 			":AsyncRun make html_self_contained<CR>",
-			{ noremap = true, silent = false }
+			{ noremap = true, silent = true }
 		)
 	end,
 })
@@ -1389,9 +1387,6 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 		vim.opt.backupext = "-" .. vim.fn.strftime("%Y%m%d%H%M")
 	end,
 })
-
--- Press F1 to repeat the last Ex command (same as typing @:)
-vim.keymap.set("n", "<F1>", ":execute 'normal! @:'<CR>", { noremap = true, silent = true })
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
