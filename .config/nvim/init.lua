@@ -670,37 +670,55 @@ require("lazy").setup({
 			end, { desc = "[S]earch [N]eovim files" })
 		end,
 	},
-	{
-		"zbirenbaum/copilot-cmp",
-		event = "InsertEnter",
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-		dependencies = {
-			"zbirenbaum/copilot.lua",
-			cmd = "Copilot",
-			config = function()
-				require("copilot").setup({
-					suggestion = { enabled = false },
-					panel = { enabled = false },
-				})
-			end,
-		},
-	},
-	{
-		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "main",
-		dependencies = {
-			{ "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-		},
-		build = "make tiktoken", -- Only on MacOS or Linux
-		opts = {
-			debug = true, -- Enable debugging
-			-- See Configuration section for rest
-		},
-		-- See Commands section for default commands if you want to lazy load on them
-	},
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        copilot_node_command = "node", -- ensure node is available
+          server_opts_overrides = {
+            settings = {
+              advanced = {
+                token = vim.env.GITHUB_TOKEN, -- use the env variable
+              },
+            },
+          },
+        -- example settings
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-l>",
+            next = "<M-]>",
+            prev = "<M-[>",
+            dismiss = "<C-]>",
+          },
+        },
+        panel = {
+          enabled = true,
+          keymap = {
+            open = "<M-CR>",
+            jump_next = "]]",
+            jump_prev = "[[",
+            refresh = "gr",
+          },
+        },
+      })
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    dependencies = {
+      "zbirenbaum/copilot.lua",
+    },
+    config = function()
+      require("copilot_cmp").setup()
+    end,
+  },
+
+
+
 	{
 		"okuuva/auto-save.nvim",
 		version = "^1.0.0", -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
@@ -1021,6 +1039,20 @@ require("lazy").setup({
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 		ft = { "markdown" },
+	},
+-- 🆕 Inline Markdown renderer (in-editor preview)
+	{
+		"OXY2DEV/markview.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		config = function()
+			require("markview").setup({
+				preview = { auto_start = true, auto_close = true },
+			})
+			vim.keymap.set("n", "<leader>mp", "<cmd>MarkviewToggle<CR>", { desc = "Toggle Markdown Preview" })
+		end,
 	},
 	--	-- Markdown added by tkdhss111
 	--	{
