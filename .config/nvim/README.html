@@ -737,7 +737,86 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<p><strong>他のオペレータとの組み合わせ:</strong></p>
+<p><strong><code>vi</code> — 内側を選択（visual inside）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vi)</code> or <code>vi(</code></td>
+<td><code>()</code> 内のテキストを選択</td>
+<td><code>func(abc)</code> → <code>abc</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi]</code> or <code>vi[</code></td>
+<td><code>[]</code> 内のテキストを選択</td>
+<td><code>arr[123]</code> → <code>123</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi}</code> or <code>vi{</code></td>
+<td><code>{}</code> 内のテキストを選択</td>
+<td><code>{key: val}</code> → <code>key: val</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi"</code></td>
+<td><code>""</code> 内のテキストを選択</td>
+<td><code>"hello"</code> → <code>hello</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi'</code></td>
+<td><code>''</code> 内のテキストを選択</td>
+<td><code>'world'</code> → <code>world</code> を選択</td>
+</tr>
+<tr>
+<td><code>vit</code></td>
+<td>HTMLタグ内のテキストを選択</td>
+<td><code>&lt;p&gt;text&lt;/p&gt;</code> → <code>text</code> を選択</td>
+</tr>
+<tr>
+<td><code>viw</code></td>
+<td>カーソル上の単語を選択</td>
+<td><code>hello</code> → <code>hello</code> を選択</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>va</code> — 外側を選択（visual around）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>va)</code></td>
+<td><code>()</code> を含めて選択</td>
+<td><code>func(abc)</code> → <code>(abc)</code> を選択</td>
+</tr>
+<tr>
+<td><code>va"</code></td>
+<td><code>""</code> を含めて選択</td>
+<td><code>"hello"</code> → <code>"hello"</code> を選択</td>
+</tr>
+<tr>
+<td><code>va{</code></td>
+<td><code>{}</code> を含めて選択</td>
+<td><code>{key: val}</code> → <code>{key: val}</code> を選択</td>
+</tr>
+<tr>
+<td><code>vat</code></td>
+<td>HTMLタグを含めて選択</td>
+<td><code>&lt;p&gt;text&lt;/p&gt;</code> → <code>&lt;p&gt;text&lt;/p&gt;</code> を選択</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>di</code> / <code>ci</code> / <code>da</code> / <code>ca</code> — 削除・変更との組み合わせ:</strong></p>
 <table>
 <thead>
 <tr>
@@ -761,10 +840,6 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 <tr>
 <td><code>ca{</code></td>
 <td><code>{}</code> を含めて削除して挿入モードへ</td>
-</tr>
-<tr>
-<td><code>vi)</code></td>
-<td><code>()</code> 内のテキストを選択（ビジュアルモード）</td>
 </tr>
 </tbody>
 </table>
