@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
   <meta charset="utf-8" />
-  <meta name="generator" content="pandoc" />
+  <meta name="generator" content="python-markdown" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <title>README</title>
   <style>
@@ -172,29 +172,53 @@
 <header id="title-block-header">
 <h1 class="title">README</h1>
 </header>
-<h1 id="neovim-設定マニュアル">Neovim 設定マニュアル</h1>
-<h2 id="インストール">インストール</h2>
-<pre><code>git clone git@github.com:tkdhss111/vim.git</code></pre>
+<h1>Neovim 設定マニュアル</h1>
+<h2>インストール</h2>
+<pre><code class="language-bash">git clone git@github.com:tkdhss111/vim.git
+</code></pre>
 <p>HTTPS の場合:</p>
-<pre><code>git clone https://github.com/tkdhss111/vim.git</code></pre>
-<h3 id="セットアップ">セットアップ</h3>
+<pre><code class="language-bash">git clone https://github.com/tkdhss111/vim.git
+</code></pre>
+<h3>自動セットアップ（推奨）</h3>
+<p>リポジトリに含まれる <code>install.sh</code> を実行すると、必要な依存パッケージのインストールからシンボリックリンクの作成、プラグインの初期化まで一括で行えます。</p>
+<pre><code class="language-bash">cd vim/.config/nvim
+chmod +x install.sh
+./install.sh
+</code></pre>
+<p><strong>install.sh が行うこと:</strong></p>
+<ol>
+<li>システムパッケージのインストール（git, ripgrep, ctags, build-essential 等）</li>
+<li>Neovim のバージョン確認・インストール（&gt;= 0.11 必須）</li>
+<li>Node.js のインストール（nvm 経由、v22）</li>
+<li>Python ツールのインストール（black, isort）</li>
+<li>Node.js ツールのインストール（prettier）</li>
+<li>StyLua（Lua フォーマッター）のインストール</li>
+<li>R 言語サーバーのインストール</li>
+<li>DuckDB のインストール（オプション、parquet プレビュー用）</li>
+<li>Claude Code CLI のインストール（オプション）</li>
+<li>設定ファイルのシンボリックリンク作成（<code>~/.config/nvim</code>）</li>
+<li>必要なディレクトリの作成（<code>~/VIM_BACKUP_FILES</code> 等）</li>
+<li>プラグイン・Tree-sitter パーサー・Mason ツールのヘッドレスインストール（オプション）</li>
+</ol>
+<p><strong>対応OS:</strong> Ubuntu / Debian 系（その他の Linux でも手動調整で対応可能）</p>
+<h3>手動セットアップ</h3>
 <p>Neovim の設定ファイルはリポジトリ内の <code>.config/nvim/</code> にあります。
 <code>~/.config/nvim</code> へシンボリックリンクを作成してください。</p>
-<pre><code>ln -s /path/to/vim/.config/nvim ~/.config/nvim</code></pre>
+<pre><code class="language-bash">ln -s /path/to/vim/.config/nvim ~/.config/nvim
+</code></pre>
 <p>例（クローン先が <code>~/vim</code> の場合）:</p>
-<pre><code>ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
+<pre><code class="language-bash">ln -s ~/vim/.config/nvim ~/.config/nvim
+</code></pre>
 <p>既に <code>~/.config/nvim</code> が存在する場合は、先にバックアップしてください:</p>
-<pre><code>mv ~/.config/nvim ~/.config/nvim.bak
-ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
-<h2 id="概要">概要</h2>
-<p>この設定は <strong>lazy.nvim</strong>
-をプラグインマネージャーとして使用し、<strong>tokyonight-night</strong>
-カラースキームを採用しています。</p>
+<pre><code class="language-bash">mv ~/.config/nvim ~/.config/nvim.bak
+ln -s ~/vim/.config/nvim ~/.config/nvim
+</code></pre>
+<h2>概要</h2>
+<p>この設定は <strong>lazy.nvim</strong> をプラグインマネージャーとして使用し、<strong>tokyonight-night</strong> カラースキームを採用しています。</p>
 <p><strong>リーダーキー:</strong> <code>,</code>（カンマ）</p>
 <hr />
-<h2 id="キーボードショートカット一覧">キーボードショートカット一覧</h2>
-<h3 id="ナビゲーション---カーソル移動">ナビゲーション -
-カーソル移動</h3>
+<h2>キーボードショートカット一覧</h2>
+<h3>ナビゲーション - カーソル移動</h3>
 <table>
 <thead>
 <tr>
@@ -226,7 +250,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="ウィンドウ操作">ウィンドウ操作</h3>
+<h3>ウィンドウ操作</h3>
 <table>
 <thead>
 <tr>
@@ -269,8 +293,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="ファイルエクスプローラー-nerdtree">ファイルエクスプローラー
-(NERDTree)</h3>
+<h3>ファイルエクスプローラー (NERDTree)</h3>
 <p><strong>グローバルショートカット:</strong></p>
 <table>
 <thead>
@@ -395,8 +418,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="ファジーファインダー-telescope">ファジーファインダー
-(Telescope)</h3>
+<h3>ファジーファインダー (Telescope)</h3>
 <table>
 <thead>
 <tr>
@@ -431,7 +453,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="lsp-コード補助機能">LSP (コード補助機能)</h3>
+<h3>LSP (コード補助機能)</h3>
 <table>
 <thead>
 <tr>
@@ -486,9 +508,8 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="r-プログラミング-r.nvim">R プログラミング (R.nvim)</h3>
-<p><em><code>.r</code>, <code>.rmd</code>, <code>.quarto</code>
-ファイルで有効</em></p>
+<h3>R プログラミング (R.nvim)</h3>
+<p><em><code>.r</code>, <code>.rmd</code>, <code>.quarto</code> ファイルで有効</em></p>
 <table>
 <thead>
 <tr>
@@ -545,7 +566,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="ビルド-実行コマンド">ビルド / 実行コマンド</h3>
+<h3>ビルド / 実行コマンド</h3>
 <table>
 <thead>
 <tr>
@@ -572,7 +593,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="ターミナル">ターミナル</h3>
+<h3>ターミナル</h3>
 <table>
 <thead>
 <tr>
@@ -594,14 +615,9 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="検索置換-ferret">検索・置換 (Ferret)</h3>
-<p>バックエンドに <code>rg</code> (ripgrep)
-を使用。隠しファイルも検索対象、<code>build/</code> は除外。</p>
+<h3>検索・置換 (Ferret)</h3>
+<p>バックエンドに <code>rg</code> (ripgrep) を使用。隠しファイルも検索対象、<code>build/</code> は除外。</p>
 <table>
-<colgroup>
-<col style="width: 62%" />
-<col style="width: 37%" />
-</colgroup>
 <thead>
 <tr>
 <th>コマンド</th>
@@ -624,15 +640,12 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tbody>
 </table>
 <p><strong>典型的なワークフロー:</strong></p>
-<ol type="1">
-<li><code>:Ack foo</code> — プロジェクト内の <code>foo</code>
-を検索</li>
-<li>QuickFix リストで結果を確認（<code>:cn</code>/<code>:cp</code>
-で移動）</li>
-<li><code>:Acks /foo/bar/</code> — 検索結果の <code>foo</code> を
-<code>bar</code> に一括置換</li>
+<ol>
+<li><code>:Ack foo</code> — プロジェクト内の <code>foo</code> を検索</li>
+<li>QuickFix リストで結果を確認（<code>:cn</code>/<code>:cp</code> で移動）</li>
+<li><code>:Acks /foo/bar/</code> — 検索結果の <code>foo</code> を <code>bar</code> に一括置換</li>
 </ol>
-<h3 id="テキスト操作">テキスト操作</h3>
+<h3>テキスト操作</h3>
 <table>
 <thead>
 <tr>
@@ -659,10 +672,8 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="テキストオブジェクト操作vim-標準">テキストオブジェクト操作（Vim
-標準）</h3>
-<p><code>y</code>（ヤンク）、<code>d</code>（削除）、<code>c</code>（変更）などのオペレータと
-<code>i</code>（内側）/ <code>a</code>（外側）を組み合わせて、括弧や引用符で囲まれたテキストを操作できます。</p>
+<h3>テキストオブジェクト操作（Vim 標準）</h3>
+<p><code>y</code>（ヤンク）、<code>d</code>（削除）、<code>c</code>（変更）などのオペレータと <code>i</code>（内側）/ <code>a</code>（外側）を組み合わせて、括弧や引用符で囲まれたテキストを操作できます。</p>
 <p><strong><code>yi</code> — 内側をヤンク（yank inside）:</strong></p>
 <table>
 <thead>
@@ -700,8 +711,8 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 <tr>
 <td><code>yi`</code></td>
-<td><code>``</code> 内のテキストをヤンク</td>
-<td><code>`code`</code> → <code>code</code> をヤンク</td>
+<td><code></code> <code>内のテキストをヤンク |</code> <code>code</code> <code>` →</code>code` をヤンク</td>
+<td></td>
 </tr>
 <tr>
 <td><code>yit</code></td>
@@ -843,7 +854,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="インサートモード補助">インサートモード補助</h3>
+<h3>インサートモード補助</h3>
 <table>
 <thead>
 <tr>
@@ -874,7 +885,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="補完-nvim-cmp">補完 (nvim-cmp)</h3>
+<h3>補完 (nvim-cmp)</h3>
 <table>
 <thead>
 <tr>
@@ -905,7 +916,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="claude-code-ai-アシスタント">Claude Code (AI アシスタント)</h3>
+<h3>Claude Code (AI アシスタント)</h3>
 <table>
 <thead>
 <tr>
@@ -947,7 +958,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="github-copilot">GitHub Copilot</h3>
+<h3>GitHub Copilot</h3>
 <p><strong>コード補完:</strong></p>
 <table>
 <thead>
@@ -1016,7 +1027,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="行選択範囲の移動-mini.move">行・選択範囲の移動 (mini.move)</h3>
+<h3>行・選択範囲の移動 (mini.move)</h3>
 <table>
 <thead>
 <tr>
@@ -1048,7 +1059,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="スニペット-mini.snippets">スニペット (mini.snippets)</h3>
+<h3>スニペット (mini.snippets)</h3>
 <table>
 <thead>
 <tr>
@@ -1080,8 +1091,7 @@ ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
-<h3 id="タグジャンプ-gutentags-ctags">タグジャンプ (gutentags /
-ctags)</h3>
+<h3>タグジャンプ (gutentags / ctags)</h3>
 <p>タグファイルは gutentags により自動生成・更新されます。</p>
 <table>
 <thead>
@@ -1105,7 +1115,7 @@ ctags)</h3>
 </tr>
 </tbody>
 </table>
-<h3 id="その他">その他</h3>
+<h3>その他</h3>
 <table>
 <thead>
 <tr>
@@ -1121,7 +1131,7 @@ ctags)</h3>
 </tbody>
 </table>
 <hr />
-<h2 id="エディタ設定">エディタ設定</h2>
+<h2>エディタ設定</h2>
 <ul>
 <li><strong>インデント:</strong> スペース2個（タブは展開）</li>
 <li><strong>行番号:</strong> 有効（絶対番号）</li>
@@ -1129,29 +1139,33 @@ ctags)</h3>
 <li><strong>検索:</strong> 大文字小文字を無視（大文字入力時は区別）</li>
 <li><strong>クリップボード:</strong> システムと同期</li>
 <li><strong>Undo履歴:</strong> セッション間で保持</li>
-<h3 id="自動保存バックアップ-auto-save.nvim">自動保存・バックアップ (auto-save.nvim)</h3>
+</ul>
+<h3>自動保存・バックアップ (auto-save.nvim)</h3>
 <p>ファイルは <strong>auto-save.nvim</strong> により自動保存されます（<code>InsertLeave</code> / <code>TextChanged</code> から3秒後）。</p>
 <p><strong>バックアップファイルの保存先:</strong></p>
-<pre><code>~/VIM_BACKUP_FILES/</code></pre>
+<pre><code>~/VIM_BACKUP_FILES/
+</code></pre>
 <p><strong>バックアップファイルの命名規則:</strong></p>
 <p>ファイル名に時刻（時間単位）のタイムスタンプが付加されます。</p>
 <pre><code>元ファイル:  main.py
 バックアップ: main.py_2025-11-06_14
               main.py_2025-11-06_15
-              main.py_2025-11-07_09</code></pre>
+              main.py_2025-11-07_09
+</code></pre>
 <p><strong>過去のファイルを復元するには:</strong></p>
-<pre><code># バックアップ一覧を確認
+<pre><code class="language-bash"># バックアップ一覧を確認
 ls ~/VIM_BACKUP_FILES/
 
 # 特定ファイルのバックアップを検索
 ls ~/VIM_BACKUP_FILES/ | grep &quot;ファイル名&quot;
 
 # 復元（コピー）
-cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py</code></pre>
+cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py
+</code></pre>
 <p><strong>Undo 履歴:</strong></p>
 <p>セッション間で Undo 履歴が保持されるため、Neovim を再起動しても <code>u</code> で過去の変更を戻せます。Undo ファイルは <code>~/.local/state/nvim/undo/</code> に保存されます。</p>
 <hr />
-<h2 id="インストール済みプラグイン">インストール済みプラグイン</h2>
+<h2>インストール済みプラグイン</h2>
 <ul>
 <li><strong>lazy.nvim</strong> - プラグインマネージャー</li>
 <li><strong>tokyonight</strong> - カラースキーム</li>
@@ -1165,19 +1179,15 @@ cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py</code></pre>
 <li><strong>treesitter</strong> - シンタックスハイライト</li>
 <li><strong>copilot.vim</strong> - GitHub Copilot</li>
 <li><strong>R.nvim</strong> - R 言語サポート</li>
-<li><strong>ferret</strong> -
-プロジェクト全体の検索・置換（<code>:Ack</code>/<code>:Acks</code>）</li>
-<li><strong>claudecode.nvim</strong> - Claude Code AI
-アシスタント連携</li>
-<li><strong>mini.nvim</strong> - 行移動 (mini.move)、スニペット
-(mini.snippets)、テキスト整列 (mini.align)、引数の分割/結合
-(mini.splitjoin) 等</li>
+<li><strong>ferret</strong> - プロジェクト全体の検索・置換（<code>:Ack</code>/<code>:Acks</code>）</li>
+<li><strong>claudecode.nvim</strong> - Claude Code AI アシスタント連携</li>
+<li><strong>mini.nvim</strong> - 行移動 (mini.move)、スニペット (mini.snippets)、テキスト整列 (mini.align)、引数の分割/結合 (mini.splitjoin) 等</li>
 <li><strong>vim-gutentags</strong> - 自動タグ生成・管理</li>
 <li><strong>vista.vim</strong> - タグバー（LSP/ctags 対応）</li>
 </ul>
 <hr />
-<h2 id="初心者向けヒント">初心者向けヒント</h2>
-<ol type="1">
+<h2>初心者向けヒント</h2>
+<ol>
 <li><code>,fk</code> でキーマップ一覧を表示</li>
 <li><code>Ctrl+n</code> でファイルエクスプローラーを開く</li>
 <li><code>,ff</code> でファイルを素早く検索</li>
