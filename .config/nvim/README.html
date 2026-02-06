@@ -173,6 +173,19 @@
 <h1 class="title">README</h1>
 </header>
 <h1 id="neovim-設定マニュアル">Neovim 設定マニュアル</h1>
+<h2 id="インストール">インストール</h2>
+<pre><code>git clone git@github.com:tkdhss111/vim.git</code></pre>
+<p>HTTPS の場合:</p>
+<pre><code>git clone https://github.com/tkdhss111/vim.git</code></pre>
+<h3 id="セットアップ">セットアップ</h3>
+<p>Neovim の設定ファイルはリポジトリ内の <code>.config/nvim/</code> にあります。
+<code>~/.config/nvim</code> へシンボリックリンクを作成してください。</p>
+<pre><code>ln -s /path/to/vim/.config/nvim ~/.config/nvim</code></pre>
+<p>例（クローン先が <code>~/vim</code> の場合）:</p>
+<pre><code>ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
+<p>既に <code>~/.config/nvim</code> が存在する場合は、先にバックアップしてください:</p>
+<pre><code>mv ~/.config/nvim ~/.config/nvim.bak
+ln -s ~/vim/.config/nvim ~/.config/nvim</code></pre>
 <h2 id="概要">概要</h2>
 <p>この設定は <strong>lazy.nvim</strong>
 をプラグインマネージャーとして使用し、<strong>tokyonight-night</strong>
@@ -646,6 +659,115 @@
 </tr>
 </tbody>
 </table>
+<h3 id="テキストオブジェクト操作vim-標準">テキストオブジェクト操作（Vim
+標準）</h3>
+<p><code>y</code>（ヤンク）、<code>d</code>（削除）、<code>c</code>（変更）などのオペレータと
+<code>i</code>（内側）/ <code>a</code>（外側）を組み合わせて、括弧や引用符で囲まれたテキストを操作できます。</p>
+<p><strong><code>yi</code> — 内側をヤンク（yank inside）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>yi)</code> or <code>yi(</code></td>
+<td><code>()</code> 内のテキストをヤンク</td>
+<td><code>func(abc)</code> → <code>abc</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi]</code> or <code>yi[</code></td>
+<td><code>[]</code> 内のテキストをヤンク</td>
+<td><code>arr[123]</code> → <code>123</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi}</code> or <code>yi{</code></td>
+<td><code>{}</code> 内のテキストをヤンク</td>
+<td><code>{key: val}</code> → <code>key: val</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi"</code></td>
+<td><code>""</code> 内のテキストをヤンク</td>
+<td><code>"hello"</code> → <code>hello</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi'</code></td>
+<td><code>''</code> 内のテキストをヤンク</td>
+<td><code>'world'</code> → <code>world</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi`</code></td>
+<td><code>``</code> 内のテキストをヤンク</td>
+<td><code>`code`</code> → <code>code</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yit</code></td>
+<td>HTMLタグ内のテキストをヤンク</td>
+<td><code>&lt;p&gt;text&lt;/p&gt;</code> → <code>text</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yiw</code></td>
+<td>カーソル上の単語をヤンク</td>
+<td><code>hello</code> → <code>hello</code> をヤンク</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>ya</code> — 外側をヤンク（yank around）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ya)</code></td>
+<td><code>()</code> を含めてヤンク</td>
+<td><code>func(abc)</code> → <code>(abc)</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>ya"</code></td>
+<td><code>""</code> を含めてヤンク</td>
+<td><code>"hello"</code> → <code>"hello"</code> をヤンク</td>
+</tr>
+</tbody>
+</table>
+<p><strong>他のオペレータとの組み合わせ:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>di)</code></td>
+<td><code>()</code> 内のテキストを削除</td>
+</tr>
+<tr>
+<td><code>ci"</code></td>
+<td><code>""</code> 内のテキストを削除して挿入モードへ</td>
+</tr>
+<tr>
+<td><code>da]</code></td>
+<td><code>[]</code> を含めて削除</td>
+</tr>
+<tr>
+<td><code>ca{</code></td>
+<td><code>{}</code> を含めて削除して挿入モードへ</td>
+</tr>
+<tr>
+<td><code>vi)</code></td>
+<td><code>()</code> 内のテキストを選択（ビジュアルモード）</td>
+</tr>
+</tbody>
+</table>
 <h3 id="インサートモード補助">インサートモード補助</h3>
 <table>
 <thead>
@@ -932,9 +1054,27 @@ ctags)</h3>
 <li><strong>検索:</strong> 大文字小文字を無視（大文字入力時は区別）</li>
 <li><strong>クリップボード:</strong> システムと同期</li>
 <li><strong>Undo履歴:</strong> セッション間で保持</li>
-<li><strong>スワップ/バックアップファイル:</strong> 有効（auto-save.nvim
-により自動バックアップ、時刻付きバックアップファイルを生成）</li>
-</ul>
+<h3 id="自動保存バックアップ-auto-save.nvim">自動保存・バックアップ (auto-save.nvim)</h3>
+<p>ファイルは <strong>auto-save.nvim</strong> により自動保存されます（<code>InsertLeave</code> / <code>TextChanged</code> から3秒後）。</p>
+<p><strong>バックアップファイルの保存先:</strong></p>
+<pre><code>~/VIM_BACKUP_FILES/</code></pre>
+<p><strong>バックアップファイルの命名規則:</strong></p>
+<p>ファイル名に時刻（時間単位）のタイムスタンプが付加されます。</p>
+<pre><code>元ファイル:  main.py
+バックアップ: main.py_2025-11-06_14
+              main.py_2025-11-06_15
+              main.py_2025-11-07_09</code></pre>
+<p><strong>過去のファイルを復元するには:</strong></p>
+<pre><code># バックアップ一覧を確認
+ls ~/VIM_BACKUP_FILES/
+
+# 特定ファイルのバックアップを検索
+ls ~/VIM_BACKUP_FILES/ | grep &quot;ファイル名&quot;
+
+# 復元（コピー）
+cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py</code></pre>
+<p><strong>Undo 履歴:</strong></p>
+<p>セッション間で Undo 履歴が保持されるため、Neovim を再起動しても <code>u</code> で過去の変更を戻せます。Undo ファイルは <code>~/.local/state/nvim/undo/</code> に保存されます。</p>
 <hr />
 <h2 id="インストール済みプラグイン">インストール済みプラグイン</h2>
 <ul>
