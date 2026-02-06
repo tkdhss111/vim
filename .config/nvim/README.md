@@ -12,7 +12,34 @@ HTTPS の場合:
 git clone https://github.com/tkdhss111/vim.git
 ```
 
-### セットアップ
+### 自動セットアップ（推奨）
+
+リポジトリに含まれる `install.sh` を実行すると、必要な依存パッケージのインストールからシンボリックリンクの作成、プラグインの初期化まで一括で行えます。
+
+```bash
+cd vim/.config/nvim
+chmod +x install.sh
+./install.sh
+```
+
+**install.sh が行うこと:**
+
+1. システムパッケージのインストール（git, ripgrep, ctags, build-essential 等）
+2. Neovim のバージョン確認・インストール（>= 0.11 必須）
+3. Node.js のインストール（nvm 経由、v22）
+4. Python ツールのインストール（black, isort）
+5. Node.js ツールのインストール（prettier）
+6. StyLua（Lua フォーマッター）のインストール
+7. R 言語サーバーのインストール
+8. DuckDB のインストール（オプション、parquet プレビュー用）
+9. Claude Code CLI のインストール（オプション）
+10. 設定ファイルのシンボリックリンク作成（`~/.config/nvim`）
+11. 必要なディレクトリの作成（`~/VIM_BACKUP_FILES` 等）
+12. プラグイン・Tree-sitter パーサー・Mason ツールのヘッドレスインストール（オプション）
+
+**対応OS:** Ubuntu / Debian 系（その他の Linux でも手動調整で対応可能）
+
+### 手動セットアップ
 
 Neovim の設定ファイルはリポジトリ内の `.config/nvim/` にあります。
 `~/.config/nvim` へシンボリックリンクを作成してください。
